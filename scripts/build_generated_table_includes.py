@@ -78,7 +78,6 @@ def build_benchmark_rows(article_root: Path, table_cfg: dict) -> tuple[list[str]
             'source_class': table_cfg['source_class'],
             'source_note': table_cfg['note'],
         })
-    raw_lines.append('\\addlinespace[2pt]')
     for row_label in MODEL_ORDER:
         parts = [row_label]
         for cutoff in CUTOFF_ORDER:
