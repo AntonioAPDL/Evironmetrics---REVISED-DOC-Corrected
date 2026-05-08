@@ -203,11 +203,11 @@ The following manuscript figure assets in `Evironmetrics---REVISED-DOC-2/DISC/` 
 | `fig:covariates` | `DISC/precip_soilmoisture_climatePC1_faceted_labeled.png` | covariate setup figure | corrected `v2` bundle reads raw cutoff-specific `cov_01_PPT.csv`, `cov_02_SOIL.csv`, and `cov_03_PCA.csv`; manuscript-facing copy promoted from `generated/setup_support_by_cutoff_v2/20221225_exal_m_t1/figures/...`; current contract uses full `1987-05-29 -> cutoff` raw covariate history | yes | reproducible through validated `v2` workflow and frozen locally | representative `2022-12-25` support role; all five cutoff variants preserved | keep as representative setup/support figure with explicit cutoff-specific provenance |
 | `fig:retrospectives` | `DISC/retrospective_log_discharge_plot_faceted.png` | retrospective-product setup figure | corrected `v2` bundle reads authoritative retrospective lineage / bundle-native retrospective sources; manuscript-facing copy promoted from `generated/setup_support_by_cutoff_v2/20221225_exal_m_t1/figures/...`; current contract uses the retrospective support actually available for the selected cutoff and records whether full history is present | yes | reproducible through validated `v2` workflow and frozen locally | representative `2022-12-25` support role; all five cutoff variants preserved | keep as representative setup/support figure with explicit cutoff-specific provenance |
 | `fig:ensembles` | `DISC/forecats.png` | forecast-product setup figure | corrected `v2` bundle stages bundle-native forecast inputs through `forecats_plot_bundle.R`; manuscript-facing copy promoted from `generated/setup_support_by_cutoff_v2/20221225_exal_m_t1/figures/...`; current contract uses a strict `cutoff - 28 days` to `cutoff + 28 days` display window | yes | reproducible through validated `v2` workflow and frozen locally | representative `2022-12-25` support role; all five cutoff variants preserved | keep as representative setup/support figure with explicit cutoff-specific provenance |
-| `fig:dry_quantile` | `DISC/All_exal_2012-2016_DISC.png` | historical regime illustration | `REPO_MAP.md`, `REPRODUCE_PAPER.md`, `40_figures.R`, notebook; locked article-side bundle in `generated/historical_summary_sources/` | yes | reproducible from workflow repo and frozen locally in the article repo | intentionally retained as historical-summary support | keep with explicit historical-summary provenance |
-| `fig:rainy_quantile` | `DISC/All_exal_2017-2019_DISC.png` | historical regime illustration | same as above; locked article-side bundle in `generated/historical_summary_sources/` | yes | reproducible from workflow repo and frozen locally in the article repo | intentionally retained as historical-summary support | keep with explicit historical-summary provenance |
+| `fig:dry_quantile` | `DISC/All_exal_2012-2016_DISC.png` | historical regime illustration | current `2022-05-11 exAL-M-T1` full-history multivariate run rendered through `scripts/render_current_model_output_support_figures.R` and frozen locally in `generated/current_model_output_support/` | yes | reproducible from current model outputs and frozen locally in the article repo | current-model historical-support figure outside the narrow five-run keep lineage | keep with explicit current-output support provenance |
+| `fig:rainy_quantile` | `DISC/All_exal_2017-2019_DISC.png` | historical regime illustration | same as above; frozen locally in `generated/current_model_output_support/` | yes | reproducible from current model outputs and frozen locally in the article repo | current-model historical-support figure outside the narrow five-run keep lineage | keep with explicit current-output support provenance |
 | `fig:synth1` | `DISC/posterior_samples_valid.png` | predictive synthesis illustration | verified representative rerun bundle in `generated/exal_m_t1_20221225/` plus workflow-side replay validation | yes | reproducible from verified `2022-12-25 exAL-M-T1` rerun bundle and frozen locally | locked to representative `2022-12-25` selected-model run | keep synced to representative selected-model bundle |
-| `fig:80_components` | `DISC/80_component_1991_2022.png` | appendix long-cycle seasonal illustration | `REPO_MAP.md`, `REPRODUCE_PAPER.md`, `40_figures.R`, notebook; locked article-side bundle in `generated/historical_summary_sources/` | yes | reproducible from workflow repo and frozen locally in the article repo | intentionally retained as historical-summary support | keep with explicit historical-summary provenance |
-| `fig:synth2` | `DISC/posterior_samples_counter_valid.png` | appendix historical-only predictive synthesis | `40_figures.R`, `run_environmetrics_figures.R`, provenance docs; frozen locally in `generated/workflow_linked_support_sources/` | yes | reproducible from workflow repo and frozen locally in the article repo | intentionally retained as workflow-linked appendix reference | keep with explicit separate provenance |
+| `fig:80_components` | `DISC/80_component_1991_2022.png` | appendix long-cycle seasonal illustration | current `2022-05-11 exAL-M-T1` full-history multivariate run rendered through `scripts/render_current_model_output_support_figures.R` and frozen locally in `generated/current_model_output_support/` | yes | reproducible from current model outputs and frozen locally in the article repo | current-model historical-support figure outside the narrow five-run keep lineage | keep with explicit current-output support provenance |
+| `fig:synth2` | `DISC/posterior_samples_counter_valid.png` | appendix historical-only predictive synthesis | current `2022-12-25 exdqlm_univar` publication-style output bundle copied into `generated/current_model_output_support/` | yes | reproducible from current model outputs and frozen locally in the article repo | current-model appendix support figure outside the narrow five-run keep lineage | keep with explicit current-output support provenance |
 
 ### Notes on figure confidence
 
@@ -237,12 +237,12 @@ The following manuscript figure assets in `Evironmetrics---REVISED-DOC-2/DISC/` 
      - `repro/FORECATS_INPUTS_AND_WEIGHTING_PLAN.md`
    - The corrected cutoff-specific derivation anchors that figure to the CRPS-linked `exAL-M-T1` source manifest and the authoritative forecats/histfix bundles instead of the older generic paper-level copy.
 
-3. The dry/wet regime figures and the appendix long-cycle figure are now locked as historical-summary support.
-   - They are not part of the narrow five-run `exAL-M-T1` keep-run lineage.
+3. The dry/wet regime figures and the appendix long-cycle figure are now regenerated from current model outputs.
+   - They are still outside the narrow five-run `exAL-M-T1` keep-run lineage used for the main benchmark table.
    - They are frozen locally in:
-     - `generated/historical_summary_sources/`
-   - Their role is descriptive:
-     - historical summaries of the fitted specification,
+     - `generated/current_model_output_support/`
+   - Their role remains descriptive support:
+     - current-model historical summaries of the fitted specification,
      - not representative-cutoff outputs,
      - and not a second forecast-validation exercise.
 
@@ -253,9 +253,9 @@ The following manuscript figure assets in `Evironmetrics---REVISED-DOC-2/DISC/` 
      - `run_environmetrics_figures.R` runs headlessly,
      - `40_figures.R` generates the figures.
 
-5. `fig:synth1` is the only synthesis figure currently tied to the selected-model refresh.
-   - `fig:synth1` is locked to the verified representative `2022-12-25` rerun bundle.
-   - `fig:synth2` remains a separate workflow-linked appendix reference and is not part of the narrow five-run keep-lineage freeze.
+5. `fig:synth1` remains the representative selected-model synthesis figure tied to the `2022-12-25` rerun bundle.
+   - `fig:synth2` is now refreshed from a current `exdqlm_univar` output bundle.
+   - It remains outside the narrow five-run keep-lineage freeze used for the main benchmark table.
 
 ## Table provenance map
 
@@ -291,7 +291,7 @@ These are now reproduced through the corrected `v2` per-cutoff family derived fr
 - `fig:retrospectives`
 - `fig:ensembles`
 
-### Group B: keep as workflow-linked appendix reference
+### Group B: keep as current-model appendix support
 - `fig:synth2`
 
 ### Group C: selected-run dependent and must be refreshed or verified first
@@ -299,8 +299,8 @@ These are too tightly tied to one fitted output to leave ambiguous.
 - `fig:synth1`
 - `tab:components_23_31`
 
-### Group D: reproducible historical-summary support
-These objects are intentionally kept as workflow-linked historical summaries of the fitted specification, rather than as representative-cutoff outputs.
+### Group D: reproducible current-model historical-support figures
+These objects are intentionally kept as current-model historical summaries of the fitted specification, rather than as representative-cutoff outputs.
 - `fig:dry_quantile`
 - `fig:rainy_quantile`
 - `fig:80_components`

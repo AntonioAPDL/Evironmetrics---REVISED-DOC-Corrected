@@ -78,16 +78,16 @@ That bundle now includes:
 | `tab:gamma_sigma_intervals1` | supplementary appendix `gamma` summary | `2022-12-25 exAL-M-T1 keep` | `generated/exal_m_t1_20221225/gamma_summary.csv` | values in `wileyNJD-APA.tex` | refreshed |
 | `tab:gamma_sigma_intervals2` | supplementary appendix `sigma` summary | `2022-12-25 exAL-M-T1 keep` | `generated/exal_m_t1_20221225/sigma_summary.csv` | values in `wileyNJD-APA.tex` | refreshed |
 
-### Workflow-linked but outside the locked five-run keep source set
+### Current-model support outside the locked five-run keep source set
 
-These objects are still reproducible workflow assets, but they are not part of the narrow locked `exAL-M-T1` keep-run source set above.
+These objects are now wired to current model outputs, but they are still outside the narrow locked `exAL-M-T1` keep-run source set used for the main five-cutoff validation evidence above.
 
 | Manuscript object | Current role | Current source status | Action |
 |---|---|---|---|
-| `fig:synth2` | appendix historical-only reference | not sourced from the locked five-run keep lineage; current `DISC/posterior_samples_counter_valid.png` remains a workflow-linked counterfactual artifact outside this narrowed keep-run freeze and is now frozen locally in `generated/workflow_linked_support_sources/` | keep with explicit separate provenance |
-| `fig:dry_quantile` | historical regime illustration | workflow-linked historical figure, hash-matched to the current workflow gold record and frozen locally in `generated/historical_summary_sources/`; not a five-run cutoff artifact | keep as historical-summary object |
-| `fig:rainy_quantile` | historical regime illustration | workflow-linked historical figure, hash-matched to the current workflow gold record and frozen locally in `generated/historical_summary_sources/`; not a five-run cutoff artifact | keep as historical-summary object |
-| `fig:80_components` | appendix long-cycle historical summary | workflow-linked historical figure, hash-matched to the current workflow gold record and frozen locally in `generated/historical_summary_sources/`; not a five-run cutoff artifact | keep as historical-summary object |
+| `fig:synth2` | appendix historical-only reference | copied from the current `2022-12-25 exdqlm_univar` publication-style output bundle and frozen locally in `generated/current_model_output_support/` | keep with explicit current-output support provenance |
+| `fig:dry_quantile` | historical regime illustration | rendered from the current `2022-05-11 exAL-M-T1` full-history multivariate run and frozen locally in `generated/current_model_output_support/` | keep as current-model historical-support object |
+| `fig:rainy_quantile` | historical regime illustration | rendered from the current `2022-05-11 exAL-M-T1` full-history multivariate run and frozen locally in `generated/current_model_output_support/` | keep as current-model historical-support object |
+| `fig:80_components` | appendix long-cycle historical summary | rendered from the current `2022-05-11 exAL-M-T1` full-history multivariate run and frozen locally in `generated/current_model_output_support/` | keep as current-model historical-support object |
 
 ### Setup figures outside the selected-model refresh scope
 
@@ -103,28 +103,28 @@ These objects are still reproducible workflow assets, but they are not part of t
 1. The five verified `exAL-M-T1` keep runs are now the locked reproducible source set for the main selected-model manuscript evidence.
 2. Any further refresh of the central selected-model objects `fig:synth1` and `tab:components_23_31` should use only the files recorded above.
 3. The appendix support tables `tab:gamma_sigma_intervals1` and `tab:gamma_sigma_intervals2` should remain supplementary and should continue to use the representative `2022-12-25` source files recorded above.
-4. `fig:synth2` and the historical-summary figures should not be silently treated as part of that five-run keep lineage. If they remain in the paper, they should either:
-   - stay explicitly labeled as separate workflow-linked historical/counterfactual objects, or
-   - be regenerated from a separately locked source path.
+4. `fig:synth2` and the historical-support figures are now regenerated from separately locked current-output source paths.
+   - They should remain distinguished from the narrow five-run keep lineage used for the main benchmark table.
+   - Their article-side provenance anchor is now `generated/current_model_output_support/`.
 
 ## 6. Locked choice for the current manuscript pass
 
 For the current revised article pass, the chosen approach is:
 
 1. keep `fig:dry_quantile`, `fig:rainy_quantile`, and `fig:80_components`
-2. treat them explicitly as workflow-linked historical summaries
+2. treat them explicitly as current-model historical-support figures
 3. do not treat them as additional five-cutoff forecast-validation evidence
 4. do not force them into the representative `2022-12-25` selected-run bundle
-5. preserve their article-side provenance bundle in `generated/historical_summary_sources/`
-6. preserve `fig:synth2` in `generated/workflow_linked_support_sources/`
+5. preserve their article-side provenance bundle in `generated/current_model_output_support/`
+6. preserve `fig:synth2` in `generated/current_model_output_support/`
 7. preserve the corrected cutoff-dependent setup/support figures through:
    - `generated/setup_support_by_cutoff_v2/`
    - `generated/setup_support_by_cutoff_v2_review/`
 8. preserve the older `v1` setup/support family only as an archival audit artifact:
    - `generated/setup_support_by_cutoff/`
    - `generated/setup_support_by_cutoff_review/`
-9. refresh the local support bundles through:
-   - `scripts/refresh_local_provenance_bundles.py`
+9. refresh the current-model support bundle through:
+   - `scripts/refresh_current_model_output_support_figures.py`
 10. refresh the corrected cutoff-specific setup/support family through:
    - `scripts/refresh_setup_support_by_cutoff_v2.py`
    - `scripts/build_setup_support_by_cutoff_v2_review.py`

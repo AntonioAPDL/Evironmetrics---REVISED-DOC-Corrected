@@ -25,6 +25,7 @@ def main() -> None:
 
     py = sys.executable
     run([py, str(article_root / 'scripts' / 'refresh_local_provenance_bundles.py'), '--article-root', str(article_root), '--workflow-root', str(workflow_root), '--bundle', 'all'])
+    run([py, str(article_root / 'scripts' / 'refresh_current_model_output_support_figures.py'), '--article-root', str(article_root), '--workflow-root', str(workflow_root)])
     run([py, str(article_root / 'scripts' / 'refresh_exal_m_t1_generated_assets.py'), '--article-root', str(article_root), '--runtime-root', str(runtime_root)])
     run([py, str(article_root / 'scripts' / 'refresh_he2_manifest_snapshot.py'), '--article-root', str(article_root), '--workflow-root', str(workflow_root)])
     run([py, str(article_root / 'scripts' / 'refresh_setup_support_by_cutoff_v2.py'), '--article-root', str(article_root)])

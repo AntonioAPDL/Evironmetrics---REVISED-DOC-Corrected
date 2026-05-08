@@ -55,24 +55,24 @@
       "filename": "All_exal_2012-2016_DISC.png",
       "category": "Historical Summaries",
       "role": "Dry-period historical summary",
-      "source_class": "historical_summary_support",
-      "current_model_output_wired": false,
-      "generated_source": "generated/historical_summary_sources/figures/All_exal_2012-2016_DISC.png",
+      "source_class": "current_model_output_support",
+      "current_model_output_wired": true,
+      "generated_source": "generated/current_model_output_support/figures/All_exal_2012-2016_DISC.png",
       "disc_target": "DISC/All_exal_2012-2016_DISC.png",
-      "sha256": "01db33e6833749a5da42d17e5808fb105451b682be94fddfbb6e2a71bc7ff4a8",
-      "note": "Historical-summary support figure"
+      "sha256": "8e511534f8ee0929914ebde06f29b1b0bae91b719747ffc2c4384248f32ef7da",
+      "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {
       "label": "fig:rainy_quantile",
       "filename": "All_exal_2017-2019_DISC.png",
       "category": "Historical Summaries",
       "role": "Rainy-period historical summary",
-      "source_class": "historical_summary_support",
-      "current_model_output_wired": false,
-      "generated_source": "generated/historical_summary_sources/figures/All_exal_2017-2019_DISC.png",
+      "source_class": "current_model_output_support",
+      "current_model_output_wired": true,
+      "generated_source": "generated/current_model_output_support/figures/All_exal_2017-2019_DISC.png",
       "disc_target": "DISC/All_exal_2017-2019_DISC.png",
-      "sha256": "1604a5b14e783417bb8c3e6a400f6674dc17950d8d036f8d36909855a4c81a5b",
-      "note": "Historical-summary support figure"
+      "sha256": "2d8a8ebacf599f6b761b4a16ddd01600199dfe619603ccf8c3bfdbfaa17680d3",
+      "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {
       "label": "fig:synth1",
@@ -91,24 +91,24 @@
       "filename": "80_component_1991_2022.png",
       "category": "Historical Summaries",
       "role": "Long-cycle component summary",
-      "source_class": "historical_summary_support",
-      "current_model_output_wired": false,
-      "generated_source": "generated/historical_summary_sources/figures/80_component_1991_2022.png",
+      "source_class": "current_model_output_support",
+      "current_model_output_wired": true,
+      "generated_source": "generated/current_model_output_support/figures/80_component_1991_2022.png",
       "disc_target": "DISC/80_component_1991_2022.png",
-      "sha256": "fcb082c3d100aee8cf980eca96ccfe918fc2647d3c4a2642bb13e2242afae9c4",
-      "note": "Historical-summary support figure"
+      "sha256": "29ae990b7288cc75c4558536caecd37d88ee4f830cb054911b2a33f8a68031be",
+      "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {
       "label": "fig:synth2",
       "filename": "posterior_samples_counter_valid.png",
       "category": "Appendix Support",
       "role": "Historical-only reference synthesis",
-      "source_class": "workflow_linked_support",
-      "current_model_output_wired": false,
-      "generated_source": "generated/workflow_linked_support_sources/figures/posterior_samples_counter_valid.png",
+      "source_class": "current_model_output_support",
+      "current_model_output_wired": true,
+      "generated_source": "generated/current_model_output_support/figures/posterior_samples_counter_valid.png",
       "disc_target": "DISC/posterior_samples_counter_valid.png",
-      "sha256": "be4e5b1911d89d5866c8209f872f353e740dd9c930b7ae445b908df9ab768dba",
-      "note": "Workflow-linked appendix support figure"
+      "sha256": "309f78249508ee938766120576dcaa7f6565afbc62a11b357f9af66cb97e1f26",
+      "note": "Copied from the current 2022-12-25 exdqlm_univar publication-style output bundle"
     }
   ]
 }

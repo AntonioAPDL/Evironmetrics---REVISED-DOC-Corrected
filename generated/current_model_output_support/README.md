@@ -1,0 +1,10 @@
+# Current Model Output Support Figures
+
+This bundle regenerates the remaining manuscript support figures from current model outputs.
+
+Sources:
+- Historical multivariate support figures: `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_publication_replay_representatives_20260506/20220511_exal_m_t1/runs/multimodel_20220511_v8_eps180cf1_exdqlm_multivar_keep_featurecov_cf1`
+- Appendix univariate reference figure: `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_quantile_featurecov_custom_discount_probe_20260422/runs/multimodel_20221225_v8_quantile_featurecov_custom_discount_probe_v1_exdqlm_univar/post/outputs/multimodel_20221225_v8_quantile_featurecov_custom_discount_probe_v1_exdqlm_univar/exdqlm_univar_synth_cutoff_window_posterior_samples.png`
+
+Refresh entrypoint:
+- `scripts/refresh_current_model_output_support_figures.py`

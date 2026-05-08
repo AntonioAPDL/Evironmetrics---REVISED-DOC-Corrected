@@ -45,20 +45,20 @@
       "filename": "All_exal_2012-2016_DISC.png",
       "category": "Historical Summaries",
       "role": "Dry-period historical summary",
-      "generated_source": "generated/historical_summary_sources/figures/All_exal_2012-2016_DISC.png",
-      "source_class": "historical_summary_support",
-      "current_model_output_wired": false,
-      "note": "Historical-summary support figure"
+      "generated_source": "generated/current_model_output_support/figures/All_exal_2012-2016_DISC.png",
+      "source_class": "current_model_output_support",
+      "current_model_output_wired": true,
+      "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {
       "label": "fig:rainy_quantile",
       "filename": "All_exal_2017-2019_DISC.png",
       "category": "Historical Summaries",
       "role": "Rainy-period historical summary",
-      "generated_source": "generated/historical_summary_sources/figures/All_exal_2017-2019_DISC.png",
-      "source_class": "historical_summary_support",
-      "current_model_output_wired": false,
-      "note": "Historical-summary support figure"
+      "generated_source": "generated/current_model_output_support/figures/All_exal_2017-2019_DISC.png",
+      "source_class": "current_model_output_support",
+      "current_model_output_wired": true,
+      "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {
       "label": "fig:synth1",
@@ -75,20 +75,20 @@
       "filename": "80_component_1991_2022.png",
       "category": "Historical Summaries",
       "role": "Long-cycle component summary",
-      "generated_source": "generated/historical_summary_sources/figures/80_component_1991_2022.png",
-      "source_class": "historical_summary_support",
-      "current_model_output_wired": false,
-      "note": "Historical-summary support figure"
+      "generated_source": "generated/current_model_output_support/figures/80_component_1991_2022.png",
+      "source_class": "current_model_output_support",
+      "current_model_output_wired": true,
+      "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {
       "label": "fig:synth2",
       "filename": "posterior_samples_counter_valid.png",
       "category": "Appendix Support",
       "role": "Historical-only reference synthesis",
-      "generated_source": "generated/workflow_linked_support_sources/figures/posterior_samples_counter_valid.png",
-      "source_class": "workflow_linked_support",
-      "current_model_output_wired": false,
-      "note": "Workflow-linked appendix support figure"
+      "generated_source": "generated/current_model_output_support/figures/posterior_samples_counter_valid.png",
+      "source_class": "current_model_output_support",
+      "current_model_output_wired": true,
+      "note": "Copied from the current 2022-12-25 exdqlm_univar publication-style output bundle"
     }
   ],
   "tables": {
