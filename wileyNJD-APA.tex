@@ -342,28 +342,7 @@ We fit the framework separately at the seven target quantile levels \(0.05\), \(
 
 Table~\ref{tab:benchmark_crps_models} compares the raw forecast products with nine Bayesian variants of the common state-space framework. These variants differ only in three respects: the observation likelihood, whether the synthesis uses only the USGS channel or all source channels jointly, and whether the transfer component remains active during the forecast window. We summarize them with the label \(L\)-\(S\)-\(T\), where \(L\in\{\mathrm{N},\mathrm{AL},\mathrm{exAL}\}\) denotes a Gaussian, asymmetric Laplace, or extended asymmetric Laplace observation likelihood, \(S\in\{\mathrm{U},\mathrm{M}\}\) indicates whether the synthesis uses only the USGS channel or all source channels jointly, and \(T\in\{\mathrm{T0},\mathrm{T1}\}\) indicates whether the transfer component is suppressed or retained during the forecast window. The raw baselines are the daily GloFAS and NWS forecast products evaluated without statistical correction.
 
-\begin{table*}[htbp]
-\centering
-\renewcommand{\arraystretch}{1.08}
-\begin{threeparttable}
-\caption{Mean forecast-window CRPS by model family and cutoff across the five rolling-origin evaluation folds. Lower values are better; bold indicates the lowest CRPS within each cutoff column.}
-\label{tab:benchmark_crps_models}
-\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} >{\ttfamily}l r r r r r}
-\toprule
-Model label & 01/23/2021 & 11/12/2021 & 12/21/2021 & 05/11/2022 & 12/25/2022 \\
-\midrule
-\multicolumn{6}{l}{\textit{Raw forecast products}} \\
-\input{generated/article_table_includes/table_benchmark_crps_rows.tex}
-\midrule
-\multicolumn{6}{l}{\textit{Bayesian benchmark variants}} \\
-\input{generated/article_table_includes/table_benchmark_bayesian_rows.tex}
-\bottomrule
-\end{tabular*}
-\begin{tablenotes}
-\item \textit{Note:} The model label \(L\)-\(S\)-\(T\) is defined as follows: \(L\in\{\mathrm{N},\mathrm{AL},\mathrm{exAL}\}\) denotes a Gaussian, asymmetric Laplace, or extended asymmetric Laplace observation likelihood; \(S\in\{\mathrm{U},\mathrm{M}\}\) indicates whether the synthesis uses only the USGS channel or all source channels jointly; and \(T\in\{\mathrm{T0},\mathrm{T1}\}\) indicates whether the transfer component is suppressed or retained during the forecast window. \texttt{RAW-GLOFAS} and \texttt{RAW-NWS} denote the uncorrected operational forecast products from GloFAS and NWS, respectively.
-\end{tablenotes}
-\end{threeparttable}
-\end{table*}
+\input{generated/article_table_includes/table_benchmark_crps_block.tex}
 
 Table~\ref{tab:benchmark_crps_models} yields a consistent ranking across the five cutoffs. The \(U\) versus \(M\) comparison isolates whether the external source channels improve forecast skill beyond using the observation channel alone, whereas the \(T0\) versus \(T1\) comparison isolates whether carrying the transfer component into the forecast window is beneficial. The two multivariate specifications with an active forecast-window transfer component, AL-M-T1 and exAL-M-T1, dominate the comparison, with exAL-M-T1 attaining the lowest CRPS in every cutoff. AL-M-T1 is the closest competitor, especially at 01/23/2021 and 05/11/2022, but it remains second in each case. The best corrected model also improves on the best raw forecast-product baseline in all five cutoffs. Forecast skill is therefore highest when retrospective products are synthesized jointly with the observations and when the transfer component remains active during the forecast window. We use exAL-M-T1 as the reference specification for the remaining summaries.
 

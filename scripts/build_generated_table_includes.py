@@ -39,7 +39,7 @@ def fmt_ci(row: dict[str, str], digits: int) -> str:
     return f'$[{fmt_num(row["q2_5"], digits)},\ {fmt_num(row["q97_5"], digits)}]$'
 
 
-def build_benchmark_rows(article_root: Path, table_cfg: dict) -> tuple[list[str], list[str], list[dict[str, str]]]:
+def build_benchmark_rows(article_root: Path, table_cfg: dict) -> tuple[list[str], list[str], list[str], list[dict[str, str]]]:
     manifest_rows = read_csv(article_root / table_cfg['sources']['bayesian_manifest_csv'])
     bayes = {(row['manuscript_label'], row['cutoff']): row for row in manifest_rows}
     raw_rows: dict[tuple[str, str], str] = {}
@@ -93,7 +93,14 @@ def build_benchmark_rows(article_root: Path, table_cfg: dict) -> tuple[list[str]
             'source_class': table_cfg['source_class'],
             'source_note': table_cfg['note'],
         })
-    return raw_lines, bayesian_lines, manifest_out
+    body_lines = [
+        r'\multicolumn{6}{l}{\textit{Raw forecast products}} \\',
+        *raw_lines,
+        r'\midrule',
+        r'\multicolumn{6}{l}{\textit{Bayesian benchmark variants}} \\',
+        *bayesian_lines,
+    ]
+    return raw_lines, bayesian_lines, body_lines, manifest_out
 
 
 def build_component_rows(article_root: Path, table_cfg: dict) -> tuple[list[str], list[dict[str, str]]]:
@@ -150,10 +157,32 @@ def main() -> None:
 
     manifest_rows: list[dict[str, str]] = []
 
-    benchmark_raw_lines, benchmark_bayesian_lines, rows = build_benchmark_rows(article_root, manifest['tables']['tab:benchmark_crps_models'])
+    benchmark_raw_lines, benchmark_bayesian_lines, benchmark_body_lines, rows = build_benchmark_rows(article_root, manifest['tables']['tab:benchmark_crps_models'])
     manifest_rows.extend(rows)
     write_lines(out_root / 'table_benchmark_crps_rows.tex', benchmark_raw_lines)
     write_lines(out_root / 'table_benchmark_bayesian_rows.tex', benchmark_bayesian_lines)
+    write_lines(out_root / 'table_benchmark_body.tex', benchmark_body_lines)
+    benchmark_block_lines = [
+        r'\begin{table*}[htbp]',
+        r'\centering',
+        r'\renewcommand{\arraystretch}{1.08}',
+        r'\begin{threeparttable}',
+        r'\caption{Mean forecast-window CRPS by model family and cutoff across the five rolling-origin evaluation folds. Lower values are better; bold indicates the lowest CRPS within each cutoff column.}',
+        r'\label{tab:benchmark_crps_models}',
+        r'\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} >{\ttfamily}l r r r r r}',
+        r'\toprule',
+        r'Model label & 01/23/2021 & 11/12/2021 & 12/21/2021 & 05/11/2022 & 12/25/2022 \\',
+        r'\midrule',
+        *benchmark_body_lines,
+        r'\bottomrule',
+        r'\end{tabular*}',
+        r'\begin{tablenotes}',
+        r'\item \textit{Note:} The model label \(L\)-\(S\)-\(T\) is defined as follows: \(L\in\{\mathrm{N},\mathrm{AL},\mathrm{exAL}\}\) denotes a Gaussian, asymmetric Laplace, or extended asymmetric Laplace observation likelihood; \(S\in\{\mathrm{U},\mathrm{M}\}\) indicates whether the synthesis uses only the USGS channel or all source channels jointly; and \(T\in\{\mathrm{T0},\mathrm{T1}\}\) indicates whether the transfer component is suppressed or retained during the forecast window. \texttt{RAW-GLOFAS} and \texttt{RAW-NWS} denote the uncorrected operational forecast products from GloFAS and NWS, respectively.',
+        r'\end{tablenotes}',
+        r'\end{threeparttable}',
+        r'\end{table*}',
+    ]
+    write_lines(out_root / 'table_benchmark_crps_block.tex', benchmark_block_lines)
 
     component_lines, rows = build_component_rows(article_root, manifest['tables']['tab:components_23_31'])
     manifest_rows.extend(rows)
@@ -177,6 +206,8 @@ def main() -> None:
         'outputs': {
             'tab:benchmark_crps_models': 'generated/article_table_includes/table_benchmark_crps_rows.tex',
             'tab:benchmark_crps_models_bayesian': 'generated/article_table_includes/table_benchmark_bayesian_rows.tex',
+            'tab:benchmark_crps_models_body': 'generated/article_table_includes/table_benchmark_body.tex',
+            'tab:benchmark_crps_models_block': 'generated/article_table_includes/table_benchmark_crps_block.tex',
             'tab:components_23_31': 'generated/article_table_includes/table_components_23_31_rows.tex',
             'tab:gamma_sigma_intervals1': 'generated/article_table_includes/table_gamma_rows.tex',
             'tab:gamma_sigma_intervals2': 'generated/article_table_includes/table_sigma_rows.tex'
