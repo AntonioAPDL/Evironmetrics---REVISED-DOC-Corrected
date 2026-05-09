@@ -24,7 +24,6 @@ def main() -> None:
     runtime_root = args.runtime_root.resolve()
 
     py = sys.executable
-    run([py, str(article_root / 'scripts' / 'refresh_local_provenance_bundles.py'), '--article-root', str(article_root), '--workflow-root', str(workflow_root), '--bundle', 'all'])
     run([py, str(article_root / 'scripts' / 'refresh_current_model_output_support_figures.py'), '--article-root', str(article_root), '--workflow-root', str(workflow_root)])
     run([py, str(article_root / 'scripts' / 'refresh_exal_m_t1_generated_assets.py'), '--article-root', str(article_root), '--runtime-root', str(runtime_root)])
     run([py, str(article_root / 'scripts' / 'refresh_he2_manifest_snapshot.py'), '--article-root', str(article_root), '--workflow-root', str(workflow_root)])
@@ -36,6 +35,7 @@ def main() -> None:
     run([py, str(article_root / 'scripts' / 'build_generated_table_includes.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'promote_generated_figures_to_disc.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'build_article_asset_review_report.py'), '--article-root', str(article_root)])
+    run([py, str(article_root / 'scripts' / 'clean_article_legacy_assets.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'build_generated_asset_index.py'), '--article-root', str(article_root)])
     print('Refreshed all article-side generated assets successfully.')
 

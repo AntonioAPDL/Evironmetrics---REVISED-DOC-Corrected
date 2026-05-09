@@ -26,6 +26,11 @@ def main() -> None:
     out_root = article_root / 'generated' / 'article_asset_selection'
     out_root.mkdir(parents=True, exist_ok=True)
 
+    expected = {fig['filename'] for fig in manifest['figures']}
+    for stale in sorted(disc_root.iterdir()):
+        if stale.is_file() and stale.name not in expected:
+            stale.unlink()
+
     rows: list[dict[str, object]] = []
     for fig in manifest['figures']:
         src = article_root / fig['generated_source']

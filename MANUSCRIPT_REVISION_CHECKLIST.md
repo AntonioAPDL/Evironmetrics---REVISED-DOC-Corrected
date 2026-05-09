@@ -61,7 +61,7 @@ The older setup/support family:
 - `generated/setup_support_by_cutoff/`
 - `generated/setup_support_by_cutoff_review/`
 
-is now retained only as a **provisional `v1` audit artifact**.
+has been removed from the article repo during the cleanup pass; only the canonical `v2` family remains in the current article contract.
 
 ### 0.2 Generated-asset organization checkpoint
 
@@ -72,10 +72,18 @@ Current generated-asset index:
 - `generated/README.md`
 - `generated/asset_inventory.csv`
 
+Current canonical article-side generated families:
+- `generated/exal_m_t1_20221225/`
+- `generated/exal_m_t1_five_run_sources/`
+- `generated/current_model_output_support/`
+- `generated/setup_support_by_cutoff_v2/`
+- `generated/setup_support_by_cutoff_v2_appendix/`
+- `generated/article_table_includes/`
+
 Preferred article-side refresh command:
 - `python3 scripts/refresh_all_generated_assets.py`
 
-That command should be treated as the standard way to refresh article-side bundles before any figure/table promotion into `DISC/`.
+That command should be treated as the standard way to refresh article-side bundles before any figure/table promotion into `DISC/`. It now also re-applies the cleanup step that removes stale `DISC/` files and obsolete article-side figure families.
 
 The revised article appendix can now also draw from:
 - `generated/setup_support_by_cutoff_v2_appendix/`
@@ -1031,42 +1039,23 @@ Use this as the working order when actually editing the manuscript.
     - keep `fig:dry_quantile`, `fig:rainy_quantile`, and `fig:80_components`
     - treat them as workflow-linked historical summaries of the selected specification
     - do not treat them as representative-cutoff or additional forecast-validation objects
-- [x] Freeze a local provenance bundle for the historical-summary figures in the revised article repo.
-  - Bundle:
-    - `generated/historical_summary_sources/README.md`
-    - `generated/historical_summary_sources/manifest.csv`
-    - `generated/historical_summary_sources/SHA256SUMS.txt`
-    - `generated/historical_summary_sources/figures/80_component_1991_2022.png`
-    - `generated/historical_summary_sources/figures/All_exal_2012-2016_DISC.png`
-    - `generated/historical_summary_sources/figures/All_exal_2017-2019_DISC.png`
-- [x] Freeze a local provenance bundle for the remaining workflow-linked setup/support figures.
-  - Bundle:
-    - `generated/workflow_linked_support_sources/README.md`
-    - `generated/workflow_linked_support_sources/manifest.csv`
-    - `generated/workflow_linked_support_sources/SHA256SUMS.txt`
-    - `generated/workflow_linked_support_sources/figures/usgs.png`
-    - `generated/workflow_linked_support_sources/figures/precip_soilmoisture_climatePC1_faceted_labeled.png`
-    - `generated/workflow_linked_support_sources/figures/retrospective_log_discharge_plot_faceted.png`
-    - `generated/workflow_linked_support_sources/figures/forecats.png`
-    - `generated/workflow_linked_support_sources/figures/posterior_samples_counter_valid.png`
+- [x] Consolidate article-side local provenance onto the canonical current families.
+  - Historical-summary and appendix-support figures now anchor to:
+    - `generated/current_model_output_support/`
+  - Cutoff-specific setup/support figures now anchor to:
+    - `generated/setup_support_by_cutoff_v2/`
+    - `generated/setup_support_by_cutoff_v2_review/`
   - Locked reproduction note:
     - treat `R/unified/stages/stage_post.R` + `scripts/run_environmetrics_figures.R` + `R/environmetrics/40_figures.R` as the current clean reproduction path
     - treat `scripts/make_environmetrics_figures.R` as legacy scaffolding rather than the preferred reproduction contract
-- [x] Audit the first cutoff-specific setup/support figure family and freeze it as a provisional `v1` artifact rather than treating it as the final canonical update.
-  - Provisional workflow-side runtime family:
-    - `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_20260506/`
-  - Provisional `v1` scripts:
-    - `config/exal_m_t1_setup_support_by_cutoff_20260506.json`
-    - `/data/muscat_data/jaguir26/project1_ucsc_phd/scripts/render_exal_m_t1_setup_support_by_cutoff.py`
-    - `/data/muscat_data/jaguir26/project1_ucsc_phd/scripts/render_setup_support_figures.R`
-    - `/data/muscat_data/jaguir26/project1_ucsc_phd/R/environmetrics/40_figures_setup_support.R`
-  - Provisional article-side mirror and review:
+- [x] Remove superseded article-side figure families once the canonical bundles were in place.
+  - Removed during cleanup:
+    - `generated/historical_summary_sources/`
+    - `generated/workflow_linked_support_sources/`
     - `generated/setup_support_by_cutoff/`
     - `generated/setup_support_by_cutoff_review/`
-  - Why this is not final:
-    - wrong plotting surfaces for `usgs.png` and the covariate figure
-    - incomplete recovery of authoritative `forecats_bundle` metadata
-    - retrospective plotting still needs bundle-native lineage handling
+    - legacy extra files under `DISC/`
+    - legacy article-only `Figures/`
 - [x] Freeze the corrected `v2` planning gate for the setup/support figures before further implementation.
   - Canonical planning docs:
     - `/data/muscat_data/jaguir26/project1_ucsc_phd/repro/run/EXAL_M_T1_SETUP_SUPPORT_V2_SOURCE_MANIFEST.md`
@@ -1105,7 +1094,7 @@ Use this as the working order when actually editing the manuscript.
   - Canonical runbook:
     - `/data/muscat_data/jaguir26/project1_ucsc_phd/repro/run/CANONICAL_REVISED_ARTICLE_WORKFLOW.md`
   - Article-side helpers:
-    - `scripts/refresh_local_provenance_bundles.py`
+    - `scripts/clean_article_legacy_assets.py`
     - `scripts/refresh_exal_m_t1_generated_assets.py`
     - `scripts/refresh_he2_manifest_snapshot.py`
     - `scripts/refresh_all_generated_assets.py`
@@ -1143,7 +1132,7 @@ Use this as the working order when actually editing the manuscript.
   - Locked decision:
     - keep them as descriptive historical-summary figures
     - do not treat them as representative-cutoff outputs
-    - preserve them through `generated/historical_summary_sources/`
+    - preserve them through `generated/current_model_output_support/`
 - [ ] Clarify forecast-covariate availability in both the manuscript and the corrections letter.
   - Make explicit that forecast precipitation and forecast soil moisture are used after the cutoff, whereas the large-scale climate factor (GDPC / PCA-based summary) is not forecasted in the same way.
 - [ ] Add an explicit justification for why only five cutoffs were retained after the archive/version screening.

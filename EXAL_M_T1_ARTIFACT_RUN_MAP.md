@@ -10,6 +10,26 @@ It is the execution companion to:
 - `EXAL_M_T1_RELAUNCH_CHECKLIST.md`
 - `FIGURE_TABLE_PROVENANCE.md`
 
+## Cleanup status
+
+The article repo cleanup on 2026-05-09 removed stale manuscript-facing figure copies and legacy article-side support bundles that were no longer part of the current workflow contract.
+
+Current canonical article-side figure/table families are:
+- `generated/exal_m_t1_20221225/`
+- `generated/exal_m_t1_five_run_sources/`
+- `generated/current_model_output_support/`
+- `generated/setup_support_by_cutoff_v2/`
+- `generated/setup_support_by_cutoff_v2_appendix/`
+- `generated/article_table_includes/`
+
+Removed legacy article-side families:
+- `generated/historical_summary_sources/`
+- `generated/workflow_linked_support_sources/`
+- `generated/setup_support_by_cutoff/`
+- `generated/setup_support_by_cutoff_review/`
+
+`DISC/` is now pruned automatically to the exact figure files named in `ARTICLE_GENERATED_ASSET_MANIFEST.json`.
+
 ## 1. Locked reproducible source set
 
 The revised article now carries a minimal local freeze of the five verified publication `exAL-M-T1` runs under:
@@ -120,9 +140,7 @@ For the current revised article pass, the chosen approach is:
 7. preserve the corrected cutoff-dependent setup/support figures through:
    - `generated/setup_support_by_cutoff_v2/`
    - `generated/setup_support_by_cutoff_v2_review/`
-8. preserve the older `v1` setup/support family only as an archival audit artifact:
-   - `generated/setup_support_by_cutoff/`
-   - `generated/setup_support_by_cutoff_review/`
+8. keep the article repo free of older `v1` / ad hoc support families; the cleanup step removes them automatically.
 9. refresh the current-model support bundle through:
    - `scripts/refresh_current_model_output_support_figures.py`
 10. refresh the corrected cutoff-specific setup/support family through:
@@ -140,5 +158,7 @@ For the current revised article pass, the chosen approach is:
    - `scripts/refresh_he2_manifest_snapshot.py`
 15. refresh all article-side generated bundles and the review report through:
    - `scripts/refresh_all_generated_assets.py`
+16. re-apply the article-side cleanup/audit contract through:
+   - `scripts/clean_article_legacy_assets.py`
 
 This is the strongest minimal choice because it preserves reproducibility, avoids mixing incompatible provenance roles, and does not require unnecessary reruns.

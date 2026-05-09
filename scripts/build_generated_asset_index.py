@@ -13,14 +13,11 @@ FAMILY_DESCRIPTIONS = {
     'exal_m_t1_five_run_sources': 'Five-cutoff publication source freeze for exAL-M-T1.',
     'he2_historical_support_audit_20260507': 'Audit snapshot showing which published Bayesian rows use full historical support versus short-window support.',
     'he2_publication_manifest_snapshot': 'Frozen local snapshot of the current HE2 Bayesian publication manifest and alignment tables.',
-    'historical_summary_sources': 'Frozen historical-summary figure bundle used as supporting article context.',
-    'setup_support_by_cutoff': 'Older v1 cutoff-specific setup/support figure family retained only for audit comparison.',
-    'setup_support_by_cutoff_review': 'v1 review markdown/gallery for the provisional setup/support figure family.',
+    'current_model_output_support': 'Canonical current-output support bundle for manuscript historical summaries and supporting appendix figures.',
     'setup_support_by_cutoff_v2': 'Canonical cutoff-specific setup/support figure family mirrored from the validated v2 workflow.',
     'setup_support_by_cutoff_v2_appendix': 'Appendix-ready composite panels built from the canonical v2 cutoff-specific setup/support figure family.',
     'setup_support_by_cutoff_v2_article_selection': 'Manifest for which cutoff-specific v2 figures are promoted into DISC/.',
     'setup_support_by_cutoff_v2_review': 'Review markdown/gallery and audits for the canonical v2 setup/support figure family.',
-    'workflow_linked_support_sources': 'Frozen workflow-linked support bundle for appendix/reference figures not tied to the narrow exAL-M-T1 rerun family.',
 }
 
 PREFERRED_REVIEW_FILES = [

@@ -30,12 +30,14 @@ Canonical forward runbook:
 
 Article-side provenance refresh helper:
 - `ARTICLE_GENERATED_ASSET_MANIFEST.json`
-- `scripts/refresh_local_provenance_bundles.py`
+- `scripts/refresh_current_model_output_support_figures.py`
 - `scripts/refresh_exal_m_t1_generated_assets.py`
 - `scripts/refresh_he2_manifest_snapshot.py`
+- `scripts/refresh_setup_support_by_cutoff_v2.py`
 - `scripts/build_generated_table_includes.py`
 - `scripts/promote_generated_figures_to_disc.py`
 - `scripts/build_setup_support_by_cutoff_v2_appendix.py`
+- `scripts/clean_article_legacy_assets.py`
 - `scripts/build_generated_asset_index.py`
 - `scripts/refresh_all_generated_assets.py`
 
@@ -52,7 +54,7 @@ Article-side review outputs:
 
 This inventory now distinguishes three reproducibility levels:
 - objects frozen locally in the article repo and tied to verified selected-model reruns,
-- objects frozen locally in the article repo as workflow-linked support figures,
+- objects frozen locally in the article repo as canonical current-output or setup/support `v2` support bundles,
 - and the underlying workflow-side generators that remain the authoritative reproduction path.
 
 ## Overall conclusion
@@ -125,11 +127,17 @@ That companion file should now be treated as the most direct answer to:
 - which objects are already refreshed from the representative `2022-12-25` run,
 - and which remaining figures are workflow-linked support objects outside the narrow keep-run source set.
 
-The revised manuscript repo now also contains two article-side frozen support bundles:
+The revised manuscript repo now carries its current support-side freeze under:
+- `generated/current_model_output_support/`
+- `generated/setup_support_by_cutoff_v2/`
+
+Legacy article-side support bundles removed during the 2026-05-09 cleanup:
 - `generated/historical_summary_sources/`
 - `generated/workflow_linked_support_sources/`
+- `generated/setup_support_by_cutoff/`
+- `generated/setup_support_by_cutoff_review/`
 
-It now also contains a dedicated cutoff-specific setup/support figure family derived from the five verified `exAL-M-T1` run bundles:
+It also contains a dedicated cutoff-specific setup/support figure family derived from the five verified `exAL-M-T1` run bundles:
 - `generated/setup_support_by_cutoff_v2/`
 - `generated/setup_support_by_cutoff_v2_review/`
 
@@ -144,10 +152,13 @@ That family is produced from the current workflow-side derivation path:
 Current article-facing status:
 - the corrected `v2` setup/support family is now implemented, validated, and mirrored locally;
 - the manuscript-facing `DISC/` copies are promoted from the representative `20221225_exal_m_t1` bundle;
-- the older `20260506` setup/support family remains archived only as a provisional `v1` audit artifact.
+- legacy `v1` and ad hoc support families have been removed from the article repo.
 
-Both support bundles can now be refreshed through:
-- `scripts/refresh_local_provenance_bundles.py`
+The current support families can now be refreshed through:
+- `scripts/refresh_current_model_output_support_figures.py`
+- `scripts/refresh_setup_support_by_cutoff_v2.py`
+- `scripts/build_setup_support_by_cutoff_v2_appendix.py`
+- `scripts/clean_article_legacy_assets.py`
 
 The representative selected-model bundle and the HE2 snapshot can now be refreshed through:
 - `scripts/refresh_exal_m_t1_generated_assets.py`
@@ -230,7 +241,7 @@ The following manuscript figure assets in `Evironmetrics---REVISED-DOC-2/DISC/` 
      - the retrospective figure uses the actual retrospective support available for that cutoff and no longer implies full-history coverage when the selected bundle is short-window
    - The full per-cutoff availability audit is recorded in:
      - `generated/setup_support_by_cutoff_v2_review/SETUP_SUPPORT_BY_CUTOFF_V2_REVIEW.md`
-   - The older `20260506` `v1` family remains archived only as an audit/debugging artifact.
+   - The older `20260506` `v1` family has been removed from the article repo as part of the cleanup pass; only the canonical `v2` family remains.
 
 2. `forecats.png` remains more delicate than the other setup figures, but the canonical `v2` path now stages bundle-native forecast inputs explicitly.
    - The workflow repo includes a dedicated reproducibility plan at:
@@ -335,12 +346,9 @@ The following policy is now adopted for the revised manuscript and should govern
   - `tab:gamma_sigma_intervals1`
   - `tab:gamma_sigma_intervals2`
 - The captions and nearby text should continue to say so clearly.
-- For the three historical-summary figures, the revised article repo now includes a locked local provenance bundle at:
-  - `generated/historical_summary_sources/`
-- That bundle preserves:
-  - article-side copies of the exact PNGs,
-  - SHA-256 hashes matching the workflow gold manifests,
-  - and source references to the workflow script and reproduction docs.
+- For the three historical-summary figures, the current article-side provenance anchor is now:
+  - `generated/current_model_output_support/`
+- The earlier article-local `historical_summary_sources` bundle was removed during cleanup once the current-output support family became the canonical manuscript-local freeze point.
 
 ## Recent selected-model workflow status
 
@@ -367,12 +375,12 @@ Resolved gaps from this audit:
   - `generated/setup_support_by_cutoff_v2_review/`
 - the manuscript-facing `DISC/` copies for `fig:sanlorenzo`, `fig:covariates`, `fig:retrospectives`, and `fig:ensembles` are now promoted from the representative `20221225_exal_m_t1` `v2` bundle through:
   - `generated/setup_support_by_cutoff_v2_article_selection/selection_manifest.json`
-- the appendix historical-only reference synthesis remains frozen locally through:
-  - `generated/workflow_linked_support_sources/`
+- the appendix historical-only reference synthesis and the historical-summary figures now share the current article-side provenance anchor:
+  - `generated/current_model_output_support/`
 - In practice, this means:
-  - `fig:synth1`, `tab:components_23_31`, `tab:gamma_sigma_intervals1`, and `tab:gamma_sigma_intervals2` are now locked to verified article-side bundles, and
-  - the historical-summary figures are preserved separately through the local provenance bundle under `generated/historical_summary_sources/`,
-  - while `fig:synth2` is preserved through `generated/workflow_linked_support_sources/`, and the four setup/support figures are now preserved through the validated `v2` cutoff family, with the older `generated/setup_support_by_cutoff/` family retained only as an archival `v1` audit artifact.
+  - `fig:synth1`, `tab:components_23_31`, `tab:gamma_sigma_intervals1`, and `tab:gamma_sigma_intervals2` are now locked to verified article-side bundles,
+  - `fig:dry_quantile`, `fig:rainy_quantile`, `fig:80_components`, and `fig:synth2` are preserved through the canonical `current_model_output_support` family,
+  - and the four setup/support figures are preserved through the validated `v2` cutoff family, while older article-side support families have been removed.
 
 ## Exact relaunch handoff
 
