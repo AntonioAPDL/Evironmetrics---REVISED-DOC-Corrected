@@ -25,6 +25,7 @@ REPORT_DESCRIPTIONS = {
 
 PREFERRED_REVIEW_FILES = [
     'ARTICLE_ASSET_REVIEW.md',
+    'FIGURE_POLISH_STATUS_AUDIT.md',
     'FIVE_CUTOFF_SETUP_SUPPORT_REVIEW.md',
     'CURRENT_MODEL_OUTPUT_WIRING_AUDIT.md',
     'TRANSFORM_AND_LINEAGE_AUDIT.md',
@@ -115,7 +116,7 @@ def main() -> None:
             f"| `{row['name']}` | {row['description']} | {row['file_count']} | {row['png_count']} | {row['has_readme']} | `{row['review_targets']}` |\n"
             for row in report_rows
         ) +
-        '\nPreferred review starting points:\n- `reports/manuscript_asset_review/ARTICLE_ASSET_REVIEW.md`\n- `reports/five_cutoff_setup_support_review/FIVE_CUTOFF_SETUP_SUPPORT_REVIEW.md`\n'
+        '\nPreferred review starting points:\n- `reports/manuscript_asset_review/ARTICLE_ASSET_REVIEW.md`\n- `reports/manuscript_asset_review/FIGURE_POLISH_STATUS_AUDIT.md`\n- `reports/five_cutoff_setup_support_review/FIVE_CUTOFF_SETUP_SUPPORT_REVIEW.md`\n'
     )
 
     (article_root / 'README.md').write_text(
@@ -124,11 +125,13 @@ def main() -> None:
         '## Where to look first\n\n'
         '- `wileyNJD-APA.tex`: manuscript source used by Overleaf\n'
         '- `figures/manuscript/`: the exact figure files used by the manuscript\n'
+        '- `figures/forecast_context_by_cutoff/`: advisor-facing copies of the Figure 4 forecast-context view for all five cutoffs\n'
         '- `tables/generated_tex/`: the exact generated table blocks included by the manuscript\n'
         '- `docs/figure_table_provenance.md`: figure/table provenance summary\n'
-        '- `reports/manuscript_asset_review/ARTICLE_ASSET_REVIEW.md`: review report for the current article assets\n\n'
+        '- `reports/manuscript_asset_review/ARTICLE_ASSET_REVIEW.md`: review report for the current article assets\n'
+        '- `reports/manuscript_asset_review/FIGURE_POLISH_STATUS_AUDIT.md`: point-by-point status audit for the earlier figure-polish request\n\n'
         '## Directory roles\n\n'
-        '- `figures/`: manuscript-facing figures and appendix cutoff panels\n'
+        '- `figures/`: manuscript-facing figures, appendix cutoff panels, and advisor-facing cutoff forecast-context copies\n'
         '- `tables/`: generated TeX tables used by the manuscript\n'
         '- `artifacts/`: frozen local bundles copied from validated workflow outputs\n'
         '- `reports/`: review reports, galleries, audits, and selection manifests\n'

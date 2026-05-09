@@ -26,6 +26,14 @@ APPENDIX_PANEL_FILENAMES = {
     '20221225_exal_m_t1': 'cutoff_2022_12_25_setup_support.png',
 }
 
+CUTOFF_FORECAST_CONTEXT_FILENAMES = {
+    '20210123_exal_m_t1': 'cutoff_2021_01_23_forecast_context.png',
+    '20211112_exal_m_t1': 'cutoff_2021_11_12_forecast_context.png',
+    '20211221_exal_m_t1': 'cutoff_2021_12_21_forecast_context.png',
+    '20220511_exal_m_t1': 'cutoff_2022_05_11_forecast_context.png',
+    '20221225_exal_m_t1': 'cutoff_2022_12_25_forecast_context.png',
+}
+
 TABLE_TEX_FILENAMES = {
     'benchmark_rows': 'benchmark_crps_raw_rows.tex',
     'benchmark_bayesian_rows': 'benchmark_crps_bayesian_rows.tex',
@@ -59,6 +67,10 @@ class ArticleRepoLayout:
     @property
     def appendix_cutoff_panels_dir(self) -> Path:
         return self.figures_dir / 'appendix_cutoff_panels'
+
+    @property
+    def cutoff_forecast_context_dir(self) -> Path:
+        return self.figures_dir / 'forecast_context_by_cutoff'
 
     @property
     def tables_dir(self) -> Path:
@@ -154,11 +166,15 @@ class ArticleRepoLayout:
     def appendix_panel_path(self, slug: str) -> Path:
         return self.appendix_cutoff_panels_dir / APPENDIX_PANEL_FILENAMES[slug]
 
+    def cutoff_forecast_context_path(self, slug: str) -> Path:
+        return self.cutoff_forecast_context_dir / CUTOFF_FORECAST_CONTEXT_FILENAMES[slug]
+
     def ensure_base_dirs(self) -> None:
         for path in [
             self.figures_dir,
             self.manuscript_figures_dir,
             self.appendix_cutoff_panels_dir,
+            self.cutoff_forecast_context_dir,
             self.tables_dir,
             self.generated_tex_dir,
             self.artifacts_dir,

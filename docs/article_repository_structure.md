@@ -13,7 +13,7 @@ The repository is organized so that a reader can separate three roles immediatel
 ## Top-level layout
 
 - `wileyNJD-APA.tex`: manuscript source used by Overleaf
-- `figures/`: manuscript-facing figures and appendix cutoff panels
+- `figures/`: manuscript-facing figures, appendix cutoff panels, and advisor-facing forecast-context copies
 - `tables/`: generated TeX tables consumed by `\input{}` in the manuscript
 - `artifacts/`: article-local frozen bundles copied from validated workflow outputs
 - `reports/`: galleries, audits, selection manifests, and review reports
@@ -41,6 +41,16 @@ The repository is organized so that a reader can separate three roles immediatel
 - `figures/appendix_cutoff_panels/cutoff_2021_12_21_setup_support.png`
 - `figures/appendix_cutoff_panels/cutoff_2022_05_11_setup_support.png`
 - `figures/appendix_cutoff_panels/cutoff_2022_12_25_setup_support.png`
+
+### Advisor-facing cutoff forecast-context figures
+
+- `figures/forecast_context_by_cutoff/cutoff_2021_01_23_forecast_context.png`
+- `figures/forecast_context_by_cutoff/cutoff_2021_11_12_forecast_context.png`
+- `figures/forecast_context_by_cutoff/cutoff_2021_12_21_forecast_context.png`
+- `figures/forecast_context_by_cutoff/cutoff_2022_05_11_forecast_context.png`
+- `figures/forecast_context_by_cutoff/cutoff_2022_12_25_forecast_context.png`
+
+These are advisor-facing copies of the Figure 4 forecast-context view for every cutoff. They are not manuscript-facing paths, but they are refreshed automatically and meant to support cutoff-by-cutoff review before wider synthesis promotion work.
 
 ### Generated tables used directly by the manuscript
 
@@ -99,9 +109,10 @@ This refresh path now does all of the following:
 1. rebuild article-side artifact bundles
 2. rebuild review reports and audits
 3. promote manuscript-facing figure files from the manifest contract
-4. regenerate manuscript table blocks
-5. remove the retired `DISC/` and `generated/` naming layers
-6. rebuild the advisor-facing README and inventory guides
+4. promote the advisor-facing cutoff forecast-context figure family
+5. regenerate manuscript table blocks
+6. remove the retired `DISC/` and `generated/` naming layers
+7. rebuild the advisor-facing README and inventory guides
 
 ## Standard compile workflow
 

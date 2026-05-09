@@ -78,6 +78,7 @@ Current canonical article-side generated families:
 - `artifacts/historical_support_from_current_models/`
 - `artifacts/five_cutoff_setup_support/`
 - `figures/appendix_cutoff_panels/`
+- `figures/forecast_context_by_cutoff/`
 - `tables/generated_tex/`
 
 Preferred article-side refresh command:
@@ -89,6 +90,9 @@ The revised article appendix can now also draw from:
 - `figures/appendix_cutoff_panels/`
 
 This family contains appendix-ready composite panels for the cutoff-specific setup/support figures and is refreshed automatically through the same top-level command.
+
+Advisor-facing cutoff-wide copies of the Figure 4 forecast-context view are also refreshed automatically under:
+- `figures/forecast_context_by_cutoff/`
 
 ### 0.3 Forward repair checkpoint
 

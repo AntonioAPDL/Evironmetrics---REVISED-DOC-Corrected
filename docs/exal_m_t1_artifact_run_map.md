@@ -20,6 +20,7 @@ Current canonical article-side figure/table families are:
 - `artifacts/historical_support_from_current_models/`
 - `artifacts/five_cutoff_setup_support/`
 - `figures/appendix_cutoff_panels/`
+- `figures/forecast_context_by_cutoff/`
 - `tables/generated_tex/`
 
 Removed legacy article-side families:
@@ -116,7 +117,7 @@ These objects are now wired to current model outputs, but they are still outside
 | `fig:sanlorenzo` | study-setting figure | now tied to the corrected `v2` cutoff-specific setup/support family; manuscript-facing `figures/manuscript/site_context_usgs.png` is promoted from `artifacts/five_cutoff_setup_support/20221225_exal_m_t1/figures/usgs.png`, while all five cutoff variants are preserved under `artifacts/five_cutoff_setup_support/`. In the corrected contract this figure uses the full `1987-05-29 -> cutoff` USGS history available in the selected-run shared inputs. |
 | `fig:covariates` | data/covariate setup figure | now tied to the corrected `v2` cutoff-specific setup/support family; manuscript-facing `figures/manuscript/covariate_context_precip_soil_pca.png` is promoted from `artifacts/five_cutoff_setup_support/20221225_exal_m_t1/figures/...`, while all five cutoff variants are preserved under `artifacts/five_cutoff_setup_support/`. In the corrected contract this figure uses the full `1987-05-29 -> cutoff` raw PPT/SOIL/PCA histories. |
 | `fig:retrospectives` | retrospective-product setup figure | now tied to the corrected `v2` cutoff-specific setup/support family; manuscript-facing `figures/manuscript/retrospective_products_context.png` is promoted from `artifacts/five_cutoff_setup_support/20221225_exal_m_t1/figures/...`, while all five cutoff variants are preserved under `artifacts/five_cutoff_setup_support/`. In the corrected contract this figure uses the retrospective support actually available for the cutoff-specific bundle, with the availability audit recorded alongside the figures. |
-| `fig:ensembles` | forecast-product setup figure | now tied to the corrected `v2` cutoff-specific setup/support family; manuscript-facing `figures/manuscript/forecast_products_context.png` is promoted from `artifacts/five_cutoff_setup_support/20221225_exal_m_t1/figures/...`, while all five cutoff variants are preserved under `artifacts/five_cutoff_setup_support/`. In the corrected contract this figure uses a strict `cutoff - 28 days` to `cutoff + 28 days` display window. |
+| `fig:ensembles` | forecast-product setup figure | now tied to the corrected `v2` cutoff-specific setup/support family; manuscript-facing `figures/manuscript/forecast_products_context.png` is promoted from `artifacts/five_cutoff_setup_support/20221225_exal_m_t1/figures/...`, while advisor-facing cutoff-wide copies live under `figures/forecast_context_by_cutoff/`. In the corrected contract this figure uses a strict `cutoff - 28 days` to `cutoff + 28 days` display window. |
 
 ## 5. What this means operationally
 
