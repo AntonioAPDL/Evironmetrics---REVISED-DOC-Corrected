@@ -116,8 +116,9 @@ Current canonical GDPC decision snapshot:
 - standardize each index over that canonical window
 - keep the standardized daily series in levels for GDPC
 - do not difference or detrend them before fitting the canonical `GDPC1`
-- use fixed lag `k = 1`, `tol = 1e-3`, `niter_max = 200`, and criterion label `BIC`
+- use fixed lag `k = 2`, `tol = 1e-3`, `niter_max = 200`, and criterion label `BIC`
 - orient the final `GDPC1` so it has positive correlation with `oni`
+- bounded simple screening over `k in {1, 2, 3}` selected `k = 2`; `k = 3` timed out under the `900` second cap
 
 ---
 
