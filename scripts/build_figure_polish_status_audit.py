@@ -53,7 +53,7 @@ def build_items(root: Path) -> list[dict[str, object]]:
                 'scripts/setup_support_bundle_v2_helpers.R:376-401',
                 'wileyNJD-APA.tex:259-264',
             ],
-            'note': 'Facet labels now carry `Precipitation [mm]`, `Soil moisture [m^3 m^-3]`, and `1st GDPC`; the manuscript caption describes the raw support-file scale directly.',
+            'note': 'Facet labels now render as plotmath expressions for precipitation, soil moisture, and `GDPC[1]`; the manuscript caption describes the raw support-file scale directly.',
         },
         {
             'item': 3,

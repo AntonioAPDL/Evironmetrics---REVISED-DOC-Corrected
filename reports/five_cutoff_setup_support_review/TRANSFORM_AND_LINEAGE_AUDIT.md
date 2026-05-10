@@ -9,7 +9,7 @@ This report verifies three things for the revised article setup/support figures:
 ## Representative Cutoff
 
 - `2022-12-25` now renders with full retrospective support from `1987-05-29` through `2022-12-25`.
-- display scale is explicitly `log1p_cms` and the axis label is standardized to `River flow [log(1 + m^3 s^-1)]`.
+- display scale is explicitly `log1p_cms` and the axis label is standardized to `River flow [log(1 + x); x in m^3 s^-1]`.
 
 ## Cutoff Checks
 

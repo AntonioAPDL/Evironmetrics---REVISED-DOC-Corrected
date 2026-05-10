@@ -187,7 +187,7 @@ def render_markdown(audits: list[CutoffAudit]) -> str:
             f"- `2022-12-25` now renders with full retrospective support from `{full_history.support_start}` through `{full_history.support_end}`."
         )
         lines.append(
-            f"- display scale is explicitly `{full_history.display_scale}` and the axis label is standardized to `River flow [log(1 + m^3 s^-1)]`."
+            f"- display scale is explicitly `{full_history.display_scale}` and the axis label is standardized to `River flow [log(1 + x); x in m^3 s^-1]`."
         )
         if full_history.display_scale != "log1p_cms":
             lines.append(

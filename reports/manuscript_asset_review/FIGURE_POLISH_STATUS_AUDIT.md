@@ -20,7 +20,7 @@ Figure 1 should remain good and consistent.
 ### Item 2 [complete]
 Figure 2 should remove support-window subtitle, show units for precipitation and soil moisture, keep the large-scale climate-factor label concise, and keep caption compact/high quality.
 
-- Note: Facet labels now carry `Precipitation [mm]`, `Soil moisture [m^3 m^-3]`, and `1st GDPC`; the manuscript caption describes the raw support-file scale directly.
+- Note: Facet labels now render as plotmath expressions for precipitation, soil moisture, and `GDPC[1]`; the manuscript caption describes the raw support-file scale directly.
 - Evidence:
   - `figures/manuscript/covariate_context_precip_soil_gdpc.png`
   - `scripts/figure_style_contract.R:86-92`

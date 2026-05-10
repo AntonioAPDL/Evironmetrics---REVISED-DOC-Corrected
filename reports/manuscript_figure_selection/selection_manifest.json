@@ -54,7 +54,7 @@
       "source_class": "current_model_output_support",
       "current_model_output_wired": true,
       "source_path": "artifacts/historical_support_from_current_models/figures/historical_summary_dry_period.png",
-      "sha256": "48208f532cb34f2639260c7c398f637c929a512f206ed3e64582b9cb0697f3f3",
+      "sha256": "eba6d8701c9186b0af3010d199f88becccaa275eed797448ba98de2cd1b099f6",
       "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {
@@ -65,7 +65,7 @@
       "source_class": "current_model_output_support",
       "current_model_output_wired": true,
       "source_path": "artifacts/historical_support_from_current_models/figures/historical_summary_wet_period.png",
-      "sha256": "1c2c2f35843a249efd18586d9b49021f4ad9290aae19f416e22f359a4705d1c8",
+      "sha256": "26b4c06fa3d8cf7f024ff2f0cab498fe16aaf5fca85af376e64cc1c51eb40449",
       "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {
@@ -76,7 +76,7 @@
       "source_class": "current_selected_model_representative",
       "current_model_output_wired": true,
       "source_path": "artifacts/representative_selected_model_2022_12_25/representative_synthesis_multivariate.png",
-      "sha256": "6cd2ebdabc00d56baee1cec01d478e97b686a5c0be19af09346dd9a69192ed39",
+      "sha256": "91de59975b3a62c5ad5d8e261047b7fba65af2094578ca710f3d99eacab28366",
       "note": "Verified representative 2022-12-25 exAL-M-T1 output"
     },
     {
@@ -87,7 +87,7 @@
       "source_class": "current_model_output_support",
       "current_model_output_wired": true,
       "source_path": "artifacts/historical_support_from_current_models/figures/historical_component_80month.png",
-      "sha256": "f7fefd1c5e9709a63710dd01682b9e5019a74ea05664336356c6bba01c677d13",
+      "sha256": "3534cbe3ad07946cf748d6fcfc6189cf3e899c03a7bf3c8fd2ab8980024c7339",
       "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {
@@ -98,7 +98,7 @@
       "source_class": "current_model_output_support",
       "current_model_output_wired": true,
       "source_path": "artifacts/historical_support_from_current_models/figures/reference_synthesis_univariate.png",
-      "sha256": "88222698abb001b4a3e4b343e7bbd2664348e391043a18a53c21b84f2b9abbb8",
+      "sha256": "0bf7986c74b43945d2aa846f4cdc26f322b84b442a2bcac2f191210c992052e4",
       "note": "Copied from the current 2022-12-25 exdqlm_univar publication-style output bundle"
     }
   ]
