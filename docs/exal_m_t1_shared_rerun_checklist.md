@@ -46,9 +46,10 @@ The next relaunch is planned around a single shared `exAL-M-T1` spec:
 | bundle run id | `20260510_publication_shared_r01` |
 | deterministic blended covariates | `PPT`, `SOIL` |
 | climate factor alias | `PCA` backed by canonical `GDPC1` |
-| shared `epsilon` | `360.0` |
+| shared `epsilon` | `30.0` |
 | shared `c_factor` | `1.0` |
-| shared discount set | `set08` |
+| shared discount set | `set10_manual_20260516` |
+| shared discount values | `df_t=0.99999999`, `df_s1=df_s2=df_s67=df_discrep=0.99999`, `lambda=0.97`, `df_trans=df_covs=0.9999999` |
 | shared q50 stabilization | `freeze_target=states`, `hold_after_guard=0`, blend `0.5/0.5`, step caps `0.15/0.25`, `fail_fast` guard |
 
 ## Figure / table families to refresh after the rerun
