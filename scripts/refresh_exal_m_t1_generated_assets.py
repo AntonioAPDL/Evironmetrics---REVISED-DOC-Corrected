@@ -15,31 +15,31 @@ FIVE_RUN_SPECS = [
         'slug': '20210123_exal_m_t1',
         'cutoff': '2021-01-23',
         'published_crps': '0.1569',
-        'run_id': 'multimodel_20210123_v8_eps360cf1_exdqlm_multivar_keep_featurecov_cf1',
+        'run_id': 'multimodel_20210123_v8_he2pubgdpc1r1_exdqlm_multivar_keep',
     },
     {
         'slug': '20211112_exal_m_t1',
         'cutoff': '2021-11-12',
         'published_crps': '0.0284',
-        'run_id': 'multimodel_20211112_v8_eps180cf1_exdqlm_multivar_keep_featurecov_cf1',
+        'run_id': 'multimodel_20211112_v8_he2pubgdpc1r1_exdqlm_multivar_keep',
     },
     {
         'slug': '20211221_exal_m_t1',
         'cutoff': '2021-12-21',
         'published_crps': '0.2369',
-        'run_id': 'multimodel_20211221_v8_eps1cf1_exdqlm_multivar_keep_featurecov_cf1',
+        'run_id': 'multimodel_20211221_v8_he2pubgdpc1r1_exdqlm_multivar_keep',
     },
     {
         'slug': '20220511_exal_m_t1',
         'cutoff': '2022-05-11',
         'published_crps': '0.0210',
-        'run_id': 'multimodel_20220511_v8_eps180cf1_exdqlm_multivar_keep_featurecov_cf1',
+        'run_id': 'multimodel_20220511_v8_he2pubgdpc1r1_exdqlm_multivar_keep',
     },
     {
         'slug': '20221225_exal_m_t1',
         'cutoff': '2022-12-25',
         'published_crps': '0.4375',
-        'run_id': 'multimodel_20221225_v8_exalm_t1_discount_grid_exact_v1_set09_exdqlm_multivar_keep',
+        'run_id': 'multimodel_20221225_v8_he2pubgdpc1r1_exdqlm_multivar_keep',
     },
 ]
 
@@ -95,7 +95,7 @@ def refresh_five_run_sources(layout, runtime_root: Path) -> None:
     sums = []
 
     for spec in FIVE_RUN_SPECS:
-        run_root = runtime_root / spec['slug'] / 'runs' / spec['run_id']
+        run_root = runtime_root / 'runs' / spec['run_id']
         output_root = run_root / 'post' / 'outputs' / spec['run_id']
         target_dir = bundle_root / spec['slug']
         target_dir.mkdir(parents=True, exist_ok=True)
@@ -129,14 +129,14 @@ def refresh_five_run_sources(layout, runtime_root: Path) -> None:
 
     (bundle_root / 'README.md').write_text(
         '# Five-Cutoff CRPS Validation Sources\n\n'
-        'This artifact bundle freezes the five verified publication `exAL-M-T1` run roots used by the revised article benchmark table.\n\n'
+        'This artifact bundle freezes the five corrected `he2pubgdpc1r1` `exAL-M-T1` run roots used by the revised article benchmark table refresh.\n\n'
         'Refresh script:\n'
         '- `scripts/refresh_exal_m_t1_generated_assets.py`\n\n'
         'For each cutoff, the local freeze contains:\n'
         '- `summary.json`\n'
         '- `compare_report.json`\n'
         '- `crps_forecast_summary.csv`\n\n'
-        'These files are copied from the verified publication replay representative runtime roots.\n'
+        'These files are copied from the corrected five-cutoff `exdqlm_multivar_keep` relaunch root.\n'
     )
 
     with (bundle_root / 'manifest.csv').open('w', newline='') as f:
@@ -152,7 +152,7 @@ def refresh_five_run_sources(layout, runtime_root: Path) -> None:
 
 def refresh_representative_bundle(layout, runtime_root: Path) -> None:
     spec = next(s for s in FIVE_RUN_SPECS if s['slug'] == '20221225_exal_m_t1')
-    run_root = runtime_root / spec['slug'] / 'runs' / spec['run_id']
+    run_root = runtime_root / 'runs' / spec['run_id']
     output_root = run_root / 'post' / 'outputs' / spec['run_id']
     bundle_root = layout.representative_selected_model_dir
     bundle_root.mkdir(parents=True, exist_ok=True)
@@ -190,11 +190,11 @@ def refresh_representative_bundle(layout, runtime_root: Path) -> None:
 
     (bundle_root / 'README.md').write_text(
         '# Representative Selected Model: 2022-12-25\n\n'
-        'This artifact bundle freezes the verified representative `2022-12-25 exAL-M-T1` outputs used by the revised article.\n\n'
+        'This artifact bundle freezes the corrected representative `2022-12-25 exAL-M-T1` outputs used by the revised article.\n\n'
         'Refresh script:\n'
         '- `scripts/refresh_exal_m_t1_generated_assets.py`\n\n'
         'Included content:\n'
-        '- selected synthesis figures\n'
+        '- corrected selected-model synthesis figures\n'
         '- quantile and sample exports\n'
         '- CRPS summaries\n'
         '- posterior table exports\n'
@@ -211,7 +211,7 @@ def refresh_representative_bundle(layout, runtime_root: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description='Refresh article-side exAL-M-T1 generated asset bundles.')
     parser.add_argument('--article-root', type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument('--runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_publication_replay_representatives_20260506'))
+    parser.add_argument('--runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_20260512'))
     args = parser.parse_args()
 
     article_root = args.article_root.resolve()

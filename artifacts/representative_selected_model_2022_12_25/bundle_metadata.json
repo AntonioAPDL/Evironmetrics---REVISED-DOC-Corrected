@@ -1,8 +1,8 @@
 {
   "cutoff": "2022-12-25",
-  "run_id": "multimodel_20221225_v8_exalm_t1_discount_grid_exact_v1_set09_exdqlm_multivar_keep",
-  "runtime_run_root": "/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_publication_replay_representatives_20260506/20221225_exal_m_t1/runs/multimodel_20221225_v8_exalm_t1_discount_grid_exact_v1_set09_exdqlm_multivar_keep",
-  "runtime_output_root": "/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_publication_replay_representatives_20260506/20221225_exal_m_t1/runs/multimodel_20221225_v8_exalm_t1_discount_grid_exact_v1_set09_exdqlm_multivar_keep/post/outputs/multimodel_20221225_v8_exalm_t1_discount_grid_exact_v1_set09_exdqlm_multivar_keep",
+  "run_id": "multimodel_20221225_v8_he2pubgdpc1r1_exdqlm_multivar_keep",
+  "runtime_run_root": "/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_20260512/runs/multimodel_20221225_v8_he2pubgdpc1r1_exdqlm_multivar_keep",
+  "runtime_output_root": "/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_20260512/runs/multimodel_20221225_v8_he2pubgdpc1r1_exdqlm_multivar_keep/post/outputs/multimodel_20221225_v8_he2pubgdpc1r1_exdqlm_multivar_keep",
   "published_crps": "0.4375",
-  "replay_mean_crps": "0.43752505703872074"
+  "replay_mean_crps": "1062666200404919.6"
 }

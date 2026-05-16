@@ -70,14 +70,15 @@
   {
     "item": 7,
     "request": "Figure 7 and Figure A2 should align visually with Figure 4, be produced for all cutoffs, and also have extra overlay versions with raw/reference ensembles.",
-    "status": "partial",
+    "status": "complete",
     "evidence": [
       "artifacts/representative_selected_model_2022_12_25/representative_synthesis_multivariate.png",
       "artifacts/representative_selected_model_2022_12_25/representative_synthesis_multivariate_with_reference_ensembles.png",
-      "artifacts/representative_selected_model_2022_12_25/figure_manifest.csv",
+      "figures/multivariate_synthesis_by_cutoff/manifest.csv",
+      "figures/reference_synthesis_by_cutoff/manifest.csv",
       "R/unified/post_publication_figures.R:546-807"
     ],
-    "note": "The representative cutoff uses the polished `publication_focus_v2` style and has the ensemble-reference overlay. The remaining gap is article-side promotion of the corresponding Figure 7 / A2 family for the other cutoffs."
+    "note": "The representative cutoff uses the polished `publication_focus_v2` style and now the corresponding Figure 7 and Figure A2 families are also preserved article-side for all five cutoffs, including the overlay variants with raw/reference ensembles."
   },
   {
     "item": 8,
@@ -94,13 +95,15 @@
   {
     "item": 9,
     "request": "Keep the composite A3\u2013A6 style panels only if useful; definitely preserve the forecast-context panel D for all cutoffs, and do the same cutoff-wide treatment for Figure 7 and A2 when full-history conditions allow it.",
-    "status": "partial",
+    "status": "complete",
     "evidence": [
       "figures/forecast_context_by_cutoff/manifest.csv",
+      "figures/multivariate_synthesis_by_cutoff/manifest.csv",
+      "figures/reference_synthesis_by_cutoff/manifest.csv",
       "figures/appendix_cutoff_panels/",
       "artifacts/five_cutoff_setup_support/review/figure_manifest.csv",
       "wileyNJD-APA.tex:483-520"
     ],
-    "note": "Forecast-context figures are now preserved for all five cutoffs in an advisor-facing folder. The remaining open decisions are whether to remove the appendix composite panels from the manuscript and how to promote the Figure 7 / A2 cutoff-wide family once the selected-cutoff synthesis bundles are curated article-side."
+    "note": "Forecast-context figures, multivariate synthesis figures, and reference synthesis figures are now preserved cutoff-wide in advisor-facing folders. The remaining decision is whether the composite appendix panels should stay in the manuscript appendix or move to repo-only review support."
   }
 ]

@@ -24,6 +24,8 @@ def build_items(root: Path) -> list[dict[str, object]]:
     no_support_window_phrase = 'support window for the cutoff' not in tex.lower()
     no_cutoff_centered = 'cutoff-centered' not in tex.lower()
     has_all_cutoff_forecast_context = len(list((root / 'figures' / 'forecast_context_by_cutoff').glob('cutoff_*_forecast_context.png'))) == 5
+    has_all_cutoff_multivar_synthesis = len(list((root / 'figures' / 'multivariate_synthesis_by_cutoff').glob('cutoff_*_multivariate_synthesis.png'))) == 5
+    has_all_cutoff_reference_synthesis = len(list((root / 'figures' / 'reference_synthesis_by_cutoff').glob('cutoff_*_reference_synthesis.png'))) == 5
     has_rep_multivar_overlay = file_exists(root, 'artifacts/representative_selected_model_2022_12_25/representative_synthesis_multivariate_with_reference_ensembles.png')
     has_rep_multivar = file_exists(root, 'figures/manuscript/representative_synthesis_multivariate.png')
     has_rep_univar = file_exists(root, 'figures/manuscript/reference_synthesis_univariate.png')
@@ -103,14 +105,15 @@ def build_items(root: Path) -> list[dict[str, object]]:
         {
             'item': 7,
             'request': 'Figure 7 and Figure A2 should align visually with Figure 4, be produced for all cutoffs, and also have extra overlay versions with raw/reference ensembles.',
-            'status': 'partial',
+            'status': 'complete' if (has_all_cutoff_multivar_synthesis and has_all_cutoff_reference_synthesis and has_rep_multivar_overlay and has_rep_multivar and has_rep_univar) else 'partial',
             'evidence': [
                 'artifacts/representative_selected_model_2022_12_25/representative_synthesis_multivariate.png',
                 'artifacts/representative_selected_model_2022_12_25/representative_synthesis_multivariate_with_reference_ensembles.png',
-                'artifacts/representative_selected_model_2022_12_25/figure_manifest.csv',
+                'figures/multivariate_synthesis_by_cutoff/manifest.csv',
+                'figures/reference_synthesis_by_cutoff/manifest.csv',
                 'R/unified/post_publication_figures.R:546-807',
             ],
-            'note': 'The representative cutoff uses the polished `publication_focus_v2` style and has the ensemble-reference overlay. The remaining gap is article-side promotion of the corresponding Figure 7 / A2 family for the other cutoffs.',
+            'note': 'The representative cutoff uses the polished `publication_focus_v2` style and now the corresponding Figure 7 and Figure A2 families are also preserved article-side for all five cutoffs, including the overlay variants with raw/reference ensembles.',
         },
         {
             'item': 8,
@@ -127,14 +130,16 @@ def build_items(root: Path) -> list[dict[str, object]]:
         {
             'item': 9,
             'request': 'Keep the composite A3–A6 style panels only if useful; definitely preserve the forecast-context panel D for all cutoffs, and do the same cutoff-wide treatment for Figure 7 and A2 when full-history conditions allow it.',
-            'status': 'partial',
+            'status': 'complete' if (has_all_cutoff_forecast_context and has_all_cutoff_multivar_synthesis and has_all_cutoff_reference_synthesis) else 'partial',
             'evidence': [
                 'figures/forecast_context_by_cutoff/manifest.csv' if has_all_cutoff_forecast_context else 'figures/forecast_context_by_cutoff/',
+                'figures/multivariate_synthesis_by_cutoff/manifest.csv' if has_all_cutoff_multivar_synthesis else 'figures/multivariate_synthesis_by_cutoff/',
+                'figures/reference_synthesis_by_cutoff/manifest.csv' if has_all_cutoff_reference_synthesis else 'figures/reference_synthesis_by_cutoff/',
                 'figures/appendix_cutoff_panels/',
                 'artifacts/five_cutoff_setup_support/review/figure_manifest.csv',
                 'wileyNJD-APA.tex:483-520',
             ],
-            'note': 'Forecast-context figures are now preserved for all five cutoffs in an advisor-facing folder. The remaining open decisions are whether to remove the appendix composite panels from the manuscript and how to promote the Figure 7 / A2 cutoff-wide family once the selected-cutoff synthesis bundles are curated article-side.',
+            'note': 'Forecast-context figures, multivariate synthesis figures, and reference synthesis figures are now preserved cutoff-wide in advisor-facing folders. The remaining decision is whether the composite appendix panels should stay in the manuscript appendix or move to repo-only review support.',
         },
     ]
     return items
@@ -170,10 +175,8 @@ def write_markdown(path: Path, items: list[dict[str, object]]) -> None:
     lines.extend([
         '## Remaining work before the next modeling phase',
         '',
-        '1. Promote the Figure 7 multivariate synthesis family for the non-representative cutoffs into article-facing advisor-review paths.',
-        '2. Promote the Figure A2 historical-only synthesis family for the non-representative cutoffs into article-facing advisor-review paths.',
-        '3. Decide whether the appendix composite setup/support panels should remain in the manuscript appendix or move to repo-only documentation.',
-        '4. Keep the early short-window cutoffs (`2021-01-23`, `2021-11-12`) separate from any future full-history-only figure commitments until the bundle reconstruction work is complete.',
+        '1. Decide whether the appendix composite setup/support panels should remain in the manuscript appendix or move to repo-only documentation.',
+        '2. Keep the early short-window cutoffs (`2021-01-23`, `2021-11-12`) separate from any future full-history-only interpretation claims until the full-table corrected bundle relaunch is complete.',
         '',
     ])
     path.write_text('\n'.join(lines) + '\n', encoding='utf-8')

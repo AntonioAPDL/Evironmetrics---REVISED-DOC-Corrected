@@ -21,6 +21,8 @@ This report records the cleanup that removes retired article-side figure/table d
 ## Retained artifact families
 
 - `artifacts/five_cutoff_crps_validation_sources`
+- `artifacts/five_cutoff_main_model_synthesis`
+- `artifacts/five_cutoff_reference_synthesis`
 - `artifacts/five_cutoff_setup_support`
 - `artifacts/he2_historical_support_audit`
 - `artifacts/he2_publication_freeze`
@@ -30,6 +32,7 @@ This report records the cleanup that removes retired article-side figure/table d
 ## Retained report families
 
 - `reports/five_cutoff_setup_support_review`
+- `reports/five_cutoff_synthesis_review`
 - `reports/manuscript_asset_review`
 - `reports/manuscript_figure_selection`
 - `reports/representative_setup_selection`

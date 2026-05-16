@@ -7,6 +7,8 @@ This repository is the advisor-facing freeze of the revised manuscript, its manu
 - `wileyNJD-APA.tex`: manuscript source used by Overleaf
 - `figures/manuscript/`: the exact figure files used by the manuscript
 - `figures/forecast_context_by_cutoff/`: advisor-facing copies of the Figure 4 forecast-context view for all five cutoffs
+- `figures/multivariate_synthesis_by_cutoff/`: advisor-facing Figure 7 family for all five cutoffs
+- `figures/reference_synthesis_by_cutoff/`: advisor-facing Figure A2-style family for all five cutoffs
 - `tables/generated_tex/`: the exact generated table blocks included by the manuscript
 - `docs/figure_table_provenance.md`: figure/table provenance summary
 - `reports/manuscript_asset_review/ARTICLE_ASSET_REVIEW.md`: review report for the current article assets
@@ -15,7 +17,7 @@ This repository is the advisor-facing freeze of the revised manuscript, its manu
 
 ## Directory roles
 
-- `figures/`: manuscript-facing figures, appendix cutoff panels, and advisor-facing cutoff forecast-context copies
+- `figures/`: manuscript-facing figures, appendix cutoff panels, and advisor-facing cutoff-wide forecast/synthesis figure families
 - `tables/`: generated TeX tables used by the manuscript
 - `artifacts/`: frozen local bundles copied from validated workflow outputs
 - `reports/`: review reports, galleries, audits, and selection manifests

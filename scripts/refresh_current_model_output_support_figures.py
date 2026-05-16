@@ -15,12 +15,12 @@ MULTIVAR_SPEC = {
     "slug": "20220511_exal_m_t1",
     "cutoff": "2022-05-11",
     "forecast_start": "2022-05-12",
-    "run_id": "multimodel_20220511_v8_eps180cf1_exdqlm_multivar_keep_featurecov_cf1",
+    "run_id": "multimodel_20220511_v8_he2pubgdpc1r1_exdqlm_multivar_keep",
 }
 
 UNIVAR_SPEC = {
     "cutoff": "2022-12-25",
-    "run_id": "multimodel_20221225_v8_quantile_featurecov_custom_discount_probe_v1_exdqlm_univar",
+    "run_id": "multimodel_20221225_v8_univar_featurecov_he2_v1_exdqlm_univar",
     "source_png": "exdqlm_univar_synth_cutoff_window_posterior_samples.png",
 }
 
@@ -143,12 +143,12 @@ def main() -> None:
     parser.add_argument(
         "--multivar-runtime-root",
         type=Path,
-        default=Path("/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_publication_replay_representatives_20260506"),
+        default=Path("/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_20260512"),
     )
     parser.add_argument(
         "--univar-runtime-root",
         type=Path,
-        default=Path("/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_quantile_featurecov_custom_discount_probe_20260422"),
+        default=Path("/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_univar_featurecov_he2_rerun_20260422"),
     )
     args = parser.parse_args()
 
@@ -163,7 +163,7 @@ def main() -> None:
     figures_dir = bundle_root / "figures"
     figures_dir.mkdir(parents=True, exist_ok=True)
 
-    multivar_run_root = multivar_runtime_root / MULTIVAR_SPEC["slug"] / "runs" / MULTIVAR_SPEC["run_id"]
+    multivar_run_root = multivar_runtime_root / "runs" / MULTIVAR_SPEC["run_id"]
     univar_output_root = (
         univar_runtime_root / "runs" / UNIVAR_SPEC["run_id"] / "post" / "outputs" / UNIVAR_SPEC["run_id"]
     )

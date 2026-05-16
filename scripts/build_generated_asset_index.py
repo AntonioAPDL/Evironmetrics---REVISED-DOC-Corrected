@@ -12,6 +12,8 @@ ARTIFACT_DESCRIPTIONS = {
     'representative_selected_model_2022_12_25': 'Representative selected-model bundle for the verified 2022-12-25 exAL-M-T1 rerun.',
     'historical_support_from_current_models': 'Current-model historical-support figures used by manuscript Figures 5, 6, A1, and A2.',
     'five_cutoff_setup_support': 'Canonical five-cutoff setup/support figure family mirrored from the validated workflow runtime bundle.',
+    'five_cutoff_main_model_synthesis': 'Corrected cutoff-wide Figure 7 family copied from the five-cutoff he2pubgdpc1r1 exAL main-model reruns.',
+    'five_cutoff_reference_synthesis': 'Cutoff-wide Figure A2-style reference synthesis family copied from the current exdqlm_univar output bundles.',
     'he2_publication_freeze': 'Frozen local snapshot of the current HE2 Bayesian publication manifest and alignment tables.',
     'he2_historical_support_audit': 'Workflow-side audit snapshot showing which publication rows use full historical support versus short-window support.',
 }
@@ -20,6 +22,7 @@ REPORT_DESCRIPTIONS = {
     'manuscript_asset_review': 'Top-level review report, gallery, and wiring audit for manuscript figures and tables.',
     'manuscript_figure_selection': 'Manifest recording which artifact figures are currently promoted into the manuscript-facing figure directory.',
     'five_cutoff_setup_support_review': 'Review markdown, gallery, and audits for the five-cutoff setup/support figure family.',
+    'five_cutoff_synthesis_review': 'Review markdown for the cutoff-wide Figure 7 and Figure A2 synthesis families.',
     'representative_setup_selection': 'Selection manifest recording which cutoff-specific setup/support bundle feeds Figures 1-4.',
 }
 
@@ -130,13 +133,15 @@ def main() -> None:
         '- `wileyNJD-APA.tex`: manuscript source used by Overleaf\n'
         '- `figures/manuscript/`: the exact figure files used by the manuscript\n'
         '- `figures/forecast_context_by_cutoff/`: advisor-facing copies of the Figure 4 forecast-context view for all five cutoffs\n'
+        '- `figures/multivariate_synthesis_by_cutoff/`: advisor-facing Figure 7 family for all five cutoffs\n'
+        '- `figures/reference_synthesis_by_cutoff/`: advisor-facing Figure A2-style family for all five cutoffs\n'
         '- `tables/generated_tex/`: the exact generated table blocks included by the manuscript\n'
         '- `docs/figure_table_provenance.md`: figure/table provenance summary\n'
         '- `reports/manuscript_asset_review/ARTICLE_ASSET_REVIEW.md`: review report for the current article assets\n'
         '- `reports/manuscript_asset_review/FIGURE_POLISH_STATUS_AUDIT.md`: point-by-point status audit for the earlier figure-polish request\n'
         '- `scripts/validate_manuscript_figure_paths.py`: validates that every `\\includegraphics{}` call in the manuscript resolves through the canonical figure search paths\n\n'
         '## Directory roles\n\n'
-        '- `figures/`: manuscript-facing figures, appendix cutoff panels, and advisor-facing cutoff forecast-context copies\n'
+        '- `figures/`: manuscript-facing figures, appendix cutoff panels, and advisor-facing cutoff-wide forecast/synthesis figure families\n'
         '- `tables/`: generated TeX tables used by the manuscript\n'
         '- `artifacts/`: frozen local bundles copied from validated workflow outputs\n'
         '- `reports/`: review reports, galleries, audits, and selection manifests\n'

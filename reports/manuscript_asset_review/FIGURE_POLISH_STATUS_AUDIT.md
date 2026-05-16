@@ -2,8 +2,8 @@
 
 This audit checks the implementation status of the nine-point figure-polish request that preceded the PCA hardening and full-history reconstruction phase.
 
-- `complete`: 7
-- `partial`: 2
+- `complete`: 9
+- `partial`: 0
 - `not_done`: 0
 
 ## Item-by-item status
@@ -64,14 +64,15 @@ Figure 6 should exist in both 0 to 20 and 0 to 7 variants and keep the normalize
   - `artifacts/historical_support_from_current_models/figures/historical_summary_wet_period_fullrange.png`
   - `scripts/render_current_model_output_support_figures.R:624-634`
 
-### Item 7 [partial]
+### Item 7 [complete]
 Figure 7 and Figure A2 should align visually with Figure 4, be produced for all cutoffs, and also have extra overlay versions with raw/reference ensembles.
 
-- Note: The representative cutoff uses the polished `publication_focus_v2` style and has the ensemble-reference overlay. The remaining gap is article-side promotion of the corresponding Figure 7 / A2 family for the other cutoffs.
+- Note: The representative cutoff uses the polished `publication_focus_v2` style and now the corresponding Figure 7 and Figure A2 families are also preserved article-side for all five cutoffs, including the overlay variants with raw/reference ensembles.
 - Evidence:
   - `artifacts/representative_selected_model_2022_12_25/representative_synthesis_multivariate.png`
   - `artifacts/representative_selected_model_2022_12_25/representative_synthesis_multivariate_with_reference_ensembles.png`
-  - `artifacts/representative_selected_model_2022_12_25/figure_manifest.csv`
+  - `figures/multivariate_synthesis_by_cutoff/manifest.csv`
+  - `figures/reference_synthesis_by_cutoff/manifest.csv`
   - `R/unified/post_publication_figures.R:546-807`
 
 ### Item 8 [complete]
@@ -84,20 +85,20 @@ Figure A1 should plot the 80-month component after adding the posterior mean tre
   - `scripts/render_current_model_output_support_figures.R:589-608, 656-680`
   - `wileyNJD-APA.tex:460-466`
 
-### Item 9 [partial]
+### Item 9 [complete]
 Keep the composite A3–A6 style panels only if useful; definitely preserve the forecast-context panel D for all cutoffs, and do the same cutoff-wide treatment for Figure 7 and A2 when full-history conditions allow it.
 
-- Note: Forecast-context figures are now preserved for all five cutoffs in an advisor-facing folder. The remaining open decisions are whether to remove the appendix composite panels from the manuscript and how to promote the Figure 7 / A2 cutoff-wide family once the selected-cutoff synthesis bundles are curated article-side.
+- Note: Forecast-context figures, multivariate synthesis figures, and reference synthesis figures are now preserved cutoff-wide in advisor-facing folders. The remaining decision is whether the composite appendix panels should stay in the manuscript appendix or move to repo-only review support.
 - Evidence:
   - `figures/forecast_context_by_cutoff/manifest.csv`
+  - `figures/multivariate_synthesis_by_cutoff/manifest.csv`
+  - `figures/reference_synthesis_by_cutoff/manifest.csv`
   - `figures/appendix_cutoff_panels/`
   - `artifacts/five_cutoff_setup_support/review/figure_manifest.csv`
   - `wileyNJD-APA.tex:483-520`
 
 ## Remaining work before the next modeling phase
 
-1. Promote the Figure 7 multivariate synthesis family for the non-representative cutoffs into article-facing advisor-review paths.
-2. Promote the Figure A2 historical-only synthesis family for the non-representative cutoffs into article-facing advisor-review paths.
-3. Decide whether the appendix composite setup/support panels should remain in the manuscript appendix or move to repo-only documentation.
-4. Keep the early short-window cutoffs (`2021-01-23`, `2021-11-12`) separate from any future full-history-only figure commitments until the bundle reconstruction work is complete.
+1. Decide whether the appendix composite setup/support panels should remain in the manuscript appendix or move to repo-only documentation.
+2. Keep the early short-window cutoffs (`2021-01-23`, `2021-11-12`) separate from any future full-history-only interpretation claims until the full-table corrected bundle relaunch is complete.
 

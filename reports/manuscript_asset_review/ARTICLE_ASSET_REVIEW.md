@@ -36,7 +36,7 @@ Primary wiring audit: `reports/manuscript_asset_review/CURRENT_MODEL_OUTPUT_WIRI
 
 | Label | Role | Manuscript path | Artifact source | TeX line | Wired to current outputs? | Note |
 |---|---|---|---|---:|---|---|
-| `fig:synth1` | Representative selected-model synthesis | `figures/manuscript/representative_synthesis_multivariate.png` | `artifacts/representative_selected_model_2022_12_25/representative_synthesis_multivariate.png` | 405 | yes | Verified representative 2022-12-25 exAL-M-T1 output |
+| `fig:synth1` | Representative selected-model synthesis | `figures/manuscript/representative_synthesis_multivariate.png` | `artifacts/representative_selected_model_2022_12_25/representative_synthesis_multivariate.png` | 405 | yes | Corrected representative 2022-12-25 exAL-M-T1 output from the he2pubgdpc1r1 relaunch |
 
 ## Appendix Support
 

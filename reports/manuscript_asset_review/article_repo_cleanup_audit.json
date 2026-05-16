@@ -16,6 +16,8 @@
   ],
   "retained_artifact_families": [
     "five_cutoff_crps_validation_sources",
+    "five_cutoff_main_model_synthesis",
+    "five_cutoff_reference_synthesis",
     "five_cutoff_setup_support",
     "he2_historical_support_audit",
     "he2_publication_freeze",
@@ -24,6 +26,7 @@
   ],
   "retained_report_families": [
     "five_cutoff_setup_support_review",
+    "five_cutoff_synthesis_review",
     "manuscript_asset_review",
     "manuscript_figure_selection",
     "representative_setup_selection"
