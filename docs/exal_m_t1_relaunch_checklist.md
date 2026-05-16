@@ -2,6 +2,13 @@
 
 Date: 2026-05-06
 
+Status note added: 2026-05-16
+
+This document still describes the **current article-side publication-state provenance**.
+
+The planned next rerun under the shared `exAL-M-T1` relaunch spec is tracked separately in:
+- `docs/exal_m_t1_shared_rerun_checklist.md`
+
 ## Purpose
 
 This manuscript-side checklist records the **current publication-aligned** `exAL-M-T1` relaunch target for `Evironmetrics---REVISED-DOC-2`.
@@ -13,6 +20,9 @@ Primary workflow-side execution note:
 
 Primary publication source of truth:
 - `/data/muscat_data/jaguir26/project1_ucsc_phd/reports/he2_publication_manifest/he2_bayesian_publication_manifest.md`
+
+Planned next-state shared rerun plan:
+- `/data/muscat_data/jaguir26/project1_ucsc_phd/repro/run/HE2_EXDQLM_MULTIVAR_KEEP_SHARED_RELAUNCH_PLAN_20260516.md`
 
 ## Locked five-run source map
 

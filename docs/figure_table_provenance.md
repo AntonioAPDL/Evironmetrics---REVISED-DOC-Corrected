@@ -18,6 +18,8 @@ Main purpose:
 Companion relaunch document:
 - `docs/exal_m_t1_relaunch_checklist.md`
   - This records the exact cutoff-by-cutoff source runs behind the published `exAL-M-T1` CRPS values, the required rerun artifacts, and the post-rerun validation contract.
+- `docs/exal_m_t1_shared_rerun_checklist.md`
+  - This records the planned next shared-spec rerun and the article-side figure/table families that will be refreshed from it once the new relaunch completes.
 
 Setup/support figure correction plan:
 - `/data/muscat_data/jaguir26/project1_ucsc_phd/repro/run/EXAL_M_T1_SETUP_SUPPORT_V2_SOURCE_MANIFEST.md`

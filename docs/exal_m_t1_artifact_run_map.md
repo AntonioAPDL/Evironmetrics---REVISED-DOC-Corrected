@@ -9,6 +9,11 @@ This file locks the reproducible `exAL-M-T1` source set used by the revised arti
 It is the execution companion to:
 - `docs/exal_m_t1_relaunch_checklist.md`
 - `docs/figure_table_provenance.md`
+- `docs/exal_m_t1_shared_rerun_checklist.md`
+
+Important transition note:
+- the mappings below remain the current article-side provenance anchor.
+- the next shared-spec relaunch is planned separately and should not replace these mappings until the new exdqlm rerun has passed and the article-side bundles are refreshed.
 
 ## Cleanup status
 
