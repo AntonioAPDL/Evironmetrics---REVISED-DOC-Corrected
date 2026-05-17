@@ -10,7 +10,7 @@
       "source_class": "setup_support_v2_representative",
       "current_model_output_wired": true,
       "source_path": "artifacts/five_cutoff_setup_support/20221225_exal_m_t1/figures/usgs.png",
-      "sha256": "ebd36a3f2a3dcce2d8b5bf9a8bc39f17e770bb387b038b7ae8b1e1da7a8ab098",
+      "sha256": "a35bd0cd8eee55a5478e8533ecb3629ce6b056c024d7b1b5197153f7cff16fd1",
       "note": "Representative 2022-12-25 setup/support figure from the canonical five-cutoff support bundle"
     },
     {
@@ -21,7 +21,7 @@
       "source_class": "setup_support_v2_representative",
       "current_model_output_wired": true,
       "source_path": "artifacts/five_cutoff_setup_support/20221225_exal_m_t1/figures/precip_soilmoisture_climatePC1_faceted_labeled.png",
-      "sha256": "9ba737ad08af2e20dc5bd4aeed8880674897810d6f80d53e96183e096857c715",
+      "sha256": "a450b7fa331403f61ea0af951dc1bdf65fab1e4d471c8f89b26cc72d89b9ad03",
       "note": "Representative 2022-12-25 setup/support figure from the canonical five-cutoff support bundle"
     },
     {
@@ -32,7 +32,7 @@
       "source_class": "setup_support_v2_representative",
       "current_model_output_wired": true,
       "source_path": "artifacts/five_cutoff_setup_support/20221225_exal_m_t1/figures/retrospective_log_discharge_plot_faceted.png",
-      "sha256": "8e4519e083b0ca0c8a8533dfcdabba6b544204124cb7993752efa2e4e9a5ffa8",
+      "sha256": "a670b1de369c4a576c9d9221eec27f83e78bbdf00db88419a714efa2bf5de16e",
       "note": "Representative 2022-12-25 setup/support figure from the canonical five-cutoff support bundle"
     },
     {
@@ -43,7 +43,7 @@
       "source_class": "setup_support_v2_representative",
       "current_model_output_wired": true,
       "source_path": "artifacts/five_cutoff_setup_support/20221225_exal_m_t1/figures/forecats.png",
-      "sha256": "c3b641db219510a14f7de9e7bf47ca3a7c92211483f03ab4f53072b0e9ec3b20",
+      "sha256": "a4f8545c539534f3bee2821250e8bd68cf92071ce6fd8b3e113d25265779fca0",
       "note": "Representative 2022-12-25 setup/support figure from the canonical five-cutoff support bundle"
     },
     {

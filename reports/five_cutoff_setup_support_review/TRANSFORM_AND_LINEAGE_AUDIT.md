@@ -15,27 +15,27 @@ This report verifies three things for the revised article setup/support figures:
 
 | Cutoff | Bundle class | Support window | One-transform USGS | One-transform GloFAS | One-transform NWS | Forecast NWS exact | Forecast GloFAS exact | Overlap rows | Overlap NWS max abs diff |
 | --- | --- | --- | ---: | ---: | ---: | --- | --- | ---: | ---: |
-| 2021-01-23 | short_window_synth_bundle | 1987-05-29 to 2021-01-23 |  |  |  | n/a | n/a | 1081 | 0.000000 |
-| 2021-11-12 | short_window_synth_bundle | 1987-05-29 to 2021-11-12 |  |  |  | n/a | n/a | 1081 | 0.000000 |
+| 2021-01-23 | histfix_long_history_bundle | 1987-05-29 to 2021-01-23 | 0.000000000 | 0.000000000 | 0.000000000 | yes | yes | 12294 | 0.000000 |
+| 2021-11-12 | histfix_long_history_bundle | 1987-05-29 to 2021-11-12 | 0.000000000 | 0.000000000 | 0.000000000 | yes | yes | 12587 | 0.000000 |
 | 2021-12-21 | histfix_long_history_bundle | 1987-05-29 to 2021-12-21 | 0.000000000 | 0.000000000 | 0.000000000 | yes | yes | 12626 | 0.000000 |
 | 2022-05-11 | histfix_long_history_bundle | 1987-05-29 to 2022-05-11 | 0.000000000 | 0.000000000 | 0.000000000 | yes | yes | 12767 | 0.000000 |
-| 2022-12-25 | histfix_long_history_bundle | 1987-05-29 to 2022-12-25 | 0.000000000 | 0.000000000 | 0.000000000 | yes | yes | 1081 | 0.000000 |
+| 2022-12-25 | histfix_long_history_bundle | 1987-05-29 to 2022-12-25 | 0.000000000 | 0.000000000 | 0.000000000 | yes | yes | 12995 | 0.000000 |
 
 ## Interpretation
 
 ### 20210123_exal_m_t1
 
-- one-transform check: USGS=``, GloFAS=``, NWS=``
-- forecast ensemble provenance: NWS exact=`n/a`, GloFAS exact=`n/a`
-- selected-run overlap: rows=`1081`, window=`2018-02-08` to `2021-01-23`, USGS max abs diff=`0.000000`, GloFAS max abs diff=`0.000000`, NWS max abs diff=`0.000000`
-- raw-source behavior: short-window bundle
+- one-transform check: USGS=`0.000000000`, GloFAS=`0.000000000`, NWS=`0.000000000`
+- forecast ensemble provenance: NWS exact=`yes`, GloFAS exact=`yes`
+- selected-run overlap: rows=`12294`, window=`1987-05-29` to `2021-01-23`, USGS max abs diff=`0.000000`, GloFAS max abs diff=`0.000000`, NWS max abs diff=`0.000000`
+- raw-source behavior: raw lineage already stepped/quantized: GloFAS min non-zero daily step=0.003906 cms; NWS negative daily deltas share=0.597; GloFAS zero-delta share=0.256
 
 ### 20211112_exal_m_t1
 
-- one-transform check: USGS=``, GloFAS=``, NWS=``
-- forecast ensemble provenance: NWS exact=`n/a`, GloFAS exact=`n/a`
-- selected-run overlap: rows=`1081`, window=`2018-11-28` to `2021-11-12`, USGS max abs diff=`0.000000`, GloFAS max abs diff=`0.000000`, NWS max abs diff=`0.000000`
-- raw-source behavior: short-window bundle
+- one-transform check: USGS=`0.000000000`, GloFAS=`0.000000000`, NWS=`0.000000000`
+- forecast ensemble provenance: NWS exact=`yes`, GloFAS exact=`yes`
+- selected-run overlap: rows=`12587`, window=`1987-05-29` to `2021-11-12`, USGS max abs diff=`0.000000`, GloFAS max abs diff=`0.000000`, NWS max abs diff=`0.000000`
+- raw-source behavior: raw lineage already stepped/quantized: GloFAS min non-zero daily step=0.007812 cms; NWS negative daily deltas share=0.603; GloFAS zero-delta share=0.555
 
 ### 20211221_exal_m_t1
 
@@ -56,7 +56,7 @@ This report verifies three things for the revised article setup/support figures:
 
 - one-transform check: USGS=`0.000000000`, GloFAS=`0.000000000`, NWS=`0.000000000`
 - forecast ensemble provenance: NWS exact=`yes`, GloFAS exact=`yes`
-- selected-run overlap: rows=`1081`, window=`2020-01-10` to `2022-12-25`, USGS max abs diff=`0.000000`, GloFAS max abs diff=`0.000000`, NWS max abs diff=`0.000000`
+- selected-run overlap: rows=`12995`, window=`1987-05-29` to `2022-12-25`, USGS max abs diff=`0.000000`, GloFAS max abs diff=`0.000000`, NWS max abs diff=`0.000000`
 - raw-source behavior: raw lineage already stepped/quantized: GloFAS min non-zero daily step=0.007812 cms; NWS negative daily deltas share=0.609; GloFAS zero-delta share=0.557
 - note: the repaired long-history bundle now matches the representative selected run across the full overlap for USGS, GloFAS, and NWS while preserving the repaired pre-window historical support.
 

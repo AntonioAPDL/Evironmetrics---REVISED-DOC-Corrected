@@ -1080,7 +1080,7 @@ Use this as the working order when actually editing the manuscript.
     - `/data/muscat_data/jaguir26/project1_ucsc_phd/repro/run/EXAL_M_T1_SETUP_SUPPORT_V2_ACCEPTANCE_CHECKLIST.md`
 - [x] Implement the corrected setup/support `v2` workflow from the frozen planning gate.
   - Workflow config:
-    - `/data/muscat_data/jaguir26/project1_ucsc_phd/config/exal_m_t1_setup_support_by_cutoff_v2_20260507.json`
+    - `/data/muscat_data/jaguir26/project1_ucsc_phd/config/exal_m_t1_setup_support_by_cutoff_v2_20260516.json`
   - Workflow scripts:
     - `/data/muscat_data/jaguir26/project1_ucsc_phd/scripts/render_exal_m_t1_setup_support_by_cutoff_v2.py`
     - `/data/muscat_data/jaguir26/project1_ucsc_phd/scripts/render_setup_support_bundle_v2.R`
@@ -1090,11 +1090,11 @@ Use this as the working order when actually editing the manuscript.
     - `/data/muscat_data/jaguir26/project1_ucsc_phd/repro/run/EXAL_M_T1_SETUP_SUPPORT_BY_CUTOFF_V2_WORKFLOW.md`
 - [x] Validate the corrected setup/support `v2` family across all five publication cutoffs.
   - Canonical runtime family:
-    - `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260507/`
+    - `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260516/`
   - Workflow-side review:
-    - `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260507/review/REVIEW.md`
-    - `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260507/review/gallery.html`
-    - `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260507/review/figure_manifest.csv`
+    - `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260516/review/REVIEW.md`
+    - `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260516/review/gallery.html`
+    - `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260516/review/figure_manifest.csv`
   - Validation gate:
     - `/data/muscat_data/jaguir26/project1_ucsc_phd/repro/run/EXAL_M_T1_SETUP_SUPPORT_V2_ACCEPTANCE_CHECKLIST.md`
 - [x] Mirror the corrected setup/support `v2` family into the revised article repo and promote the representative `2022-12-25` cutoff figures into `figures/manuscript/`.

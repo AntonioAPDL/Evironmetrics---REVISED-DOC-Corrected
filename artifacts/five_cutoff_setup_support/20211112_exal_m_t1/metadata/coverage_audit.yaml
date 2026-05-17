@@ -43,10 +43,10 @@ gdpc:
 retrospective:
   requested_start: '1987-05-29'
   requested_end: '2021-11-12'
-  available_start: '2018-11-28'
+  available_start: '1987-05-29'
   available_end: '2021-11-12'
   requested_window_days: 12587
-  available_window_days: 1081
-  missing_days_requested_window: 11506
+  available_window_days: 12587
+  missing_days_requested_window: 0
   missing_days_available_window: 0
-  full_history_available: false
+  full_history_available: true

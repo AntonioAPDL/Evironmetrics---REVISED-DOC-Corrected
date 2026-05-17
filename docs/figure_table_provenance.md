@@ -97,7 +97,7 @@ That legacy script still relies on notebook-linearized state and hard-coded exte
 The representative selected-model refresh is now partially complete.
 
 Verified source run:
-- `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_publication_replay_representatives_20260506/20221225_exal_m_t1/runs/multimodel_20221225_v8_exalm_t1_discount_grid_exact_v1_set09_exdqlm_multivar_keep`
+- `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_20260512/runs/multimodel_20221225_v8_he2pubgdpc1r1_exdqlm_multivar_keep`
 
 Verified status:
 - `validation_status=pass`
@@ -146,7 +146,7 @@ It also contains a dedicated cutoff-specific setup/support figure family derived
 - `reports/five_cutoff_setup_support_review/`
 
 That family is produced from the current workflow-side derivation path:
-- `config/exal_m_t1_setup_support_by_cutoff_v2_20260507.json`
+- `config/exal_m_t1_setup_support_by_cutoff_v2_20260516.json`
 - `scripts/render_exal_m_t1_setup_support_by_cutoff_v2.py`
 - `scripts/render_setup_support_bundle_v2.R`
 - `scripts/setup_support_bundle_v2_helpers.R`
@@ -228,7 +228,7 @@ The following manuscript figure assets in `Evironmetrics---REVISED-DOC-2/figures
 
 1. The four setup/support figures are now reproduced through the corrected cutoff-specific `v2` workflow.
    - Workflow-side review:
-     - `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260507/review/`
+     - `/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260516/review/`
    - Article-side mirror and review:
      - `artifacts/five_cutoff_setup_support/`
      - `reports/five_cutoff_setup_support_review/`
@@ -242,7 +242,7 @@ The following manuscript figure assets in `Evironmetrics---REVISED-DOC-2/figures
    - The corrected `v2` contract is now:
      - `usgs.png` and the raw covariate figure use the full `1987-05-29 -> cutoff` daily history available in the selected-run shared inputs
      - `forecats.png` uses a strict `cutoff - 28 days` to `cutoff + 28 days` display window
-     - the retrospective figure uses the actual retrospective support available for that cutoff and no longer implies full-history coverage when the selected bundle is short-window
+     - the retrospective figure now uses repaired full-history retrospective support from `1987-05-29 -> cutoff` for all five cutoffs through the canonical `20260510` shared-input bundles
    - The full per-cutoff availability audit is recorded in:
      - `reports/five_cutoff_setup_support_review/SETUP_SUPPORT_BY_CUTOFF_V2_REVIEW.md`
    - The older `20260506` `v1` family has been removed from the article repo as part of the cleanup pass; only the canonical `v2` family remains.
