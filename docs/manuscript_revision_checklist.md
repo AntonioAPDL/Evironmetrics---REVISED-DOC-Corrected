@@ -1035,7 +1035,9 @@ Use this as the working order when actually editing the manuscript.
   - Locked source:
     - `reports/he2_publication_manifest/he2_bayesian_publication_manifest.md`
   - Result:
-    - `tab:benchmark_crps_models` in `wileyNJD-APA.tex` now matches the current published HE2 values
+    - `tab:benchmark_crps_models` in `wileyNJD-APA.tex` now matches the frozen published HE2 benchmark source
+  - Hold-state note:
+    - keep this table frozen until NDLM is relaunched on the canonical shared bundle, AL multivariate keep/drop are complete, and the exAL shared-spec rerun benchmark rows are reconciled
   - Local article-side snapshot:
     - `artifacts/he2_publication_freeze/`
 - [x] Distinguish in-scope selected-model refresh objects from workflow-linked but out-of-scope historical/counterfactual objects.

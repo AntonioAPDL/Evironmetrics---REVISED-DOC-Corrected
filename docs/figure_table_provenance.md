@@ -278,7 +278,7 @@ The following manuscript figure assets in `Evironmetrics---REVISED-DOC-2/figures
 
 | Manuscript label | Current manuscript role | Current provenance evidence | Confidence | Repro status | Selected-run status | Recommended action |
 |---|---|---|---|---|---|---|
-| `tab:benchmark_crps_models` | main five-cutoff forecast-validation table | HE2 publication manifest plus synchronized manuscript table values; local article-side snapshot in `artifacts/he2_publication_freeze/` | high | validated against the frozen HE2 publication source | main reference table | keep synced to HE2 publication manifest snapshot |
+| `tab:benchmark_crps_models` | main five-cutoff forecast-validation table | HE2 publication manifest plus synchronized manuscript table values; local article-side snapshot in `artifacts/he2_publication_freeze/` | high | validated against the frozen HE2 publication source | main reference table | keep frozen until NDLM is canonical, AL multivariate families are complete, and the exAL benchmark rows are explicitly reconciled |
 | `tab:components_23_31` | main-text covariate-effects summary | verified representative rerun export frozen locally in `artifacts/representative_selected_model_2022_12_25/covariate_effects_summary.csv`; workflow export contract and tests remain in repo | high | reproducible from verified `2022-12-25 exAL-M-T1` rerun bundle and frozen locally | locked to representative `2022-12-25` selected-model run | keep synced to representative selected-model bundle |
 | `tab:gamma_sigma_intervals1` | supplementary appendix `gamma` summary | verified representative rerun export frozen locally in `artifacts/representative_selected_model_2022_12_25/gamma_summary.csv`; workflow export contract and tests remain in repo | high | reproducible from verified `2022-12-25 exAL-M-T1` rerun bundle and frozen locally | locked to representative `2022-12-25` support role | keep as supplementary appendix support |
 | `tab:gamma_sigma_intervals2` | supplementary appendix `sigma` summary | verified representative rerun export frozen locally in `artifacts/representative_selected_model_2022_12_25/sigma_summary.csv`; workflow export contract and tests remain in repo | high | reproducible from verified `2022-12-25 exAL-M-T1` rerun bundle and frozen locally | locked to representative `2022-12-25` support role | keep as supplementary appendix support |
@@ -400,7 +400,7 @@ Use that companion file when:
 ## Current locked state
 
 1. Section 4 remains the five-cutoff validation evidence.
-   - `tab:benchmark_crps_models` is now synced to the frozen HE2 publication manifest.
+   - `tab:benchmark_crps_models` is intentionally still synced to the frozen HE2 publication manifest and should not yet be promoted to a new rerun-backed benchmark source.
 
 2. Section 5 uses outputs from one representative final cutoff of the selected `exAL-M-T1` specification.
    - `fig:synth1`
@@ -420,7 +420,7 @@ Use that companion file when:
 ## Audit status summary
 
 ### Established in this pass
-- the benchmark table in the revised article is now aligned with the frozen HE2 publication manifest,
+- the benchmark table in the revised article is still aligned with the frozen HE2 publication manifest as a temporary hold state,
 - the representative selected-model outputs are refreshed from verified `exAL-M-T1` sources,
 - the appendix support tables are explicitly demoted to a supplementary role,
 - the historical-summary figures are workflow-linked, hash-verified, and frozen locally in the revised article repo, and
