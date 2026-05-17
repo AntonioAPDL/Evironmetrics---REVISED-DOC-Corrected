@@ -48,13 +48,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description='Refresh all article-side generated assets and reports.')
     parser.add_argument('--article-root', type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument('--workflow-root', type=Path, default=Path(__file__).resolve().parents[2])
-    parser.add_argument('--runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_sharedspec_20260516'))
-    parser.add_argument(
-        '--setup-support-runtime-root',
-        type=Path,
-        default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260516'),
-    )
-    parser.add_argument('--univar-runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_univar_all_cutoffs_sharedspec_20260516'))
+    parser.add_argument('--runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_20260512'))
+    parser.add_argument('--univar-runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_univar_featurecov_he2_rerun_20260422'))
     parser.add_argument(
         '--strict-current-model-support',
         action='store_true',
@@ -65,7 +60,6 @@ def main() -> None:
     article_root = args.article_root.resolve()
     workflow_root = args.workflow_root.resolve()
     runtime_root = args.runtime_root.resolve()
-    setup_support_runtime_root = args.setup_support_runtime_root.resolve()
     univar_runtime_root = args.univar_runtime_root.resolve()
 
     py = sys.executable
@@ -93,14 +87,7 @@ def main() -> None:
         str(univar_runtime_root),
     ])
     run([py, str(article_root / 'scripts' / 'refresh_he2_manifest_snapshot.py'), '--article-root', str(article_root), '--workflow-root', str(workflow_root)])
-    run([
-        py,
-        str(article_root / 'scripts' / 'refresh_setup_support_by_cutoff_v2.py'),
-        '--article-root',
-        str(article_root),
-        '--workflow-runtime-root',
-        str(setup_support_runtime_root),
-    ])
+    run([py, str(article_root / 'scripts' / 'refresh_setup_support_by_cutoff_v2.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'build_setup_support_by_cutoff_v2_review.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'build_setup_support_transform_lineage_audit.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'build_setup_support_by_cutoff_v2_appendix.py'), '--article-root', str(article_root)])
@@ -108,10 +95,8 @@ def main() -> None:
     run([py, str(article_root / 'scripts' / 'promote_setup_support_v2_to_disc.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'build_generated_table_includes.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'promote_generated_figures_to_disc.py'), '--article-root', str(article_root)])
-    run([py, str(article_root / 'scripts' / 'sync_legacy_uppercase_figures.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'build_article_asset_review_report.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'build_figure_polish_status_audit.py'), '--article-root', str(article_root)])
-    run([py, str(article_root / 'scripts' / 'build_article_figure_lineage_audit.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'clean_article_legacy_assets.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'build_generated_asset_index.py'), '--article-root', str(article_root)])
     run([py, str(article_root / 'scripts' / 'validate_manuscript_figure_paths.py'), '--article-root', str(article_root)])

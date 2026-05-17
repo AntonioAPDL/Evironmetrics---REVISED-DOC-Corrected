@@ -20,7 +20,7 @@ MULTIVAR_SPEC = {
 
 UNIVAR_SPEC = {
     "cutoff": "2022-12-25",
-    "run_id": "multimodel_20221225_v8_he2pubgdpc1r1_exdqlm_univar",
+    "run_id": "multimodel_20221225_v8_univar_featurecov_he2_v1_exdqlm_univar",
     "source_png": "exdqlm_univar_synth_cutoff_window_posterior_samples.png",
 }
 
@@ -143,12 +143,12 @@ def main() -> None:
     parser.add_argument(
         "--multivar-runtime-root",
         type=Path,
-        default=Path("/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_sharedspec_20260516"),
+        default=Path("/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_20260512"),
     )
     parser.add_argument(
         "--univar-runtime-root",
         type=Path,
-        default=Path("/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_univar_all_cutoffs_sharedspec_20260516"),
+        default=Path("/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_univar_featurecov_he2_rerun_20260422"),
     )
     args = parser.parse_args()
 

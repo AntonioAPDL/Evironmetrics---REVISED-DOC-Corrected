@@ -12,8 +12,8 @@ This audit summarizes the selected-run input alignment assumptions for the cutof
 
 | Cutoff | Bundle class | Requested history | Retros available from | Full retrospective history available? | Flow display scale |
 |---|---|---|---|---|---|
-| 2021-01-23 | `histfix_long_history_bundle` | 1987-05-29 to 2021-01-23 | 1987-05-29 | True | log1p_cms |
-| 2021-11-12 | `histfix_long_history_bundle` | 1987-05-29 to 2021-11-12 | 1987-05-29 | True | log1p_cms |
+| 2021-01-23 | `short_window_synth_bundle` | 1987-05-29 to 2021-01-23 | 2018-02-08 | False | log1p_cms |
+| 2021-11-12 | `short_window_synth_bundle` | 1987-05-29 to 2021-11-12 | 2018-11-28 | False | log1p_cms |
 | 2021-12-21 | `histfix_long_history_bundle` | 1987-05-29 to 2021-12-21 | 1987-05-29 | True | log1p_cms |
 | 2022-05-11 | `histfix_long_history_bundle` | 1987-05-29 to 2022-05-11 | 1987-05-29 | True | log1p_cms |
 | 2022-12-25 | `histfix_long_history_bundle` | 1987-05-29 to 2022-12-25 | 1987-05-29 | True | log1p_cms |

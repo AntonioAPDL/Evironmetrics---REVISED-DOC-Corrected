@@ -211,7 +211,7 @@ def refresh_representative_bundle(layout, runtime_root: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description='Refresh article-side exAL-M-T1 generated asset bundles.')
     parser.add_argument('--article-root', type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument('--runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_sharedspec_20260516'))
+    parser.add_argument('--runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_20260512'))
     args = parser.parse_args()
 
     article_root = args.article_root.resolve()

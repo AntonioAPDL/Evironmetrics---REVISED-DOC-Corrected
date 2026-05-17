@@ -21,31 +21,31 @@ CUTOFF_SPECS = [
         'slug': '20210123_exal_m_t1',
         'cutoff': '2021-01-23',
         'multivar_run_id': 'multimodel_20210123_v8_he2pubgdpc1r1_exdqlm_multivar_keep',
-        'univar_run_id': 'multimodel_20210123_v8_he2pubgdpc1r1_exdqlm_univar',
+        'univar_run_id': 'multimodel_20210123_v8_univar_featurecov_he2_v1_exdqlm_univar',
     },
     {
         'slug': '20211112_exal_m_t1',
         'cutoff': '2021-11-12',
         'multivar_run_id': 'multimodel_20211112_v8_he2pubgdpc1r1_exdqlm_multivar_keep',
-        'univar_run_id': 'multimodel_20211112_v8_he2pubgdpc1r1_exdqlm_univar',
+        'univar_run_id': 'multimodel_20211112_v8_univar_featurecov_he2_v1_exdqlm_univar',
     },
     {
         'slug': '20211221_exal_m_t1',
         'cutoff': '2021-12-21',
         'multivar_run_id': 'multimodel_20211221_v8_he2pubgdpc1r1_exdqlm_multivar_keep',
-        'univar_run_id': 'multimodel_20211221_v8_he2pubgdpc1r1_exdqlm_univar',
+        'univar_run_id': 'multimodel_20211221_v8_univar_featurecov_he2_v1_exdqlm_univar',
     },
     {
         'slug': '20220511_exal_m_t1',
         'cutoff': '2022-05-11',
         'multivar_run_id': 'multimodel_20220511_v8_he2pubgdpc1r1_exdqlm_multivar_keep',
-        'univar_run_id': 'multimodel_20220511_v8_he2pubgdpc1r1_exdqlm_univar',
+        'univar_run_id': 'multimodel_20220511_v8_univar_featurecov_he2_v1_exdqlm_univar',
     },
     {
         'slug': '20221225_exal_m_t1',
         'cutoff': '2022-12-25',
         'multivar_run_id': 'multimodel_20221225_v8_he2pubgdpc1r1_exdqlm_multivar_keep',
-        'univar_run_id': 'multimodel_20221225_v8_he2pubgdpc1r1_exdqlm_univar',
+        'univar_run_id': 'multimodel_20221225_v8_univar_featurecov_he2_v1_exdqlm_univar',
     },
 ]
 
@@ -194,12 +194,12 @@ def main() -> None:
     parser.add_argument(
         '--multivar-runtime-root',
         type=Path,
-        default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_sharedspec_20260516'),
+        default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_20260512'),
     )
     parser.add_argument(
         '--univar-runtime-root',
         type=Path,
-        default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_univar_all_cutoffs_sharedspec_20260516'),
+        default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_univar_featurecov_he2_rerun_20260422'),
     )
     args = parser.parse_args()
 
