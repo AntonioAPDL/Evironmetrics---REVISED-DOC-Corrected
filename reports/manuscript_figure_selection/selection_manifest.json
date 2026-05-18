@@ -54,7 +54,7 @@
       "source_class": "current_model_output_support",
       "current_model_output_wired": true,
       "source_path": "artifacts/historical_support_from_current_models/figures/historical_summary_dry_period.png",
-      "sha256": "eba6d8701c9186b0af3010d199f88becccaa275eed797448ba98de2cd1b099f6",
+      "sha256": "e72ef64b9d12c54e3a2114e2bcf13ae3effae11abeb4b02e5f25825a4e71be23",
       "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {
@@ -65,7 +65,7 @@
       "source_class": "current_model_output_support",
       "current_model_output_wired": true,
       "source_path": "artifacts/historical_support_from_current_models/figures/historical_summary_wet_period.png",
-      "sha256": "26b4c06fa3d8cf7f024ff2f0cab498fe16aaf5fca85af376e64cc1c51eb40449",
+      "sha256": "e425f0037d6d39035ca0491f2a531bfbbf251a0ec46079e78a1d04eb3842ac65",
       "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {
@@ -87,7 +87,7 @@
       "source_class": "current_model_output_support",
       "current_model_output_wired": true,
       "source_path": "artifacts/historical_support_from_current_models/figures/historical_component_80month.png",
-      "sha256": "3534cbe3ad07946cf748d6fcfc6189cf3e899c03a7bf3c8fd2ab8980024c7339",
+      "sha256": "1973ed49ad179634fe62a4e2dcb37992cd7e4b3cf60b4ac04a3c1ce22ee02274",
       "note": "Rendered from the current 2022-05-11 exAL-M-T1 full-history multivariate run"
     },
     {

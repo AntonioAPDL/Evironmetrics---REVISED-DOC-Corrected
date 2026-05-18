@@ -8,6 +8,7 @@ import json
 import shutil
 from pathlib import Path
 
+from article_runtime_bindings import binding_as_path, load_runtime_bindings
 from article_repo_layout import build_layout
 
 FIVE_RUN_SPECS = [
@@ -211,11 +212,16 @@ def refresh_representative_bundle(layout, runtime_root: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description='Refresh article-side exAL-M-T1 generated asset bundles.')
     parser.add_argument('--article-root', type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument('--runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_sharedspec_20260516'))
+    parser.add_argument('--runtime-root', type=Path)
     args = parser.parse_args()
 
     article_root = args.article_root.resolve()
-    runtime_root = args.runtime_root.resolve()
+    bindings = load_runtime_bindings(article_root)
+    runtime_root = (
+        args.runtime_root.resolve()
+        if args.runtime_root is not None
+        else binding_as_path(bindings, 'exal_m_t1', 'keep_runtime_root')
+    )
     layout = build_layout(article_root)
     layout.ensure_base_dirs()
     refresh_five_run_sources(layout, runtime_root)

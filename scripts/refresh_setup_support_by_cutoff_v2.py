@@ -5,6 +5,7 @@ import argparse
 import shutil
 from pathlib import Path
 
+from article_runtime_bindings import binding_as_path, load_runtime_bindings
 from article_repo_layout import build_layout
 
 
@@ -17,11 +18,16 @@ def copy_tree(src: Path, dst: Path) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description='Refresh the article-side five-cutoff setup/support artifact bundle from the workflow runtime family.')
     parser.add_argument('--article-root', type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument('--workflow-runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260516'))
+    parser.add_argument('--workflow-runtime-root', type=Path)
     args = parser.parse_args()
 
     article_root = args.article_root.resolve()
-    runtime_root = args.workflow_runtime_root.resolve()
+    bindings = load_runtime_bindings(article_root)
+    runtime_root = (
+        args.workflow_runtime_root.resolve()
+        if args.workflow_runtime_root is not None
+        else binding_as_path(bindings, 'exal_m_t1', 'setup_support_runtime_root')
+    )
     if not runtime_root.exists():
         raise FileNotFoundError(f'Missing workflow runtime bundle: {runtime_root}')
 

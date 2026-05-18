@@ -42,10 +42,19 @@ forecast_start_date <- opt[["forecast-start-date"]]
 
 source(file.path(project_root, "scripts", "figure_style_contract.R"))
 
-DISPLAY_FLOW_SCALE <- "log1p_cms"
-INTERNAL_FLOW_SCALE <- "log_log1p_cms"
+DISPLAY_FLOW_SCALE <- if (!is.null(opt[["display-flow-scale"]]) && nzchar(opt[["display-flow-scale"]])) {
+  opt[["display-flow-scale"]]
+} else {
+  "log1p_cms"
+}
+INTERNAL_FLOW_SCALE <- if (!is.null(opt[["internal-flow-scale"]]) && nzchar(opt[["internal-flow-scale"]])) {
+  opt[["internal-flow-scale"]]
+} else {
+  DISPLAY_FLOW_SCALE
+}
+STATE_INTERNAL_FLOW_SCALE <- INTERNAL_FLOW_SCALE
 
-convert_internal_flow_to_display <- function(x, internal_scale = INTERNAL_FLOW_SCALE, display_scale = DISPLAY_FLOW_SCALE) {
+convert_internal_flow_to_display <- function(x, internal_scale = STATE_INTERNAL_FLOW_SCALE, display_scale = DISPLAY_FLOW_SCALE) {
   vals <- suppressWarnings(as.numeric(x))
   if (identical(internal_scale, display_scale)) {
     return(vals)
@@ -56,7 +65,7 @@ convert_internal_flow_to_display <- function(x, internal_scale = INTERNAL_FLOW_S
   stop(sprintf("Unsupported flow-scale conversion: %s -> %s", internal_scale, display_scale), call. = FALSE)
 }
 
-convert_internal_bounds_to_display <- function(bounds, internal_scale = INTERNAL_FLOW_SCALE, display_scale = DISPLAY_FLOW_SCALE) {
+convert_internal_bounds_to_display <- function(bounds, internal_scale = STATE_INTERNAL_FLOW_SCALE, display_scale = DISPLAY_FLOW_SCALE) {
   convert_internal_flow_to_display(bounds, internal_scale = internal_scale, display_scale = display_scale)
 }
 
@@ -562,6 +571,7 @@ if (!is.null(state_summary_path)) {
   q_d_95 <- cached$q_d_95
   time_cuts <- cached$time_cuts
   trend_shift_map <- cached$trend_shift_map %||% NULL
+  cached_internal_scale <- cached$internal_flow_scale %||% NULL
   if (is.null(trend_shift_map)) {
     stop(
       sprintf(
@@ -574,7 +584,24 @@ if (!is.null(state_summary_path)) {
   if (!identical(normalizePath(state_summary_path, mustWork = TRUE), normalizePath(state_cache_path, mustWork = FALSE))) {
     saveRDS(cached, state_cache_path)
   }
-  rebuild_state_cache <- FALSE
+  scale_mismatch <- !is.null(cached_internal_scale) && !identical(cached_internal_scale, INTERNAL_FLOW_SCALE)
+  if (scale_mismatch && !have_q_paths) {
+    stop(
+      sprintf(
+        paste(
+          "Retained historical-support state summary uses internal scale '%s',",
+          "but the requested render contract is '%s' and fit artifacts are unavailable to rebuild the cache."
+        ),
+        cached_internal_scale,
+        INTERNAL_FLOW_SCALE
+      ),
+      call. = FALSE
+    )
+  }
+  rebuild_state_cache <- (is.null(cached_internal_scale) || scale_mismatch) && have_q_paths
+  if (!is.null(cached_internal_scale) && !scale_mismatch) {
+    STATE_INTERNAL_FLOW_SCALE <- cached_internal_scale
+  }
 } else {
   rebuild_state_cache <- !file.exists(state_cache_path)
 }
@@ -588,9 +615,13 @@ if (!rebuild_state_cache) {
   q_d_95 <- cached$q_d_95
   time_cuts <- cached$time_cuts
   trend_shift_map <- cached$trend_shift_map %||% NULL
-  if (is.null(trend_shift_map)) {
-    message("Cached historical-support state summaries predate the trend-shift contract. Rebuilding cache...")
+  cached_internal_scale <- cached$internal_flow_scale %||% NULL
+  scale_mismatch <- !is.null(cached_internal_scale) && !identical(cached_internal_scale, INTERNAL_FLOW_SCALE)
+  if (is.null(trend_shift_map) || is.null(cached_internal_scale) || scale_mismatch) {
+    message("Cached historical-support state summaries predate the current trend-shift/scale contract. Rebuilding cache...")
     rebuild_state_cache <- TRUE
+  } else {
+    STATE_INTERNAL_FLOW_SCALE <- cached_internal_scale
   }
 }
 
@@ -649,7 +680,9 @@ if (rebuild_state_cache) {
       q_d_05 = q_d_05,
       q_d_95 = q_d_95,
       time_cuts = time_cuts,
-      trend_shift_map = trend_shift_map
+      trend_shift_map = trend_shift_map,
+      internal_flow_scale = STATE_INTERNAL_FLOW_SCALE,
+      display_flow_scale = DISPLAY_FLOW_SCALE
     ),
     state_cache_path
   )
@@ -716,7 +749,7 @@ meta <- list(
     "80_component_1991_2022.png"
   ),
   display_flow_scale = DISPLAY_FLOW_SCALE,
-  internal_flow_scale = INTERNAL_FLOW_SCALE,
+  internal_flow_scale = STATE_INTERNAL_FLOW_SCALE,
   component_display_contract = "80-month component shifted by posterior mean trend level",
   time_cuts = as.integer(time_cuts),
   time_cut_dates = as.character(as.Date(timestamps[time_cuts])),

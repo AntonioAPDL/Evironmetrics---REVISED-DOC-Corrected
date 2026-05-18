@@ -7,6 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
+from article_runtime_bindings import binding_as_path, load_runtime_bindings
 
 def run(cmd: list[str]) -> None:
     print('+', ' '.join(cmd))
@@ -47,23 +48,17 @@ def run_optional(cmd: list[str], status_path: Path, *, strict: bool) -> None:
 def main() -> None:
     parser = argparse.ArgumentParser(description='Refresh all article-side generated assets and reports.')
     parser.add_argument('--article-root', type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument('--workflow-root', type=Path, default=Path(__file__).resolve().parents[2])
-    parser.add_argument('--runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_sharedspec_20260516'))
+    parser.add_argument('--workflow-root', type=Path)
+    parser.add_argument('--runtime-root', type=Path)
     parser.add_argument(
         '--setup-support-runtime-root',
         type=Path,
-        default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260516'),
     )
     parser.add_argument(
         '--multivar-support-run-root',
         type=Path,
-        default=Path(
-            '/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/'
-            'multimodel_v8_he2_exdqlm_multivar_keep_historical_support_replay_20260517/'
-            'runs/multimodel_20220511_v8_he2pubgdpc1r1_exdqlm_multivar_keep_historical_support_replay'
-        ),
     )
-    parser.add_argument('--univar-runtime-root', type=Path, default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_univar_all_cutoffs_sharedspec_20260516'))
+    parser.add_argument('--univar-runtime-root', type=Path)
     parser.add_argument(
         '--strict-current-model-support',
         action='store_true',
@@ -72,11 +67,24 @@ def main() -> None:
     args = parser.parse_args()
 
     article_root = args.article_root.resolve()
-    workflow_root = args.workflow_root.resolve()
-    runtime_root = args.runtime_root.resolve()
-    setup_support_runtime_root = args.setup_support_runtime_root.resolve()
-    multivar_support_run_root = args.multivar_support_run_root.resolve()
-    univar_runtime_root = args.univar_runtime_root.resolve()
+    bindings = load_runtime_bindings(article_root)
+    workflow_root = args.workflow_root.resolve() if args.workflow_root is not None else binding_as_path(bindings, 'workflow_root')
+    runtime_root = args.runtime_root.resolve() if args.runtime_root is not None else binding_as_path(bindings, 'exal_m_t1', 'keep_runtime_root')
+    setup_support_runtime_root = (
+        args.setup_support_runtime_root.resolve()
+        if args.setup_support_runtime_root is not None
+        else binding_as_path(bindings, 'exal_m_t1', 'setup_support_runtime_root')
+    )
+    multivar_support_run_root = (
+        args.multivar_support_run_root.resolve()
+        if args.multivar_support_run_root is not None
+        else binding_as_path(bindings, 'exal_m_t1', 'historical_support_replay_run_root')
+    )
+    univar_runtime_root = (
+        args.univar_runtime_root.resolve()
+        if args.univar_runtime_root is not None
+        else binding_as_path(bindings, 'exal_m_t1', 'univar_runtime_root')
+    )
 
     py = sys.executable
     run_optional([

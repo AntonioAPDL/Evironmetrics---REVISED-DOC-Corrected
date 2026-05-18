@@ -5,9 +5,9 @@
   "forecast_start_date": "2022-05-12",
   "rendered_files": ["All_exal_2012-2016_DISC.png", "All_exal_2017-2019_DISC.png", "All_exal_2017-2019_DISC_fullrange.png", "80_component_1991_2022.png"],
   "display_flow_scale": "log1p_cms",
-  "internal_flow_scale": "log_log1p_cms",
+  "internal_flow_scale": "log1p_cms",
   "component_display_contract": "80-month component shifted by posterior mean trend level",
   "time_cuts": [9197, 10566, 10703, 11753],
   "time_cut_dates": ["2012-08-01", "2016-05-01", "2016-09-15", "2019-08-01"],
-  "rendered_at_utc": "2026-05-17 20:51:51 UTC"
+  "rendered_at_utc": "2026-05-18 00:53:35 UTC"
 }

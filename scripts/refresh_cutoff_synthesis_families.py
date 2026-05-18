@@ -8,6 +8,7 @@ import json
 import shutil
 from pathlib import Path
 
+from article_runtime_bindings import binding_as_path, load_runtime_bindings
 from article_repo_layout import (
     CUTOFF_MULTIVARIATE_SYNTHESIS_FILENAMES,
     CUTOFF_MULTIVARIATE_SYNTHESIS_OVERLAY_FILENAMES,
@@ -194,18 +195,25 @@ def main() -> None:
     parser.add_argument(
         '--multivar-runtime-root',
         type=Path,
-        default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_sharedspec_20260516'),
     )
     parser.add_argument(
         '--univar-runtime-root',
         type=Path,
-        default=Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_univar_all_cutoffs_sharedspec_20260516'),
     )
     args = parser.parse_args()
 
     article_root = args.article_root.resolve()
-    multivar_runtime_root = args.multivar_runtime_root.resolve()
-    univar_runtime_root = args.univar_runtime_root.resolve()
+    bindings = load_runtime_bindings(article_root)
+    multivar_runtime_root = (
+        args.multivar_runtime_root.resolve()
+        if args.multivar_runtime_root is not None
+        else binding_as_path(bindings, 'exal_m_t1', 'keep_runtime_root')
+    )
+    univar_runtime_root = (
+        args.univar_runtime_root.resolve()
+        if args.univar_runtime_root is not None
+        else binding_as_path(bindings, 'exal_m_t1', 'univar_runtime_root')
+    )
     layout = build_layout(article_root)
     layout.ensure_base_dirs()
 

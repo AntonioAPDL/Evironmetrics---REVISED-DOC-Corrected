@@ -9,6 +9,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
+from article_runtime_bindings import binding_as_path, load_runtime_bindings
 from article_repo_layout import build_layout
 
 MULTIVAR_SPEC = {
@@ -55,6 +56,35 @@ def run(cmd: list[str]) -> None:
     subprocess.run(cmd, check=True)
 
 
+def yaml_scalar(path: Path, key: str) -> str | None:
+    if not path.exists():
+        return None
+    needle = f"{key}:"
+    for raw in path.read_text(encoding="utf-8").splitlines():
+        stripped = raw.strip()
+        if stripped.startswith(needle):
+            return stripped.split(":", 1)[1].strip().strip("'\"")
+    return None
+
+
+def infer_flow_scale_contract(run_root: Path) -> tuple[str, str, str]:
+    resolved = run_root / "resolved_config.yaml"
+    manifest = run_root / "run_manifest.yaml"
+    display_scale = (
+        yaml_scalar(resolved, "legacy_post_input_scale")
+        or yaml_scalar(resolved, "legacy_fit_input_scale")
+        or yaml_scalar(manifest, "to_scale")
+        or "log1p_cms"
+    )
+    internal_scale = (
+        yaml_scalar(resolved, "analysis_scale_post_internal")
+        or yaml_scalar(resolved, "analysis_scale_fit_internal")
+        or display_scale
+    )
+    source = str(resolved if resolved.exists() else manifest)
+    return display_scale, internal_scale, source
+
+
 def multivar_fit_q_paths(run_root: Path) -> list[Path]:
     return [
         run_root / "fit/exdqlm_multivar/keep/q=05/outputs/DISC_variables_5_exAL_synth_DISC.RData",
@@ -88,6 +118,7 @@ def write_bundle(
     univar_output_root: Path,
     *,
     render_generation_mode: str,
+    render_scale_contract: dict[str, str],
 ) -> None:
     figures_dir = bundle_root / "figures"
     rows: list[list[str]] = []
@@ -130,6 +161,7 @@ def write_bundle(
             "historical_support_render_run_root": str(render_multivar_run_root),
             "historical_support_render_generation_mode": render_generation_mode,
             "retained_state_summary_path": str(figures_dir / "cache" / "historical_support_state_summaries.rds"),
+            "render_scale_contract": render_scale_contract,
         },
         "univar_source": {
             "cutoff": UNIVAR_SPEC["cutoff"],
@@ -172,33 +204,39 @@ def write_bundle(
 def main() -> None:
     parser = argparse.ArgumentParser(description="Refresh current-model support figures for the revised article.")
     parser.add_argument("--article-root", type=Path, default=Path(__file__).resolve().parents[1])
-    parser.add_argument("--workflow-root", type=Path, default=Path(__file__).resolve().parents[2])
+    parser.add_argument("--workflow-root", type=Path)
     parser.add_argument(
         "--multivar-runtime-root",
         type=Path,
-        default=Path("/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_sharedspec_20260516"),
     )
     parser.add_argument(
         "--multivar-support-run-root",
         type=Path,
-        default=Path(
-            "/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/"
-            "multimodel_v8_he2_exdqlm_multivar_keep_historical_support_replay_20260517/"
-            "runs/multimodel_20220511_v8_he2pubgdpc1r1_exdqlm_multivar_keep_historical_support_replay"
-        ),
     )
     parser.add_argument(
         "--univar-runtime-root",
         type=Path,
-        default=Path("/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_univar_all_cutoffs_sharedspec_20260516"),
     )
     args = parser.parse_args()
 
     article_root = args.article_root.resolve()
-    workflow_root = args.workflow_root.resolve()
-    multivar_runtime_root = args.multivar_runtime_root.resolve()
-    multivar_support_run_root = args.multivar_support_run_root.resolve()
-    univar_runtime_root = args.univar_runtime_root.resolve()
+    bindings = load_runtime_bindings(article_root)
+    workflow_root = args.workflow_root.resolve() if args.workflow_root is not None else binding_as_path(bindings, "workflow_root")
+    multivar_runtime_root = (
+        args.multivar_runtime_root.resolve()
+        if args.multivar_runtime_root is not None
+        else binding_as_path(bindings, "exal_m_t1", "keep_runtime_root")
+    )
+    multivar_support_run_root = (
+        args.multivar_support_run_root.resolve()
+        if args.multivar_support_run_root is not None
+        else binding_as_path(bindings, "exal_m_t1", "historical_support_replay_run_root")
+    )
+    univar_runtime_root = (
+        args.univar_runtime_root.resolve()
+        if args.univar_runtime_root is not None
+        else binding_as_path(bindings, "exal_m_t1", "univar_runtime_root")
+    )
 
     layout = build_layout(article_root)
     layout.ensure_base_dirs()
@@ -236,6 +274,8 @@ def main() -> None:
             f"canonical={canonical_multivar_run_root} support={multivar_support_run_root} state_summary={retained_state_summary}"
         )
 
+    display_flow_scale, internal_flow_scale, flow_scale_source = infer_flow_scale_contract(render_multivar_run_root)
+
     render_cmd = [
         "Rscript",
         str(article_root / "scripts" / "render_current_model_output_support_figures.R"),
@@ -244,6 +284,8 @@ def main() -> None:
         "--output-dir", str(figures_dir),
         "--cutoff-date", MULTIVAR_SPEC["cutoff"],
         "--forecast-start-date", MULTIVAR_SPEC["forecast_start"],
+        "--display-flow-scale", display_flow_scale,
+        "--internal-flow-scale", internal_flow_scale,
     ]
     if state_summary_arg is not None:
         render_cmd.extend(["--state-summary-path", str(state_summary_arg)])
@@ -257,6 +299,11 @@ def main() -> None:
         render_multivar_run_root,
         univar_output_root,
         render_generation_mode=render_generation_mode,
+        render_scale_contract={
+            "display_flow_scale": display_flow_scale,
+            "internal_flow_scale": internal_flow_scale,
+            "source": flow_scale_source,
+        },
     )
     print("Refreshed current-model output support figures successfully.")
 

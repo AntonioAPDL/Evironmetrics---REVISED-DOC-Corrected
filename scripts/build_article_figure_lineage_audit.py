@@ -7,25 +7,30 @@ import json
 from pathlib import Path
 
 from article_asset_manifest import load_manifest
+from article_runtime_bindings import binding_as_path, load_runtime_bindings
 from article_repo_layout import build_layout
-
-LIVE_KEEP_ROOT = Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_sharedspec_20260516')
-COMPLETED_KEEP_ROOT = Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_multivar_keep_all_cutoffs_sharedspec_20260516')
-COMPLETED_UNIVAR_ROOT = Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/multimodel_v8_he2_exdqlm_univar_all_cutoffs_sharedspec_20260516')
-SETUP_SUPPORT_RUNTIME = Path('/data/muscat_data/jaguir26/project1_ucsc_phd_runtime/exal_m_t1_setup_support_by_cutoff_v2_20260516')
-
 
 def load_csv(path: Path) -> list[dict[str, str]]:
     with path.open(newline='', encoding='utf-8') as handle:
         return list(csv.DictReader(handle))
 
 
-def keep_sharedspec_complete() -> bool:
-    summaries = list((LIVE_KEEP_ROOT / 'runs').glob('*/report/summary.json'))
+def keep_sharedspec_complete(live_keep_root: Path) -> bool:
+    summaries = list((live_keep_root / 'runs').glob('*/report/summary.json'))
     return len(summaries) == 5
 
 
-def infer_row(article_root: Path, rel_path: str, manuscript_sources: dict[str, dict[str, str]], appendix_rows: dict[str, dict[str, str]], forecast_rows: dict[str, dict[str, str]], multivar_rows: dict[str, dict[str, str]], reference_rows: dict[str, dict[str, str]]) -> dict[str, str]:
+def infer_row(
+    article_root: Path,
+    rel_path: str,
+    manuscript_sources: dict[str, dict[str, str]],
+    appendix_rows: dict[str, dict[str, str]],
+    forecast_rows: dict[str, dict[str, str]],
+    multivar_rows: dict[str, dict[str, str]],
+    reference_rows: dict[str, dict[str, str]],
+    *,
+    completed_keep_root: Path,
+) -> dict[str, str]:
     prefix = rel_path.split('/', 1)[0]
     name = Path(rel_path).name
 
@@ -59,7 +64,7 @@ def infer_row(article_root: Path, rel_path: str, manuscript_sources: dict[str, d
             render_mode = bundle_payload.get('multivar_source', {}).get('historical_support_render_generation_mode', '')
             canonical_root = bundle_payload.get('multivar_source', {}).get('canonical_runtime_run_root', '')
             refreshed_ok = refresh_payload.get('returncode') == 0
-            canonical_ok = canonical_root.startswith(str(COMPLETED_KEEP_ROOT))
+            canonical_ok = canonical_root.startswith(str(completed_keep_root))
             if refreshed_ok and canonical_ok and render_mode:
                 return {
                     'classification': 'model-output-driven figure',
@@ -133,6 +138,11 @@ def main() -> None:
     args = parser.parse_args()
 
     article_root = args.article_root.resolve()
+    bindings = load_runtime_bindings(article_root)
+    live_keep_root = binding_as_path(bindings, 'exal_m_t1', 'keep_runtime_root')
+    completed_keep_root = binding_as_path(bindings, 'exal_m_t1', 'keep_runtime_root')
+    completed_univar_root = binding_as_path(bindings, 'exal_m_t1', 'univar_runtime_root')
+    setup_support_runtime = binding_as_path(bindings, 'exal_m_t1', 'setup_support_runtime_root')
     layout = build_layout(article_root)
     layout.ensure_base_dirs()
 
@@ -167,7 +177,16 @@ def main() -> None:
 
     rows = []
     for rel in sorted(str(p.relative_to(layout.figures_dir)) for p in layout.figures_dir.rglob('*') if p.is_file()):
-        info = infer_row(article_root, rel, manuscript_sources, appendix_rows, forecast_rows, multivar_rows, reference_rows)
+        info = infer_row(
+            article_root,
+            rel,
+            manuscript_sources,
+            appendix_rows,
+            forecast_rows,
+            multivar_rows,
+            reference_rows,
+            completed_keep_root=completed_keep_root,
+        )
         rows.append({
             'figure_path': f'figures/{rel}',
             **info,
@@ -206,11 +225,11 @@ def main() -> None:
         writer.writerows(rows)
 
     summary = {
-        'setup_support_runtime_root': str(SETUP_SUPPORT_RUNTIME),
-        'completed_keep_output_root': str(COMPLETED_KEEP_ROOT),
-        'completed_univar_output_root': str(COMPLETED_UNIVAR_ROOT),
-        'live_keep_sharedspec_root': str(LIVE_KEEP_ROOT),
-        'live_keep_sharedspec_complete': keep_sharedspec_complete(),
+        'setup_support_runtime_root': str(setup_support_runtime),
+        'completed_keep_output_root': str(completed_keep_root),
+        'completed_univar_output_root': str(completed_univar_root),
+        'live_keep_sharedspec_root': str(live_keep_root),
+        'live_keep_sharedspec_complete': keep_sharedspec_complete(live_keep_root),
         'setup_support_full_history_all_cutoffs': full_history_all_setup,
         'setup_support_gdpc_all_cutoffs': gdpc_all_setup,
         'uppercase_lowercase_figure_trees_match': mirror_match,
@@ -223,10 +242,10 @@ def main() -> None:
     md = []
     md.append('# Article Figure Lineage Audit\n\n')
     md.append('## Executive read\n\n')
-    md.append(f"- Setup/support family refreshed from `{SETUP_SUPPORT_RUNTIME}`.\n")
+    md.append(f"- Setup/support family refreshed from `{setup_support_runtime}`.\n")
     md.append(f"- Setup/support full-history contract across all cutoffs: `{'PASS' if full_history_all_setup else 'FAIL'}`.\n")
     md.append(f"- Setup/support GDPC contract across all cutoffs: `{'PASS' if gdpc_all_setup else 'FAIL'}`.\n")
-    md.append(f"- Live shared-spec keep outputs complete: `{'YES' if keep_sharedspec_complete() else 'NO'}`.\n")
+    md.append(f"- Live shared-spec keep outputs complete: `{'YES' if keep_sharedspec_complete(live_keep_root) else 'NO'}`.\n")
     md.append(f"- Legacy uppercase `Figures/` mirror matches lowercase canonical `figures/`: `{'YES' if mirror_match else 'NO'}`.\n\n")
     md.append('## Figure family conclusions\n\n')
     md.append('| Family | Current status | Source lineage | Notes |\n')
