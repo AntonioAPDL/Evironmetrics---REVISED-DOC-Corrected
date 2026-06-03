@@ -101,7 +101,7 @@
         "bayesian_manifest_csv": "artifacts/he2_publication_freeze/he2_bayesian_publication_manifest.csv",
         "five_run_source_root": "artifacts/five_cutoff_crps_validation_sources"
       },
-      "note": "Generated from the frozen HE2 publication manifest plus the raw-baseline rows in the five authoritative exAL-M-T1 CRPS summaries. This remains transitional until the other eight HE2 Bayesian comparison families are promoted onto the same canonical input bundle."
+      "note": "Generated from the frozen HE2 publication manifest plus the raw-baseline rows in the five authoritative exAL-M-T1 CRPS summaries. The exAL-M-T1, AL-M-T1, and exAL-M-T0 families are promoted onto canonical input bundles; this remains transitional until the remaining six HE2 Bayesian comparison families are promoted onto the same canonical input bundle."
     },
     "tab:components_23_31": {
       "label": "tab:components_23_31",

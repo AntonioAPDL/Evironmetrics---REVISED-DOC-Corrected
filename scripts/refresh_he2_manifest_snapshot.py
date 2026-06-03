@@ -14,6 +14,9 @@ MANIFEST_FILES = [
     'he2_bayesian_publication_manifest.csv',
     'he2_bayesian_publication_alignment.csv',
     'he2_bayesian_publication_inputs.csv',
+    'he2_publication_parity_gate.md',
+    'he2_publication_parity_gate.csv',
+    'he2_publication_parity_gate_summary.json',
 ]
 
 AUDIT_FILES = [

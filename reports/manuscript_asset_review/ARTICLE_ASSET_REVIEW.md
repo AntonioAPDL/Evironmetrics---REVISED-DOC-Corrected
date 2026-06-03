@@ -48,7 +48,7 @@ Primary wiring audit: `reports/manuscript_asset_review/CURRENT_MODEL_OUTPUT_WIRI
 
 | Label | Role | Generated include | TeX line | Note |
 |---|---|---|---:|---|
-| `tab:benchmark_crps_models` | Five-cutoff benchmark table | `tables/generated_tex/benchmark_crps_main_table.tex` | 355 | Generated from the frozen HE2 publication manifest plus the raw-baseline rows in the five authoritative exAL-M-T1 CRPS summaries. This remains transitional until the other eight HE2 Bayesian comparison families are promoted onto the same canonical input bundle. |
+| `tab:benchmark_crps_models` | Five-cutoff benchmark table | `tables/generated_tex/benchmark_crps_main_table.tex` | 355 | Generated from the frozen HE2 publication manifest plus the raw-baseline rows in the five authoritative exAL-M-T1 CRPS summaries. The exAL-M-T1, AL-M-T1, and exAL-M-T0 families are promoted onto canonical input bundles; this remains transitional until the remaining six HE2 Bayesian comparison families are promoted onto the same canonical input bundle. |
 | `tab:components_23_31` | Representative covariate-effects table | `tables/generated_tex/representative_covariate_effects_table.tex` | 366 | Generated from the representative 2022-12-25 exAL-M-T1 covariate-effects export |
 | `tab:gamma_sigma_intervals1` | Appendix gamma summary | `tables/generated_tex/appendix_gamma_summary_table.tex` | 459 | Generated from the representative 2022-12-25 exAL-M-T1 gamma export |
 | `tab:gamma_sigma_intervals2` | Appendix sigma summary | `tables/generated_tex/appendix_sigma_summary_table.tex` | 461 | Generated from the representative 2022-12-25 exAL-M-T1 sigma export |
