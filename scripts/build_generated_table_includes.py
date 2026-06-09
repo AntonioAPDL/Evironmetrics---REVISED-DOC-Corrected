@@ -17,6 +17,9 @@ SOURCE_ORDER = ['USGS', 'GLOFAS', 'NWS']
 COMPONENT_COVARIATES = ['Precipitation', 'Soil Moisture', 'PC1']
 COMPONENT_QUANTILES = ['5', '50', '95']
 COMPONENT_LABELS = {'PC1': 'First GDPC factor'}
+HE4_MODEL_ORDER = ['exAL-M-T1', 'AL-M-T1', 'exAL-U-T1', 'AL-U-T1']
+HE4_TAU_LABELS = ['q0.05', 'q0.20', 'q0.35', 'q0.50', 'q0.65', 'q0.80', 'q0.95']
+HE4_TAU_COLUMNS = ['q0.05', 'q0.20', 'q0.35', 'q0.50', 'q0.65', 'q0.80', 'q0.95']
 RAW_MODEL_MAP = {'RAW-GLOFAS': 'glofas_ensemble', 'RAW-NWS': 'nws_nwm_ensemble'}
 RUN_SLUG_MAP = {
     '20210123': '20210123_exal_m_t1',
@@ -141,6 +144,44 @@ def build_source_summary_rows(article_root: Path, table_cfg: dict, table_label: 
     return lines, manifest_out
 
 
+def build_he4_rows(article_root: Path, table_cfg: dict) -> tuple[list[str], list[dict[str, str]]]:
+    rows = read_csv(article_root / table_cfg['sources']['he4_quantile_check_loss_wide_csv'])
+    lookup = {(row['cutoff'], row['manuscript_label']): row for row in rows}
+    cutoffs = [cutoff for cutoff in CUTOFF_ORDER if any(row['cutoff'] == cutoff for row in rows)]
+    if len(cutoffs) != len(CUTOFF_ORDER):
+        raise ValueError(f'HE4 source is missing one or more expected cutoffs: {CUTOFF_ORDER}')
+
+    lines: list[str] = []
+    manifest_out: list[dict[str, str]] = []
+    for cutoff in CUTOFF_ORDER:
+        cutoff_rows = [lookup[(cutoff, label)] for label in HE4_MODEL_ORDER]
+        display = cutoff_rows[0]['cutoff_display']
+        best_by_tau = {
+            tau_col: min(float(row[tau_col]) for row in cutoff_rows)
+            for tau_col in HE4_TAU_COLUMNS
+        }
+        lines.append(rf'\multicolumn{{8}}{{l}}{{\textit{{Cutoff {display}}}}} \\')
+        for label in HE4_MODEL_ORDER:
+            row = lookup[(cutoff, label)]
+            cells = [label]
+            for tau_col in HE4_TAU_COLUMNS:
+                value = float(row[tau_col])
+                rendered = f'{value:.4f}'
+                if abs(round(value, 4) - round(best_by_tau[tau_col], 4)) <= 5e-5:
+                    rendered = f'\\textbf{{{rendered}}}'
+                cells.append(rendered)
+            lines.append(' & '.join(cells) + ' \\\\')
+            manifest_out.append({
+                'table_label': 'tab:he4_quantile_check_loss',
+                'row_label': f'{cutoff}_{label}',
+                'source_class': table_cfg['source_class'],
+                'source_note': table_cfg['note'],
+            })
+        if cutoff != CUTOFF_ORDER[-1]:
+            lines.append(r'\addlinespace[1pt]')
+    return lines, manifest_out
+
+
 def write_lines(path: Path, lines: list[str]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text('\n'.join(lines) + '\n')
@@ -186,6 +227,31 @@ def main() -> None:
         r'\end{table*}',
     ]
     write_lines(out_root / TABLE_TEX_FILENAMES['benchmark_block'], benchmark_block_lines)
+
+    he4_lines, rows = build_he4_rows(article_root, manifest['tables']['tab:he4_quantile_check_loss'])
+    manifest_rows.extend(rows)
+    write_lines(out_root / TABLE_TEX_FILENAMES['he4_rows'], he4_lines)
+    he4_block_lines = [
+        r'\begin{table*}[htbp]',
+        r'\centering',
+        r'\renewcommand{\arraystretch}{1.08}',
+        r'\begin{threeparttable}',
+        r'\caption{Mean forecast-window quantile check loss by synthesis model, cutoff, and target quantile. Lower values are better; bold indicates the lowest check loss within each cutoff and quantile column.}',
+        r'\label{tab:he4_quantile_check_loss}',
+        r'\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} >{\ttfamily}l r r r r r r r}',
+        r'\toprule',
+        r'Model & q0.05 & q0.20 & q0.35 & q0.50 & q0.65 & q0.80 & q0.95 \\',
+        r'\midrule',
+        *he4_lines,
+        r'\bottomrule',
+        r'\end{tabular*}',
+        r'\begin{tablenotes}',
+        r'\item \textit{Note:} Check loss is computed on forecast-window rows only, using the held-out USGS observation as the verification target on the same $\log(1+Q)$ scale used for CRPS. The four synthesis competitors are resolved directly from the frozen HE-2 publication manifest.',
+        r'\end{tablenotes}',
+        r'\end{threeparttable}',
+        r'\end{table*}',
+    ]
+    write_lines(out_root / TABLE_TEX_FILENAMES['he4_block'], he4_block_lines)
 
     component_lines, rows = build_component_rows(article_root, manifest['tables']['tab:components_23_31'])
     manifest_rows.extend(rows)
@@ -287,6 +353,8 @@ def main() -> None:
             'tab:benchmark_crps_models_bayesian': str((layout.generated_tex_dir / TABLE_TEX_FILENAMES['benchmark_bayesian_rows']).relative_to(article_root)),
             'tab:benchmark_crps_models_body': str((layout.generated_tex_dir / TABLE_TEX_FILENAMES['benchmark_body']).relative_to(article_root)),
             'tab:benchmark_crps_models_block': str((layout.generated_tex_dir / TABLE_TEX_FILENAMES['benchmark_block']).relative_to(article_root)),
+            'tab:he4_quantile_check_loss': str((layout.generated_tex_dir / TABLE_TEX_FILENAMES['he4_rows']).relative_to(article_root)),
+            'tab:he4_quantile_check_loss_block': str((layout.generated_tex_dir / TABLE_TEX_FILENAMES['he4_block']).relative_to(article_root)),
             'tab:components_23_31': str((layout.generated_tex_dir / TABLE_TEX_FILENAMES['components_rows']).relative_to(article_root)),
             'tab:components_23_31_block': str((layout.generated_tex_dir / TABLE_TEX_FILENAMES['components_block']).relative_to(article_root)),
             'tab:gamma_sigma_intervals1': str((layout.generated_tex_dir / TABLE_TEX_FILENAMES['gamma_rows']).relative_to(article_root)),

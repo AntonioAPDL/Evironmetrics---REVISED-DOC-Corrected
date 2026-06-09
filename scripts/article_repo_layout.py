@@ -77,6 +77,8 @@ TABLE_TEX_FILENAMES = {
     'gamma_block': 'appendix_gamma_summary_table.tex',
     'sigma_rows': 'appendix_sigma_rows.tex',
     'sigma_block': 'appendix_sigma_summary_table.tex',
+    'he4_rows': 'he4_quantile_check_loss_rows.tex',
+    'he4_block': 'he4_quantile_check_loss_main_table.tex',
 }
 
 

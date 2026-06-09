@@ -103,6 +103,18 @@
       },
       "note": "Generated from the frozen HE2 publication manifest plus the raw-baseline rows in the five authoritative exAL-M-T1 CRPS summaries. All nine Bayesian benchmark families are promoted onto the canonical 20260510 input-bundle contract; this is the final CRPS table source for the current publication snapshot."
     },
+    "tab:he4_quantile_check_loss": {
+      "label": "tab:he4_quantile_check_loss",
+      "role": "Forecast-window quantile check-loss table for the four principal synthesis competitors",
+      "table_tex_path": "tables/generated_tex/he4_quantile_check_loss_main_table.tex",
+      "source_class": "he4_current_he2_publication_manifest",
+      "sources": {
+        "he4_quantile_check_loss_wide_csv": "artifacts/he4_quantile_check_loss_current_publication/he4_quantile_check_loss_wide.csv",
+        "he4_selection_audit_csv": "artifacts/he4_quantile_check_loss_current_publication/he4_selection_audit.csv",
+        "he2_publication_manifest_csv": "artifacts/he2_publication_freeze/he2_bayesian_publication_manifest.csv"
+      },
+      "note": "Generated from the current HE2 publication manifest rows for exAL-M-T1, AL-M-T1, exAL-U-T1, and AL-U-T1. Quantile artifacts are resolved from the manifest run_root/run_id pairs, and CRPS is cross-checked against the frozen HE2 manifest before check losses are summarized."
+    },
     "tab:components_23_31": {
       "label": "tab:components_23_31",
       "role": "Representative covariate-effects table",
