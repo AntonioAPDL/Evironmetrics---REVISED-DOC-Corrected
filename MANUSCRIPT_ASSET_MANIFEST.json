@@ -43,22 +43,22 @@
     {
       "label": "fig:dry_quantile",
       "manuscript_path": "figures/manuscript/historical_summary_dry_period.png",
-      "category": "Historical Summaries",
-      "role": "Dry-period historical summary",
-      "source_path": "artifacts/historical_support_from_current_models/figures/historical_summary_dry_period.png",
-      "source_class": "current_model_output_support",
+      "category": "Selected Model",
+      "role": "Selected-model quantile dynamics, 2012-2016 window",
+      "source_path": "artifacts/representative_selected_model_2022_12_25/authoritative_support/figures/selected_model_quantile_dry_period.png",
+      "source_class": "current_selected_model_representative",
       "current_model_output_wired": true,
-      "note": "Rendered from the current 2022-05-11 exAL-M-T1 authoritative canonical-grid multivariate run or retained support replay"
+      "note": "Rendered from the same 2022-12-25 selected exAL-M-T1 output authority as the synthesis figure."
     },
     {
       "label": "fig:rainy_quantile",
       "manuscript_path": "figures/manuscript/historical_summary_wet_period.png",
-      "category": "Historical Summaries",
-      "role": "Rainy-period historical summary",
-      "source_path": "artifacts/historical_support_from_current_models/figures/historical_summary_wet_period.png",
-      "source_class": "current_model_output_support",
+      "category": "Selected Model",
+      "role": "Selected-model quantile dynamics, 2017-2019 window",
+      "source_path": "artifacts/representative_selected_model_2022_12_25/authoritative_support/figures/selected_model_quantile_wet_period.png",
+      "source_class": "current_selected_model_representative",
       "current_model_output_wired": true,
-      "note": "Rendered from the current 2022-05-11 exAL-M-T1 authoritative canonical-grid multivariate run or retained support replay"
+      "note": "Rendered from the same 2022-12-25 selected exAL-M-T1 output authority as the synthesis figure."
     },
     {
       "label": "fig:synth1",
@@ -73,12 +73,12 @@
     {
       "label": "fig:80_components",
       "manuscript_path": "figures/manuscript/historical_component_80month.png",
-      "category": "Historical Summaries",
-      "role": "Long-cycle component summary",
-      "source_path": "artifacts/historical_support_from_current_models/figures/historical_component_80month.png",
-      "source_class": "current_model_output_support",
+      "category": "Selected Model",
+      "role": "Selected-model 80-month component summary",
+      "source_path": "artifacts/representative_selected_model_2022_12_25/authoritative_support/figures/selected_model_component_80month.png",
+      "source_class": "current_selected_model_representative",
       "current_model_output_wired": true,
-      "note": "Rendered from the current 2022-05-11 exAL-M-T1 authoritative canonical-grid multivariate run or retained support replay"
+      "note": "Rendered from the same 2022-12-25 selected exAL-M-T1 output authority as the synthesis figure."
     },
     {
       "label": "fig:synth2",

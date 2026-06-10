@@ -1,0 +1,7 @@
+{
+  "support_dir": "/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-2/artifacts/representative_selected_model_2022_12_25/authoritative_support",
+  "output_dir": "/data/muscat_data/jaguir26/project1_ucsc_phd/Evironmetrics---REVISED-DOC-2/artifacts/representative_selected_model_2022_12_25/authoritative_support/figures",
+  "display_flow_scale": "log1p_cms",
+  "rendered_files": ["selected_model_quantile_dry_period.png", "selected_model_quantile_wet_period.png", "selected_model_component_80month.png"],
+  "generated_at_utc": "2026-06-10T01:45:40Z"
+}

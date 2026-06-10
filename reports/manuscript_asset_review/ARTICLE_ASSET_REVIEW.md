@@ -24,19 +24,14 @@ Primary wiring audit: `reports/manuscript_asset_review/CURRENT_MODEL_OUTPUT_WIRI
 | `fig:retrospectives` | Retrospective-product setup figure | `figures/manuscript/retrospective_products_context.png` | `artifacts/five_cutoff_setup_support/20221225_exal_m_t1/figures/retrospective_log_discharge_plot_faceted.png` | 287 | yes | Representative 2022-12-25 setup/support figure from the canonical five-cutoff support bundle |
 | `fig:ensembles` | Forecast-product setup figure | `figures/manuscript/forecast_products_context.png` | `artifacts/five_cutoff_setup_support/20221225_exal_m_t1/figures/forecats.png` | 338 | yes | Representative 2022-12-25 setup/support figure from the canonical five-cutoff support bundle |
 
-## Historical Summaries
-
-| Label | Role | Manuscript path | Artifact source | TeX line | Wired to current outputs? | Note |
-|---|---|---|---|---:|---|---|
-| `fig:dry_quantile` | Dry-period historical summary | `figures/manuscript/historical_summary_dry_period.png` | `artifacts/historical_support_from_current_models/figures/historical_summary_dry_period.png` | 389 | yes | Rendered from the current 2022-05-11 exAL-M-T1 authoritative canonical-grid multivariate run or retained support replay |
-| `fig:rainy_quantile` | Rainy-period historical summary | `figures/manuscript/historical_summary_wet_period.png` | `artifacts/historical_support_from_current_models/figures/historical_summary_wet_period.png` | 398 | yes | Rendered from the current 2022-05-11 exAL-M-T1 authoritative canonical-grid multivariate run or retained support replay |
-| `fig:80_components` | Long-cycle component summary | `figures/manuscript/historical_component_80month.png` | `artifacts/historical_support_from_current_models/figures/historical_component_80month.png` | 481 | yes | Rendered from the current 2022-05-11 exAL-M-T1 authoritative canonical-grid multivariate run or retained support replay |
-
 ## Selected Model
 
 | Label | Role | Manuscript path | Artifact source | TeX line | Wired to current outputs? | Note |
 |---|---|---|---|---:|---|---|
+| `fig:dry_quantile` | Selected-model quantile dynamics, 2012-2016 window | `figures/manuscript/historical_summary_dry_period.png` | `artifacts/representative_selected_model_2022_12_25/authoritative_support/figures/selected_model_quantile_dry_period.png` | 389 | yes | Rendered from the same 2022-12-25 selected exAL-M-T1 output authority as the synthesis figure. |
+| `fig:rainy_quantile` | Selected-model quantile dynamics, 2017-2019 window | `figures/manuscript/historical_summary_wet_period.png` | `artifacts/representative_selected_model_2022_12_25/authoritative_support/figures/selected_model_quantile_wet_period.png` | 398 | yes | Rendered from the same 2022-12-25 selected exAL-M-T1 output authority as the synthesis figure. |
 | `fig:synth1` | Representative selected-model synthesis | `figures/manuscript/representative_synthesis_multivariate.png` | `artifacts/representative_selected_model_2022_12_25/representative_synthesis_multivariate.png` | 416 | yes | Authoritative representative 2022-12-25 exAL-M-T1 canonical-grid output |
+| `fig:80_components` | Selected-model 80-month component summary | `figures/manuscript/historical_component_80month.png` | `artifacts/representative_selected_model_2022_12_25/authoritative_support/figures/selected_model_component_80month.png` | 481 | yes | Rendered from the same 2022-12-25 selected exAL-M-T1 output authority as the synthesis figure. |
 
 ## Appendix Support
 
