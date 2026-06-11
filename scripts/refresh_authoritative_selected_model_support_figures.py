@@ -13,6 +13,7 @@ import yaml
 
 from article_asset_manifest import load_manifest, manifest_path
 from article_repo_layout import build_layout
+from article_runtime_bindings import binding_as_optional_path, load_runtime_bindings
 
 SUPPORT_FILES = [
     "authoritative_usgs_quantile_dynamics_summary.csv",
@@ -39,8 +40,8 @@ FIGURE_UPDATES = {
     "fig:80_components": {
         "filename": "selected_model_component_80month.png",
         "category": "Selected Model",
-        "role": "Selected-model 80-month component summary",
-        "note": "Rendered from the same 2022-12-25 selected exAL-M-T1 output authority as the synthesis figure.",
+        "role": "Selected-model 80-month component summary with dry/wet period overlays",
+        "note": "Rendered from the same 2022-12-25 selected exAL-M-T1 output authority as the synthesis figure using the audited samplewise component-6-plus-trend contract.",
     },
 }
 
@@ -136,7 +137,9 @@ def write_bundle_docs(bundle_root: Path, support_dir: Path, support_rows: list[d
         "# Authoritative Selected-Model Support\n\n"
         "This bundle contains compact posterior support artifacts and rendered figures for the representative "
         "`2022-12-25 exAL-M-T1` selected model. These figures are sourced from the same selected-output authority "
-        "as the synthesis figure.\n\n"
+        "as the synthesis figure. Figure A1 is article-labeled as the 80-month seasonal component; its internal "
+        "render metadata records the audited samplewise component-6-plus-trend construction and the dry/wet "
+        "period overlays.\n\n"
         f"- run id: `{authority.get('run_id', '')}`\n"
         f"- cutoff: `{authority.get('selected_cutoff_date', '')}`\n"
         f"- runtime output root: `{authority.get('runtime_output_root', '')}`\n\n"
@@ -164,9 +167,12 @@ def main() -> None:
     authority_payload = load_yaml(authority_path).get("authority", {})
     if not isinstance(authority_payload, dict):
         raise ValueError(f"authority must be a mapping: {authority_path}")
+    bindings = load_runtime_bindings(article_root)
+    bound_support_root = binding_as_optional_path(bindings, "exal_m_t1", "selected_support_output_root")
     source_output_root = (
         args.source_output_root.resolve()
         if args.source_output_root is not None
+        else bound_support_root if bound_support_root is not None
         else Path(str(authority_payload["runtime_output_root"])).resolve()
     )
 

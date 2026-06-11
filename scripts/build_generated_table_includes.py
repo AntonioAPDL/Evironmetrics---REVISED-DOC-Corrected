@@ -21,6 +21,8 @@ HE4_MODEL_ORDER = ['exAL-M-T1', 'AL-M-T1', 'exAL-U-T1', 'AL-U-T1']
 HE4_TAU_LABELS = ['q0.05', 'q0.20', 'q0.35', 'q0.50', 'q0.65', 'q0.80', 'q0.95']
 HE4_TAU_COLUMNS = ['q0.05', 'q0.20', 'q0.35', 'q0.50', 'q0.65', 'q0.80', 'q0.95']
 RAW_MODEL_MAP = {'RAW-GLOFAS': 'glofas_ensemble', 'RAW-NWS': 'nws_nwm_ensemble'}
+DISPLAY_DIGITS = 5
+DISPLAY_TIE_TOLERANCE = 0.5 * 10 ** (-DISPLAY_DIGITS)
 RUN_SLUG_MAP = {
     '20210123': '20210123_exal_m_t1',
     '20211112': '20211112_exal_m_t1',
@@ -37,6 +39,10 @@ def read_csv(path: Path) -> list[dict[str, str]]:
 
 def fmt_num(value: str | float, digits: int) -> str:
     return f'{float(value):.{digits}f}'
+
+
+def fmt_display(value: str | float) -> str:
+    return fmt_num(value, DISPLAY_DIGITS)
 
 
 def fmt_ci(row: dict[str, str], digits: int) -> str:
@@ -71,7 +77,7 @@ def build_benchmark_rows(article_root: Path, table_cfg: dict) -> tuple[list[str]
         parts = [row_label]
         for cutoff in CUTOFF_ORDER:
             value = values_by_cutoff[cutoff][row_label]
-            rendered = f'{value:.4f}'
+            rendered = fmt_display(value)
             if abs(value - best_by_cutoff[cutoff]) < 1e-12:
                 rendered = f'\\textbf{{{rendered}}}'
             parts.append(rendered)
@@ -86,7 +92,7 @@ def build_benchmark_rows(article_root: Path, table_cfg: dict) -> tuple[list[str]
         parts = [row_label]
         for cutoff in CUTOFF_ORDER:
             value = values_by_cutoff[cutoff][row_label]
-            rendered = f'{value:.4f}'
+            rendered = fmt_display(value)
             if abs(value - best_by_cutoff[cutoff]) < 1e-12:
                 rendered = f'\\textbf{{{rendered}}}'
             parts.append(rendered)
@@ -119,7 +125,7 @@ def build_component_rows(article_root: Path, table_cfg: dict) -> tuple[list[str]
             row = lookup[(cov, q)]
             prefix = f'\\multirow{{3}}{{*}}{{{display}}}' if idx == 0 else ''
             connector = '&' if idx > 0 else '  &'
-            lines.append(f'{prefix}{connector} {q_label[q]} & {fmt_num(row["center"], 3)} & {fmt_ci(row, 3)} \\\\')
+            lines.append(f'{prefix}{connector} {q_label[q]} & {fmt_display(row["center"])} & {fmt_ci(row, DISPLAY_DIGITS)} \\\\')
             manifest_out.append({'table_label': 'tab:components_23_31', 'row_label': f'{cov}_{q}', 'source_class': table_cfg['source_class'], 'source_note': table_cfg['note']})
         if cov != COMPONENT_COVARIATES[-1]:
             lines.append('\\midrule')
@@ -166,8 +172,8 @@ def build_he4_rows(article_root: Path, table_cfg: dict) -> tuple[list[str], list
             cells = [label]
             for tau_col in HE4_TAU_COLUMNS:
                 value = float(row[tau_col])
-                rendered = f'{value:.4f}'
-                if abs(round(value, 4) - round(best_by_tau[tau_col], 4)) <= 5e-5:
+                rendered = fmt_display(value)
+                if abs(round(value, DISPLAY_DIGITS) - round(best_by_tau[tau_col], DISPLAY_DIGITS)) <= DISPLAY_TIE_TOLERANCE:
                     rendered = f'\\textbf{{{rendered}}}'
                 cells.append(rendered)
             lines.append(' & '.join(cells) + ' \\\\')
@@ -262,7 +268,7 @@ def main() -> None:
         r'\begin{threeparttable}',
         r'\caption{Selected Posterior Means and 95\% Credible Intervals for Transfer-Function Covariates}',
         r'\label{tab:components_23_31}',
-        r'\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l c S[table-format=-1.3] l }',
+        r'\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l c S[table-format=-1.5] l }',
         r'\toprule',
         r'\textbf{Covariate} & \textbf{Quantile} & \textbf{Mean} & \textbf{95\% CI} \\',
         r'\midrule',
@@ -277,7 +283,7 @@ def main() -> None:
     ]
     write_lines(out_root / TABLE_TEX_FILENAMES['components_block'], component_block_lines)
 
-    gamma_lines, rows = build_source_summary_rows(article_root, manifest['tables']['tab:gamma_sigma_intervals1'], 'tab:gamma_sigma_intervals1', 3)
+    gamma_lines, rows = build_source_summary_rows(article_root, manifest['tables']['tab:gamma_sigma_intervals1'], 'tab:gamma_sigma_intervals1', DISPLAY_DIGITS)
     manifest_rows.extend(rows)
     write_lines(out_root / TABLE_TEX_FILENAMES['gamma_rows'], gamma_lines)
     gamma_block_lines = [
@@ -287,9 +293,9 @@ def main() -> None:
         r'\caption{Posterior Means and 95\% Credible Intervals for the Source-Specific Weight Coefficients $\gamma_j(\tau)$ at the Representative December 25, 2022 Cutoff}',
         r'\label{tab:gamma_sigma_intervals1}',
         r'\begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} l',
-        r' S[table-format=-1.3] l',
-        r' S[table-format=-1.3] l',
-        r' S[table-format=-1.3] l',
+        r' S[table-format=-1.5] l',
+        r' S[table-format=-1.5] l',
+        r' S[table-format=-1.5] l',
         r'@{}}',
         r'\toprule',
         r' & \multicolumn{2}{c}{\textbf{USGS}} & \multicolumn{2}{c}{\textbf{GLOFAS}} & \multicolumn{2}{c}{\textbf{NWS}} \\',
@@ -307,7 +313,7 @@ def main() -> None:
     ]
     write_lines(out_root / TABLE_TEX_FILENAMES['gamma_block'], gamma_block_lines)
 
-    sigma_lines, rows = build_source_summary_rows(article_root, manifest['tables']['tab:gamma_sigma_intervals2'], 'tab:gamma_sigma_intervals2', 5)
+    sigma_lines, rows = build_source_summary_rows(article_root, manifest['tables']['tab:gamma_sigma_intervals2'], 'tab:gamma_sigma_intervals2', DISPLAY_DIGITS)
     manifest_rows.extend(rows)
     write_lines(out_root / TABLE_TEX_FILENAMES['sigma_rows'], sigma_lines)
     sigma_block_lines = [
@@ -348,6 +354,7 @@ def main() -> None:
 
     metadata = {
         'manifest_path': str(manifest_path(article_root)),
+        'display_precision_digits': DISPLAY_DIGITS,
         'outputs': {
             'tab:benchmark_crps_models': str((layout.generated_tex_dir / TABLE_TEX_FILENAMES['benchmark_rows']).relative_to(article_root)),
             'tab:benchmark_crps_models_bayesian': str((layout.generated_tex_dir / TABLE_TEX_FILENAMES['benchmark_bayesian_rows']).relative_to(article_root)),
@@ -367,6 +374,7 @@ def main() -> None:
     (out_root / 'README.md').write_text(
         '# Generated Table Includes\n\n'
         'These TeX table fragments are generated from the article-side artifact bundles named in `MANUSCRIPT_ASSET_MANIFEST.json`.\n\n'
+        f'Publication-facing numeric cells are rendered with fixed {DISPLAY_DIGITS} decimal places.\n\n'
         'Refresh path:\n'
         '- `scripts/build_generated_table_includes.py`\n\n'
         'The manuscript uses `\\input{}` to consume these files directly.\n'

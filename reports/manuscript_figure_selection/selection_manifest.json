@@ -83,12 +83,12 @@
       "label": "fig:80_components",
       "manuscript_path": "figures/manuscript/historical_component_80month.png",
       "category": "Selected Model",
-      "role": "Selected-model 80-month component summary",
+      "role": "Selected-model 80-month component summary with dry/wet period overlays",
       "source_class": "current_selected_model_representative",
       "current_model_output_wired": true,
       "source_path": "artifacts/representative_selected_model_2022_12_25/authoritative_support/figures/selected_model_component_80month.png",
-      "sha256": "b4cb20bec0c6208baff742c3bd1c146108a7cf4b77c38e39b86c92bb11977786",
-      "note": "Rendered from the same 2022-12-25 selected exAL-M-T1 output authority as the synthesis figure."
+      "sha256": "6a73600e4d04ff16a112114c66018ff002ea31a33d175de3f57d4ed20f2533a8",
+      "note": "Rendered from the same 2022-12-25 selected exAL-M-T1 output authority as the synthesis figure using the audited samplewise component-6-plus-trend contract."
     },
     {
       "label": "fig:synth2",

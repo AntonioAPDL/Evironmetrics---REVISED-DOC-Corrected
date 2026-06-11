@@ -46,6 +46,18 @@ suppressPackageStartupMessages({
   library(ggplot2)
 })
 
+FIGURE_A1_COMPONENT_CONTRACT <- "component_6_plus_trend_component_1_samplewise"
+
+hydrologic_regime_periods <- function() {
+  data.frame(
+    xmin = as.Date(c("2012-01-01", "2017-01-01")),
+    xmax = as.Date(c("2016-12-31", "2019-12-31")),
+    period = c("Dry", "Wet"),
+    fill = c("#fff0b3", "#cfe8f7"),
+    stringsAsFactors = FALSE
+  )
+}
+
 dynamics_path <- file.path(support_dir, "authoritative_usgs_quantile_dynamics_summary.csv")
 component_path <- file.path(support_dir, "authoritative_component_summary.csv")
 if (!file.exists(dynamics_path)) stop(sprintf("Missing dynamics support CSV: %s", dynamics_path), call. = FALSE)
@@ -115,12 +127,17 @@ render_component_80month <- function(out_file) {
   dd <- components[
     components$quantile %in% c("q05", "q50", "q95") &
       components$component == 6 &
-      components$component_contract == "component_6_shifted_by_posterior_mean_trend_component_1" &
+      components$component_contract == FIGURE_A1_COMPONENT_CONTRACT &
       !is.na(components$date),
     ,
     drop = FALSE
   ]
-  if (nrow(dd) < 1L) stop("No shifted component-6 rows found in authoritative component summary.", call. = FALSE)
+  if (nrow(dd) < 1L) {
+    stop(
+      sprintf("No component-6 rows found for required contract `%s` in authoritative component summary.", FIGURE_A1_COMPONENT_CONTRACT),
+      call. = FALSE
+    )
+  }
   min_time <- ceiling(max(dd$time_index, na.rm = TRUE) / 10)
   dd <- dd[dd$time_index >= min_time, , drop = FALSE]
   obs <- dynamics[dynamics$quantile == "q50", c("date", "observed_usgs"), drop = FALSE]
@@ -129,9 +146,21 @@ render_component_80month <- function(out_file) {
   ylim <- range(c(dd$lower_025, dd$upper_975, obs$observed_usgs), na.rm = TRUE)
   if (!all(is.finite(ylim)) || diff(ylim) <= 0) ylim <- c(0, 1)
   ylim <- c(min(0, ylim[[1L]]), ylim[[2L]] + diff(ylim) * 0.08)
+  shade_periods <- hydrologic_regime_periods()
+  shade_periods <- shade_periods[shade_periods$xmax >= min(dd$date, na.rm = TRUE) & shade_periods$xmin <= max(dd$date, na.rm = TRUE), , drop = FALSE]
+  shade_periods$xmin <- pmax(shade_periods$xmin, min(dd$date, na.rm = TRUE))
+  shade_periods$xmax <- pmin(shade_periods$xmax, max(dd$date, na.rm = TRUE))
+  label_y <- ylim[[1L]] + 0.035 * diff(ylim)
   col <- c(q05 = "#b2182b", q50 = "#238b45", q95 = "#2171b5")
   fill <- c(q05 = "#fdbba1", q50 = "#b2df8a", q95 = "#a6bddb")
   p <- ggplot() +
+    geom_rect(
+      data = shade_periods,
+      aes(xmin = xmin, xmax = xmax, ymin = -Inf, ymax = Inf, fill = period),
+      alpha = 0.48,
+      inherit.aes = FALSE,
+      show.legend = FALSE
+    ) +
     geom_ribbon(
       data = dd,
       aes(x = date, ymin = lower_025, ymax = upper_975, fill = quantile),
@@ -143,7 +172,16 @@ render_component_80month <- function(out_file) {
     geom_line(data = obs, aes(x = date, y = observed_usgs), color = "black", linewidth = 0.12) +
     geom_point(data = obs, aes(x = date, y = observed_usgs), color = "black", size = 0.1, alpha = 0.9) +
     scale_color_manual(values = col, breaks = c("q05", "q50", "q95")) +
-    scale_fill_manual(values = fill, breaks = c("q05", "q50", "q95")) +
+    scale_fill_manual(values = c(fill, setNames(shade_periods$fill, shade_periods$period))) +
+    annotate(
+      "text",
+      x = shade_periods$xmin + (shade_periods$xmax - shade_periods$xmin) / 2,
+      y = label_y,
+      label = shade_periods$period,
+      size = 3.4,
+      color = "#555555",
+      fontface = "italic"
+    ) +
     coord_cartesian(ylim = ylim) +
     scale_x_date(date_breaks = "24 months", date_labels = "%Y-%m") +
     labs(
@@ -184,6 +222,17 @@ meta <- list(
   support_dir = support_dir,
   output_dir = out_dir,
   display_flow_scale = display_flow_scale,
+  figure_a1_component_contract = FIGURE_A1_COMPONENT_CONTRACT,
+  figure_a1_article_display_label = "80-month seasonal component",
+  hydrologic_regime_periods = lapply(seq_len(nrow(hydrologic_regime_periods())), function(i) {
+    row <- hydrologic_regime_periods()[i, , drop = FALSE]
+    list(
+      period = row$period[[1L]],
+      start = as.character(row$xmin[[1L]]),
+      end = as.character(row$xmax[[1L]]),
+      fill = row$fill[[1L]]
+    )
+  }),
   rendered_files = c(
     "selected_model_quantile_dry_period.png",
     "selected_model_quantile_wet_period.png",
