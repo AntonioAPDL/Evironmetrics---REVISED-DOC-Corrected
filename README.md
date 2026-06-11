@@ -35,6 +35,32 @@ the lowercase `figures/` tree as canonical, while `wileyNJD-APA.tex` also
 accepts the legacy uppercase `Figures/` tree as a compile-time fallback for
 Overleaf Git-sync compatibility.
 
+## Overleaf sync recovery
+
+Overleaf can create `overleaf-*` branches that delete generated publication
+assets under `figures/`, `Figures/`, `artifacts/`, or `tables/generated_tex/`.
+Those deletion-only branches are not manuscript edits and should not be accepted
+into `main`.
+
+When Overleaf reports that GitHub and Overleaf could not automatically merge,
+first audit the branch from this repo:
+
+```bash
+python3 scripts/merge_overleaf_branch_preserving_generated_assets.py --fetch origin/overleaf-YYYY-MM-DD-HHMM
+```
+
+If the audit reports no TeX/Bib source edits and only protected generated-asset
+changes, merge it with:
+
+```bash
+python3 scripts/merge_overleaf_branch_preserving_generated_assets.py origin/overleaf-YYYY-MM-DD-HHMM --merge-generated-deletions-only
+git push origin main
+```
+
+If real TeX/Bib source edits are present, merge them normally, but keep
+generated article assets from `main` unless the workflow-side refresh scripts are
+deliberately regenerating them.
+
 ## Standard compile command
 
 ```bash
