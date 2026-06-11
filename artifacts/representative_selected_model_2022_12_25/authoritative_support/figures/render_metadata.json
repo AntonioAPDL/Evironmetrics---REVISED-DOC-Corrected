@@ -19,5 +19,11 @@
     }
   ],
   "rendered_files": ["selected_model_quantile_dry_period.png", "selected_model_quantile_wet_period.png", "selected_model_component_80month.png"],
-  "generated_at_utc": "2026-06-11T01:53:20Z"
+  "component_analysis": {
+    "directory": "analysis_figures/component_evolution",
+    "manifest": "analysis_figures/component_evolution/component_analysis_manifest.csv",
+    "figure_count": 8,
+    "files": ["component_01_raw_state_component.png", "component_02_raw_state_component.png", "component_03_raw_state_component.png", "component_04_raw_state_component.png", "component_05_raw_state_component.png", "component_06_raw_state_component.png", "component_07_raw_state_component.png", "component_06_component_6_plus_trend_component_1_samplewise.png"]
+  },
+  "generated_at_utc": "2026-06-11T09:17:12Z"
 }

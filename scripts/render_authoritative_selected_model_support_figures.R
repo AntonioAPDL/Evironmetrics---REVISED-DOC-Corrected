@@ -47,6 +47,76 @@ suppressPackageStartupMessages({
 })
 
 FIGURE_A1_COMPONENT_CONTRACT <- "component_6_plus_trend_component_1_samplewise"
+COMPONENT_ANALYSIS_LEGACY_EXCLUDED_CONTRACTS <- c(
+  "component_6_shifted_by_posterior_mean_trend_component_1"
+)
+
+component_analysis_slug <- function(component, contract) {
+  contract_slug <- gsub("[^A-Za-z0-9]+", "_", as.character(contract))
+  contract_slug <- gsub("^_+|_+$", "", tolower(contract_slug))
+  sprintf("component_%02d_%s.png", as.integer(component), contract_slug)
+}
+
+component_analysis_label <- function(component, contract) {
+  component <- as.integer(component)
+  contract <- as.character(contract)
+  if (identical(contract, FIGURE_A1_COMPONENT_CONTRACT)) {
+    return("Component 6 plus trend component 1 (samplewise)")
+  }
+  if (identical(contract, "raw_state_component")) {
+    return(sprintf("Raw state component %d", component))
+  }
+  sprintf("Component %d (%s)", component, contract)
+}
+
+component_analysis_specs <- function(component_df) {
+  if (!is.data.frame(component_df) || nrow(component_df) == 0L) return(data.frame())
+  required <- c("component", "component_contract")
+  missing <- setdiff(required, names(component_df))
+  if (length(missing) > 0L) return(data.frame())
+
+  rows <- list()
+  raw_components <- sort(unique(as.integer(component_df$component[component_df$component_contract == "raw_state_component"])))
+  raw_components <- raw_components[is.finite(raw_components)]
+  for (component in raw_components) {
+    rows[[length(rows) + 1L]] <- data.frame(
+      component = as.integer(component),
+      component_contract = "raw_state_component",
+      display_label = component_analysis_label(component, "raw_state_component"),
+      filename = component_analysis_slug(component, "raw_state_component"),
+      include_in_manuscript = FALSE,
+      stringsAsFactors = FALSE
+    )
+  }
+
+  has_a1_contract <- any(
+    component_df$component == 6L &
+      component_df$component_contract == FIGURE_A1_COMPONENT_CONTRACT,
+    na.rm = TRUE
+  )
+  if (isTRUE(has_a1_contract)) {
+    rows[[length(rows) + 1L]] <- data.frame(
+      component = 6L,
+      component_contract = FIGURE_A1_COMPONENT_CONTRACT,
+      display_label = component_analysis_label(6L, FIGURE_A1_COMPONENT_CONTRACT),
+      filename = component_analysis_slug(6L, FIGURE_A1_COMPONENT_CONTRACT),
+      include_in_manuscript = FALSE,
+      stringsAsFactors = FALSE
+    )
+  }
+
+  if (length(rows) == 0L) return(data.frame())
+  out <- do.call(rbind, rows)
+  out <- out[!(out$component_contract %in% COMPONENT_ANALYSIS_LEGACY_EXCLUDED_CONTRACTS), , drop = FALSE]
+  out
+}
+
+component_analysis_axis_label <- function(contract) {
+  if (identical(as.character(contract), "raw_state_component")) {
+    return(sprintf("State component (%s)", display_flow_scale))
+  }
+  figure_flow_axis_label(display_flow_scale)
+}
 
 hydrologic_regime_periods <- function() {
   data.frame(
@@ -202,6 +272,141 @@ render_component_80month <- function(out_file) {
   ggsave(out_file, plot = p, width = 12, height = 6, units = "in", dpi = 350)
 }
 
+render_component_analysis_figure <- function(spec, out_file) {
+  dd <- components[
+    components$quantile %in% c("q05", "q50", "q95") &
+      components$component == spec$component[[1L]] &
+      components$component_contract == spec$component_contract[[1L]] &
+      !is.na(components$date),
+    ,
+    drop = FALSE
+  ]
+  if (nrow(dd) < 1L) {
+    stop(sprintf("No component rows found for analysis figure `%s`.", spec$display_label[[1L]]), call. = FALSE)
+  }
+  min_time <- ceiling(max(dd$time_index, na.rm = TRUE) / 10)
+  dd <- dd[dd$time_index >= min_time, , drop = FALSE]
+  if (nrow(dd) < 1L) {
+    stop(sprintf("No component rows remain after warm-history trim for `%s`.", spec$display_label[[1L]]), call. = FALSE)
+  }
+
+  obs <- dynamics[dynamics$quantile == "q50", c("date", "observed_usgs"), drop = FALSE]
+  obs <- obs[!is.na(obs$date) & is.finite(obs$observed_usgs), , drop = FALSE]
+  obs <- obs[obs$date >= min(dd$date, na.rm = TRUE) & obs$date <= max(dd$date, na.rm = TRUE), , drop = FALSE]
+
+  ylim <- range(c(dd$lower_025, dd$upper_975, obs$observed_usgs), na.rm = TRUE)
+  if (!all(is.finite(ylim)) || diff(ylim) <= 0) ylim <- c(0, 1)
+  ylim <- c(min(0, ylim[[1L]]), ylim[[2L]] + diff(ylim) * 0.08)
+
+  shade_periods <- hydrologic_regime_periods()
+  shade_periods <- shade_periods[shade_periods$xmax >= min(dd$date, na.rm = TRUE) & shade_periods$xmin <= max(dd$date, na.rm = TRUE), , drop = FALSE]
+  shade_periods$xmin <- pmax(shade_periods$xmin, min(dd$date, na.rm = TRUE))
+  shade_periods$xmax <- pmin(shade_periods$xmax, max(dd$date, na.rm = TRUE))
+  label_y <- ylim[[1L]] + 0.035 * diff(ylim)
+  col <- c(q05 = "#b2182b", q50 = "#238b45", q95 = "#2171b5")
+  fill <- c(q05 = "#fdbba1", q50 = "#b2df8a", q95 = "#a6bddb")
+  p <- ggplot() +
+    geom_rect(
+      data = shade_periods,
+      aes(xmin = xmin, xmax = xmax, ymin = -Inf, ymax = Inf, fill = period),
+      alpha = 0.48,
+      inherit.aes = FALSE,
+      show.legend = FALSE
+    ) +
+    geom_ribbon(
+      data = dd,
+      aes(x = date, ymin = lower_025, ymax = upper_975, fill = quantile),
+      alpha = 0.12
+    ) +
+    geom_line(data = dd, aes(x = date, y = median_500, color = quantile), linewidth = 0.45) +
+    geom_line(data = dd, aes(x = date, y = lower_025, color = quantile), linewidth = 0.12) +
+    geom_line(data = dd, aes(x = date, y = upper_975, color = quantile), linewidth = 0.12) +
+    geom_line(data = obs, aes(x = date, y = observed_usgs), color = "black", linewidth = 0.12) +
+    geom_point(data = obs, aes(x = date, y = observed_usgs), color = "black", size = 0.1, alpha = 0.9) +
+    scale_color_manual(values = col, breaks = c("q05", "q50", "q95")) +
+    scale_fill_manual(values = c(fill, setNames(shade_periods$fill, shade_periods$period))) +
+    annotate(
+      "text",
+      x = shade_periods$xmin + (shade_periods$xmax - shade_periods$xmin) / 2,
+      y = label_y,
+      label = shade_periods$period,
+      size = 3.4,
+      color = "#555555",
+      fontface = "italic"
+    ) +
+    coord_cartesian(ylim = ylim) +
+    scale_x_date(date_breaks = "24 months", date_labels = "%Y-%m") +
+    labs(
+      title = sprintf("%s: selected 2022-12-25 model", spec$display_label[[1L]]),
+      x = NULL,
+      y = component_analysis_axis_label(spec$component_contract[[1L]])
+    ) +
+    theme_manuscript_standard(
+      base_size = 15,
+      title_size = 16,
+      legend_position = "none",
+      axis_text_y_size = 12,
+      x_angle = 35,
+      major_grid_x = TRUE,
+      major_grid_y = TRUE,
+      plot_margin = margin(12, 12, 12, 12)
+    )
+  ggsave(out_file, plot = p, width = 12, height = 6, units = "in", dpi = 350)
+  invisible(TRUE)
+}
+
+write_component_analysis_readme <- function(analysis_dir, manifest) {
+  writeLines(
+    c(
+      "# Component Evolution Analysis Gallery",
+      "",
+      "These PNG files are rendered from the same compact authoritative selected-model support bundle as Figure A1.",
+      "They are analysis-only diagnostics and are intentionally not added to `MANUSCRIPT_ASSET_MANIFEST.json`.",
+      "",
+      "Included contracts:",
+      "",
+      "- `raw_state_component` for each retained state component available in the support CSV.",
+      sprintf("- `%s`, the audited samplewise construction used by Figure A1.", FIGURE_A1_COMPONENT_CONTRACT),
+      "",
+      "Excluded by default:",
+      "",
+      "- `component_6_shifted_by_posterior_mean_trend_component_1`, the older shifted diagnostic contract.",
+      "",
+      sprintf("Rendered figures: %d", as.integer(nrow(manifest)))
+    ),
+    con = file.path(analysis_dir, "README.md")
+  )
+}
+
+render_component_analysis_gallery <- function(analysis_dir) {
+  dir.create(analysis_dir, recursive = TRUE, showWarnings = FALSE)
+  specs <- component_analysis_specs(components)
+  if (!is.data.frame(specs) || nrow(specs) == 0L) {
+    stop("No component analysis figure specifications were available.", call. = FALSE)
+  }
+
+  rows <- list()
+  for (i in seq_len(nrow(specs))) {
+    spec <- specs[i, , drop = FALSE]
+    out_file <- file.path(analysis_dir, spec$filename[[1L]])
+    render_component_analysis_figure(spec, out_file)
+    rows[[length(rows) + 1L]] <- data.frame(
+      component = as.integer(spec$component[[1L]]),
+      component_contract = spec$component_contract[[1L]],
+      display_label = spec$display_label[[1L]],
+      filename = spec$filename[[1L]],
+      relative_path = file.path("analysis_figures", "component_evolution", spec$filename[[1L]]),
+      include_in_manuscript = FALSE,
+      rendered_at_utc = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"),
+      stringsAsFactors = FALSE
+    )
+  }
+  manifest <- do.call(rbind, rows)
+  utils::write.csv(manifest, file.path(analysis_dir, "component_analysis_manifest.csv"), row.names = FALSE)
+  write_component_analysis_readme(analysis_dir, manifest)
+  manifest
+}
+
 render_quantile_window(
   "2012-01-01",
   "2016-12-31",
@@ -217,6 +422,8 @@ render_quantile_window(
   ylim = c(0, 7)
 )
 render_component_80month(file.path(out_dir, "selected_model_component_80month.png"))
+analysis_dir <- file.path(dirname(out_dir), "analysis_figures", "component_evolution")
+component_analysis_manifest <- render_component_analysis_gallery(analysis_dir)
 
 meta <- list(
   support_dir = support_dir,
@@ -237,6 +444,12 @@ meta <- list(
     "selected_model_quantile_dry_period.png",
     "selected_model_quantile_wet_period.png",
     "selected_model_component_80month.png"
+  ),
+  component_analysis = list(
+    directory = file.path("analysis_figures", "component_evolution"),
+    manifest = file.path("analysis_figures", "component_evolution", "component_analysis_manifest.csv"),
+    figure_count = as.integer(nrow(component_analysis_manifest)),
+    files = as.character(component_analysis_manifest$filename)
   ),
   generated_at_utc = format(Sys.time(), "%Y-%m-%dT%H:%M:%SZ", tz = "UTC")
 )

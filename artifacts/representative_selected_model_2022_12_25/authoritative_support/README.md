@@ -1,6 +1,6 @@
 # Authoritative Selected-Model Support
 
-This bundle contains compact posterior support artifacts and rendered figures for the representative `2022-12-25 exAL-M-T1` selected model. These figures are sourced from the same selected-output authority as the synthesis figure. Figure A1 is article-labeled as the 80-month seasonal component; its internal render metadata records the audited samplewise component-6-plus-trend construction and the dry/wet period overlays.
+This bundle contains compact posterior support artifacts and rendered figures for the representative `2022-12-25 exAL-M-T1` selected model. These figures are sourced from the same selected-output authority as the synthesis figure. Figure A1 is article-labeled as the 80-month seasonal component; its internal render metadata records the audited samplewise component-6-plus-trend construction and the dry/wet period overlays. The `analysis_figures/component_evolution/` subfolder is an analysis-only component gallery rendered from the same support CSVs; it is checksummed here but intentionally not registered as a manuscript figure family.
 
 - run id: `multimodel_20221225_v8_he2grid_c05_eps030_exdqlm_multivar_keep`
 - cutoff: `2022-12-25`

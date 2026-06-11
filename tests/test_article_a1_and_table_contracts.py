@@ -26,6 +26,9 @@ class ArticleA1AndTableContractTests(unittest.TestCase):
             'components$component_contract == "component_6_shifted_by_posterior_mean_trend_component_1"',
             text,
         )
+        self.assertIn("component_analysis_specs <- function(component_df)", text)
+        self.assertIn("COMPONENT_ANALYSIS_LEGACY_EXCLUDED_CONTRACTS", text)
+        self.assertIn("include_in_manuscript = FALSE", text)
 
     def test_figure_a1_render_metadata_records_contract_and_periods(self) -> None:
         meta_path = (
@@ -48,6 +51,35 @@ class ArticleA1AndTableContractTests(unittest.TestCase):
             [(row.get("period"), row.get("start"), row.get("end")) for row in periods],
             [("Dry", "2012-01-01", "2016-12-31"), ("Wet", "2017-01-01", "2019-12-31")],
         )
+        component_analysis = meta.get("component_analysis")
+        self.assertIsInstance(component_analysis, dict)
+        self.assertEqual(component_analysis.get("figure_count"), 8)
+        self.assertIn(
+            "component_06_component_6_plus_trend_component_1_samplewise.png",
+            component_analysis.get("files", []),
+        )
+
+    def test_component_analysis_gallery_is_analysis_only(self) -> None:
+        support_dir = (
+            ROOT
+            / "artifacts"
+            / "representative_selected_model_2022_12_25"
+            / "authoritative_support"
+        )
+        manifest_path = support_dir / "analysis_figures" / "component_evolution" / "component_analysis_manifest.csv"
+        self.assertTrue(manifest_path.exists(), f"missing component analysis manifest: {manifest_path}")
+        text = manifest_path.read_text(encoding="utf-8")
+        self.assertIn("component_01_raw_state_component.png", text)
+        self.assertIn("component_07_raw_state_component.png", text)
+        self.assertIn("component_06_component_6_plus_trend_component_1_samplewise.png", text)
+        self.assertNotIn("component_6_shifted_by_posterior_mean_trend_component_1", text)
+        self.assertNotIn("TRUE", text)
+
+        manuscript_manifest = json.loads((ROOT / "MANUSCRIPT_ASSET_MANIFEST.json").read_text(encoding="utf-8"))
+        manifest_blob = json.dumps(manuscript_manifest)
+        self.assertNotIn("analysis_figures/component_evolution", manifest_blob)
+        bundle_manifest = (support_dir / "manifest.csv").read_text(encoding="utf-8")
+        self.assertIn("analysis_component", bundle_manifest)
 
     def test_generated_table_builder_uses_single_five_decimal_policy(self) -> None:
         script = ROOT / "scripts" / "build_generated_table_includes.py"

@@ -171,6 +171,16 @@ The representative selected-model bundle and the HE2 snapshot can now be refresh
 The preferred top-level article-side refresh entrypoint is:
 - `scripts/refresh_all_generated_assets.py`
 
+The representative selected-model support refresh also writes an analysis-only
+component gallery under:
+- `artifacts/representative_selected_model_2022_12_25/authoritative_support/analysis_figures/component_evolution/`
+
+That gallery is rendered from the same compact selected-model support CSVs as
+Figure A1. It includes raw retained state components plus the audited
+`component_6_plus_trend_component_1_samplewise` construction used by Figure A1.
+It is checksummed in the local artifact bundle but intentionally not registered
+in `MANUSCRIPT_ASSET_MANIFEST.json`.
+
 ## Current workflow evidence
 
 ### Figure-generation evidence

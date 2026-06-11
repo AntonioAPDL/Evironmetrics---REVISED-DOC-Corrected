@@ -45,6 +45,8 @@ FIGURE_UPDATES = {
     },
 }
 
+ANALYSIS_COMPONENT_REL_DIR = Path("analysis_figures") / "component_evolution"
+
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -103,6 +105,13 @@ def update_manifest(article_root: Path, support_fig_dir: Path) -> None:
     manifest_path(article_root).write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
 
 
+def iter_analysis_component_files(support_dir: Path) -> list[Path]:
+    analysis_dir = support_dir / ANALYSIS_COMPONENT_REL_DIR
+    if not analysis_dir.exists():
+        return []
+    return sorted(path for path in analysis_dir.iterdir() if path.is_file())
+
+
 def write_bundle_docs(bundle_root: Path, support_dir: Path, support_rows: list[dict[str, str]], authority: dict) -> None:
     figures_dir = support_dir / "figures"
     manifest_rows = []
@@ -127,6 +136,16 @@ def write_bundle_docs(bundle_root: Path, support_dir: Path, support_rows: list[d
                 sha256(path),
             ]
         )
+    for path in iter_analysis_component_files(support_dir):
+        manifest_rows.append(
+            [
+                "analysis_component",
+                path.name,
+                str(path),
+                str(path.relative_to(bundle_root.parent.parent)),
+                sha256(path),
+            ]
+        )
     with (support_dir / "manifest.csv").open("w", newline="") as handle:
         writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(["label", "filename", "source_absolute_path", "local_bundle_path", "sha256"])
@@ -139,7 +158,9 @@ def write_bundle_docs(bundle_root: Path, support_dir: Path, support_rows: list[d
         "`2022-12-25 exAL-M-T1` selected model. These figures are sourced from the same selected-output authority "
         "as the synthesis figure. Figure A1 is article-labeled as the 80-month seasonal component; its internal "
         "render metadata records the audited samplewise component-6-plus-trend construction and the dry/wet "
-        "period overlays.\n\n"
+        "period overlays. The `analysis_figures/component_evolution/` subfolder is an analysis-only component "
+        "gallery rendered from the same support CSVs; it is checksummed here but intentionally not registered as "
+        "a manuscript figure family.\n\n"
         f"- run id: `{authority.get('run_id', '')}`\n"
         f"- cutoff: `{authority.get('selected_cutoff_date', '')}`\n"
         f"- runtime output root: `{authority.get('runtime_output_root', '')}`\n\n"
