@@ -81,6 +81,31 @@ class ArticleA1AndTableContractTests(unittest.TestCase):
         bundle_manifest = (support_dir / "manifest.csv").read_text(encoding="utf-8")
         self.assertIn("analysis_component", bundle_manifest)
 
+    def test_overleaf_bundle_excludes_large_compact_support_data(self) -> None:
+        support_dir = (
+            ROOT
+            / "artifacts"
+            / "representative_selected_model_2022_12_25"
+            / "authoritative_support"
+        )
+        forbidden = [
+            "authoritative_component_summary.csv",
+            "authoritative_component_summary.rds",
+            "authoritative_usgs_quantile_dynamics_summary.csv",
+            "authoritative_usgs_quantile_dynamics_summary.rds",
+            "authoritative_selected_support_manifest.json",
+            "authoritative_selected_support_lineage.csv",
+        ]
+        for filename in forbidden:
+            self.assertFalse((support_dir / filename).exists(), f"large support payload should stay external: {filename}")
+
+        refresh_script = (ROOT / "scripts" / "refresh_authoritative_selected_model_support_figures.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("tempfile.TemporaryDirectory", refresh_script)
+        self.assertIn("external_support_data", refresh_script)
+        self.assertNotIn("copy_required_support", refresh_script)
+
     def test_generated_table_builder_uses_single_five_decimal_policy(self) -> None:
         script = ROOT / "scripts" / "build_generated_table_includes.py"
         text = script.read_text(encoding="utf-8")

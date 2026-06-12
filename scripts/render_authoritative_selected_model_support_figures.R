@@ -27,6 +27,8 @@ out_dir <- normalizePath(opt[["output-dir"]], mustWork = FALSE)
 workflow_root <- opt[["workflow-root"]]
 display_flow_scale <- opt[["display-flow-scale"]]
 if (is.null(display_flow_scale) || !nzchar(display_flow_scale)) display_flow_scale <- "log1p_cms"
+metadata_support_dir <- opt[["metadata-support-dir"]]
+if (is.null(metadata_support_dir) || !nzchar(metadata_support_dir)) metadata_support_dir <- support_dir
 
 dir.create(out_dir, recursive = TRUE, showWarnings = FALSE)
 
@@ -426,7 +428,8 @@ analysis_dir <- file.path(dirname(out_dir), "analysis_figures", "component_evolu
 component_analysis_manifest <- render_component_analysis_gallery(analysis_dir)
 
 meta <- list(
-  support_dir = support_dir,
+  support_dir = metadata_support_dir,
+  render_staging_support_dir = support_dir,
   output_dir = out_dir,
   display_flow_scale = display_flow_scale,
   figure_a1_component_contract = FIGURE_A1_COMPONENT_CONTRACT,

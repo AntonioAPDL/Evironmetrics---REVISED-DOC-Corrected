@@ -181,6 +181,13 @@ Figure A1. It includes raw retained state components plus the audited
 It is checksummed in the local artifact bundle but intentionally not registered
 in `MANUSCRIPT_ASSET_MANIFEST.json`.
 
+The compact posterior support CSV/RDS files used to render this gallery are not
+persisted in the Overleaf-facing article repo. They remain workflow/runtime
+source artifacts and are staged in a temporary directory by
+`scripts/refresh_authoritative_selected_model_support_figures.py` during
+refresh. This keeps the article repository focused on manuscript tables,
+figures, and small provenance manifests.
+
 ## Current workflow evidence
 
 ### Figure-generation evidence

@@ -7,6 +7,7 @@ import hashlib
 import json
 import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 
 import yaml
@@ -15,7 +16,7 @@ from article_asset_manifest import load_manifest, manifest_path
 from article_repo_layout import build_layout
 from article_runtime_bindings import binding_as_optional_path, load_runtime_bindings
 
-SUPPORT_FILES = [
+RENDER_SUPPORT_FILES = [
     "authoritative_usgs_quantile_dynamics_summary.csv",
     "authoritative_usgs_quantile_dynamics_summary.rds",
     "authoritative_component_summary.csv",
@@ -65,21 +66,21 @@ def run(cmd: list[str]) -> None:
     subprocess.run(cmd, check=True)
 
 
-def copy_required_support(source_output_root: Path, support_dir: Path) -> list[dict[str, str]]:
-    support_dir.mkdir(parents=True, exist_ok=True)
+def stage_required_support(source_output_root: Path, staging_support_dir: Path) -> list[dict[str, str]]:
+    staging_support_dir.mkdir(parents=True, exist_ok=True)
     rows: list[dict[str, str]] = []
-    for name in SUPPORT_FILES:
+    for name in RENDER_SUPPORT_FILES:
         src = source_output_root / name
         if not src.exists():
             raise FileNotFoundError(f"Missing authoritative selected support artifact: {src}")
-        dst = support_dir / name
+        dst = staging_support_dir / name
         shutil.copy2(src, dst)
         rows.append(
             {
                 "filename": name,
                 "source_absolute_path": str(src),
-                "local_path": str(dst),
-                "sha256": sha256(dst),
+                "local_bundle_path": "",
+                "sha256": sha256(src),
             }
         )
     return rows
@@ -118,10 +119,10 @@ def write_bundle_docs(bundle_root: Path, support_dir: Path, support_rows: list[d
     for row in support_rows:
         manifest_rows.append(
             [
-                "support_data",
+                "external_support_data",
                 row["filename"],
                 row["source_absolute_path"],
-                str(Path(row["local_path"]).relative_to(bundle_root.parent.parent)),
+                row["local_bundle_path"],
                 row["sha256"],
             ]
         )
@@ -150,7 +151,7 @@ def write_bundle_docs(bundle_root: Path, support_dir: Path, support_rows: list[d
         writer = csv.writer(handle, lineterminator="\n")
         writer.writerow(["label", "filename", "source_absolute_path", "local_bundle_path", "sha256"])
         writer.writerows(manifest_rows)
-    sums = [f"{row[-1]}  {row[3]}" for row in manifest_rows]
+    sums = [f"{row[-1]}  {row[3]}" for row in manifest_rows if row[3]]
     (support_dir / "SHA256SUMS.txt").write_text("\n".join(sorted(sums)) + "\n", encoding="utf-8")
     (support_dir / "README.md").write_text(
         "# Authoritative Selected-Model Support\n\n"
@@ -161,6 +162,9 @@ def write_bundle_docs(bundle_root: Path, support_dir: Path, support_rows: list[d
         "period overlays. The `analysis_figures/component_evolution/` subfolder is an analysis-only component "
         "gallery rendered from the same support CSVs; it is checksummed here but intentionally not registered as "
         "a manuscript figure family.\n\n"
+        "Large compact support CSV/RDS files are intentionally not persisted in this Overleaf-facing article "
+        "repository. The manifest records their external runtime source paths and hashes; the refresh script "
+        "stages those files in a temporary directory only while rendering figures.\n\n"
         f"- run id: `{authority.get('run_id', '')}`\n"
         f"- cutoff: `{authority.get('selected_cutoff_date', '')}`\n"
         f"- runtime output root: `{authority.get('runtime_output_root', '')}`\n\n"
@@ -202,23 +206,27 @@ def main() -> None:
     bundle_root = layout.representative_selected_model_dir
     support_dir = bundle_root / "authoritative_support"
     figures_dir = support_dir / "figures"
-    support_rows = copy_required_support(source_output_root, support_dir)
-    figures_dir.mkdir(parents=True, exist_ok=True)
-    run(
-        [
-            "Rscript",
-            "--vanilla",
-            str(article_root / "scripts" / "render_authoritative_selected_model_support_figures.R"),
-            "--support-dir",
-            str(support_dir),
-            "--output-dir",
-            str(figures_dir),
-            "--workflow-root",
-            str(workflow_root),
-            "--display-flow-scale",
-            str(authority_payload.get("figure_scale", "log1p_cms")),
-        ]
-    )
+    with tempfile.TemporaryDirectory(prefix="selected_support_render_") as tmp_dir:
+        staging_support_dir = Path(tmp_dir) / "authoritative_support"
+        support_rows = stage_required_support(source_output_root, staging_support_dir)
+        figures_dir.mkdir(parents=True, exist_ok=True)
+        run(
+            [
+                "Rscript",
+                "--vanilla",
+                str(article_root / "scripts" / "render_authoritative_selected_model_support_figures.R"),
+                "--support-dir",
+                str(staging_support_dir),
+                "--output-dir",
+                str(figures_dir),
+                "--workflow-root",
+                str(workflow_root),
+                "--display-flow-scale",
+                str(authority_payload.get("figure_scale", "log1p_cms")),
+                "--metadata-support-dir",
+                str(source_output_root),
+            ]
+        )
     write_bundle_docs(bundle_root, support_dir, support_rows, authority_payload)
     update_manifest(article_root, figures_dir)
     print("Refreshed authoritative selected-model support figures successfully.")
